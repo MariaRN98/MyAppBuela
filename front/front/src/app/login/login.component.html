@@ -1,0 +1,10 @@
+<div class="login-form">
+    <h2>Login</h2>
+    <form (submit)="onLogin(); $event.preventDefault();">
+      <input type="text" [(ngModel)]="username" name="username" placeholder="Usuario" required>
+      <input type="password" [(ngModel)]="password" name="password" placeholder="Contraseña" required>
+      <button type="submit">Entrar</button>
+      <p *ngIf="error" style="color: red;">{{ error }}</p>
+    </form>
+  </div>
+  

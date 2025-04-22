@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 # Usuario
 class Usuario(AbstractUser):
     foto_perfil = models.ImageField(upload_to="usuarios/", null=True, blank=True)
-    email = models.EmailField(unique=True, max_length=100)
+    #email = models.EmailField(unique=True, max_length=100)
     fecha_nacimiento = models.DateField(null=True, blank=True) 
     telefono = models.CharField(max_length=15, unique=True, null=True, blank=True)
 
@@ -15,6 +15,7 @@ class Usuario(AbstractUser):
 
 # Dependiente    
 class Dependiente(models.Model):
+    foto_perfil = models.ImageField(upload_to="depedientes/", null=True, blank=True)
     nombre = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
     fecha_nacimiento = models.DateField(null=True, blank=True) 
@@ -44,8 +45,8 @@ class Acceso(models.Model):
 
 # Nota
 class Nota(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='usuario_acceso')
-    dependiente = models.ForeignKey(Dependiente, on_delete=models.CASCADE, related_name='dependiente_acceso')
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='usuario_nota')
+    dependiente = models.ForeignKey(Dependiente, on_delete=models.CASCADE, related_name='dependiente_nota')
     titulo = models.CharField(max_length=100)
     cuerpo = models.TextField()
     fecha_publicacoin = models.DateTimeField(null=True, blank=True) 
@@ -54,8 +55,8 @@ class Nota(models.Model):
 
 # Turno
 class Turno(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='usuario_acceso')
-    dependiente = models.ForeignKey(Dependiente, on_delete=models.CASCADE, related_name='dependiente_acceso')
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='usuario_turno')
+    dependiente = models.ForeignKey(Dependiente, on_delete=models.CASCADE, related_name='dependiente_turno')
     dias_semana = models.CharField(choices=
         (
             ('Lunes', 'Lunes'),
@@ -97,7 +98,7 @@ class Medicamento(models.Model):
     
 # Comidas*
 class Comida(models.Model):
-    dependiente = models.ForeignKey(Dependiente, on_delete=models.CASCADE, related_name='dependendiente_medicamento')
+    dependiente = models.ForeignKey(Dependiente, on_delete=models.CASCADE, related_name='dependendiente_comida')
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
     dias_semana = models.CharField(choices=
@@ -148,8 +149,8 @@ class Evento(models.Model):
         return f'{self.titulo}'
     
 # Compras*
-class Evento(models.Model):
-    dependiente = models.ForeignKey(Dependiente, on_delete=models.CASCADE, related_name='dependendiente_evento')
+class Compra(models.Model):
+    dependiente = models.ForeignKey(Dependiente, on_delete=models.CASCADE, related_name='dependendiente_compra')
     producto = models.CharField(max_length=100)
     cantidad = models.IntegerField()
     precio_aprx_unid = models.DecimalField(max_digits=10, decimal_places=2)
