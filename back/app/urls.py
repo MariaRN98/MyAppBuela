@@ -3,8 +3,11 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from .views import LoginView, RegistroView, home_data, crear_dependiente
 
 urlpatterns = [
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/auth/login/', LoginView.as_view(), name='login'),
+    path('api/auth/registro/', RegistroView.as_view(), name='registro'),
+    path('api/home/', home_data, name='home-data'),
+    path('api/dependientes/crear/', crear_dependiente, name='crear-dependiente'),
 ]
