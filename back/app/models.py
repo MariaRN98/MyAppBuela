@@ -144,6 +144,9 @@ class Evento(models.Model):
             ('Otros', 'Otros'), #ire agregando los eventos que se me ocurran
         ), max_length=100
     )
+    
+    # recordatorio = models.BooleanField(default=False)  # Opcional: alertas
+    # creado_por = models.ForeignKey(Usuario, on_delete=models.CASCADE)  # Quién lo creó
 
     def __str__(self):
         return f'{self.titulo}'
