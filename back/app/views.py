@@ -14,6 +14,20 @@ from .models import Dependiente, Acceso
 from .permissions import EsCreadorOAdmin
 from django.shortcuts import get_object_or_404
 
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
+from django.shortcuts import get_object_or_404
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from .models import Dependiente, Nota, Acceso
+from .serializers import NotaSerializer
+
 class LoginView(APIView):
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
@@ -33,16 +47,31 @@ class LoginView(APIView):
             }
         })
     
-class RegistroView(APIView):
-    def post(self, request):
-        serializer = RegistroSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(
-                {"message": "Usuario registrado correctamente"},
-                status=status.HTTP_201_CREATED
-            )
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# class RegistroView(APIView):
+#     def post(self, request):
+#         serializer = RegistroSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(
+#                 {"message": "Usuario registrado correctamente"},
+#                 status=status.HTTP_201_CREATED
+#             )
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# views.py
+
+
+@csrf_exempt  # 👈 Esto desactiva CSRF solo para esta vista
+@api_view(['POST'])
+@permission_classes([AllowAny])  # 👈 Permite el acceso sin token ni login
+@authentication_classes([])     # 👈 No requiere autenticación
+def register_view(request):
+    serializer = RegistroSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"message": "Usuario creado exitosamente"}, status=201)
+    return Response(serializer.errors, status=400)
+
     
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -75,14 +104,6 @@ def crear_dependiente(request):
         
         return Response(dependiente_serializer.data, status=201)
     return Response(dependiente_serializer.errors, status=400)
-
-from django.shortcuts import get_object_or_404
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-from .models import Dependiente, Nota, Acceso
-from .serializers import NotaSerializer
 
 # Helper para verificar permisos de escritura
 def tiene_permiso_escritura(usuario, dependiente):

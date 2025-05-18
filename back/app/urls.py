@@ -7,7 +7,8 @@ from .views import *
 
 urlpatterns = [
     path('api/auth/login/', LoginView.as_view(), name='login'),
-    path('api/auth/registro/', RegistroView.as_view(), name='registro'),
+    #path('api/auth/registro/', RegistroView.as_view(), name='registro'),
+    path('api/auth/register/', register_view, name='register'),
     path('api/home/', home_data, name='home-data'),
     path('api/dependientes/crear/', crear_dependiente, name='crear-dependiente'),
 
