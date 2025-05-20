@@ -638,3 +638,27 @@ def dependientes_usuario(request):
     dependientes = [acceso.dependiente for acceso in accesos]
     serializer = DependienteSerializer(dependientes, many=True)
     return Response(serializer.data)
+
+#logout
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            # Invalida el refresh token
+            refresh_token = request.data.get("refresh_token")
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            # Opcional: Elimina el token de acceso del cliente
+            # (esto se manejará en el frontend)
+            
+            return Response(
+                {"message": "Sesión cerrada correctamente"},
+                status=status.HTTP_205_RESET_CONTENT
+            )
+        except Exception as e:
+            return Response(
+                {"error": "Error al cerrar sesión", "details": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )

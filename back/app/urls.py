@@ -52,5 +52,8 @@ urlpatterns = [
 
     #header
     path('api/current-user/', current_user, name='current-user'),
+
+    #logout
+    path('api/auth/logout/', LogoutView.as_view(), name='logout'),
     
 ]
