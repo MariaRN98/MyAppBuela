@@ -619,3 +619,22 @@ def marcar_comido(request, dependiente_id, comida_id):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#header
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def current_user(request):
+    user = request.user
+    serializer = UsuarioSerializer(user)
+    return Response(serializer.data)
+
+#listado dependientes
+# views.py
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def dependientes_usuario(request):
+    usuario = request.user
+    accesos = Acceso.objects.filter(usuario=usuario)
+    dependientes = [acceso.dependiente for acceso in accesos]
+    serializer = DependienteSerializer(dependientes, many=True)
+    return Response(serializer.data)

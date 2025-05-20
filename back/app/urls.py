@@ -11,6 +11,7 @@ urlpatterns = [
     path('api/auth/register/', register_view, name='register'),
     path('api/home/', home_data, name='home-data'),
     path('api/dependientes/crear/', crear_dependiente, name='crear-dependiente'),
+    path('api/dependientes/', dependientes_usuario, name='dependientes-usuario'),
 
     #notas
     path('api/dependientes/<int:dependiente_id>/notas/', lista_notas, name='lista-notas'),
@@ -48,5 +49,8 @@ urlpatterns = [
     path('api/dependientes/<int:dependiente_id>/comidas/crear/', crear_comida, name='crear-comida'),
     path('api/dependientes/<int:dependiente_id>/comidas/<int:comida_id>/', gestionar_comida, name='gestionar-comida'),
     path('api/dependientes/<int:dependiente_id>/comidas/<int:comida_id>/marcar-comido/', marcar_comido, name='marcar-comido'),
+
+    #header
+    path('api/current-user/', current_user, name='current-user'),
     
 ]
