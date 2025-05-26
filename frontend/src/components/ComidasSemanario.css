@@ -1,0 +1,50 @@
+.comidas-container {
+  padding: 20px;
+}
+
+.tipo-comida-section {
+  margin-bottom: 30px;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.grid-comidas {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 15px;
+}
+
+.dia-comida {
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.comida-item {
+  padding: 10px;
+  margin: 5px 0;
+  border-left: 4px solid #4CAF50;
+  background: #f5f5f5;
+}
+
+.comida-item.completado {
+  opacity: 0.6;
+  border-left-color: #9E9E9E;
+}
+
+.comida-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.comida-actions {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.btn-check.active {
+  color: #4CAF50;
+}

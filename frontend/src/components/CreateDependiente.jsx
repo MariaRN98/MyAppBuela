@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import './CreateDependiente.css';
 
 const CreateDependiente = () => {
   const [formData, setFormData] = useState({

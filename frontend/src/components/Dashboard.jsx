@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../services/api';
+import './Dashboard.css';
 
 const Dashboard = () => {
   const [dependientes, setDependientes] = useState([]);
@@ -26,7 +27,7 @@ const Dashboard = () => {
       <ul>
         {dependientes.map((dependiente) => (
           <li key={dependiente.id}>
-            <Link to={`/dependiente/${dependiente.id}`}>
+            <Link to={`/dependientes/${dependiente.id}`}>
               {dependiente.nombre} {dependiente.apellidos}
             </Link>
           </li>

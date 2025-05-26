@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import './NotaForm.css';
 
 const NotaForm = ({ editMode }) => {
   const { dependienteId, notaId } = useParams();

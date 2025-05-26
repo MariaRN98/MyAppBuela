@@ -330,7 +330,7 @@ def crear_compra(request, dependiente_id):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Marcar como comprado/editar/eliminar (solo Admin/Editor)
-@api_view(['PUT', 'DELETE'])
+@api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def gestionar_compra(request, dependiente_id, compra_id):
     compra = get_object_or_404(
@@ -339,23 +339,28 @@ def gestionar_compra(request, dependiente_id, compra_id):
         dependiente_id=dependiente_id,
         dependiente__dependiente_acceso__usuario=request.user
     )
-    
+
+    if request.method == 'GET':
+        serializer = CompraSerializer(compra)
+        return Response(serializer.data)
+
     if not tiene_permiso_escritura(request.user, compra.dependiente):
         return Response(
             {"error": "Solo administradores o editores pueden modificar compras"},
             status=status.HTTP_403_FORBIDDEN
         )
-    
+
     if request.method == 'PUT':
         serializer = CompraSerializer(compra, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     elif request.method == 'DELETE':
         compra.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
     
 #turnos
 # Helper para verificar permisos de Admin
@@ -571,16 +576,50 @@ def crear_comida(request, dependiente_id):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['PUT', 'DELETE'])
+# @api_view(['PUT', 'DELETE'])
+# @permission_classes([IsAuthenticated])
+# def gestionar_comida(request, dependiente_id, comida_id):
+#     comida = get_object_or_404(
+#         Comida,
+#         pk=comida_id,
+#         dependiente_id=dependiente_id
+#     )
+    
+#     # Verifica permisos para editar/eliminar
+#     if request.method in ['PUT', 'DELETE']:
+#         if not Acceso.objects.filter(
+#             usuario=request.user,
+#             dependiente=comida.dependiente,
+#             rol__in=['Admin', 'Editor']
+#         ).exists():
+#             return Response(
+#                 {"error": "Solo administradores o editores pueden modificar comidas"},
+#                 status=status.HTTP_403_FORBIDDEN
+#             )
+    
+#     if request.method == 'PUT':
+#         serializer = CrearComidaSerializer(comida, data=request.data, partial=True)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+#     elif request.method == 'DELETE':
+#         comida.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def gestionar_comida(request, dependiente_id, comida_id):
+    # Obtener la comida verificando permisos de acceso
     comida = get_object_or_404(
         Comida,
         pk=comida_id,
-        dependiente_id=dependiente_id
+        dependiente_id=dependiente_id,
+        dependiente__dependiente_acceso__usuario=request.user
     )
     
-    # Verifica permisos para editar/eliminar
+    # Verificar permisos de escritura para PUT/DELETE
     if request.method in ['PUT', 'DELETE']:
         if not Acceso.objects.filter(
             usuario=request.user,
@@ -588,17 +627,22 @@ def gestionar_comida(request, dependiente_id, comida_id):
             rol__in=['Admin', 'Editor']
         ).exists():
             return Response(
-                {"error": "Solo administradores o editores pueden modificar comidas"},
+                {"error": "Se requieren permisos de administrador o editor"},
                 status=status.HTTP_403_FORBIDDEN
             )
     
-    if request.method == 'PUT':
+    # Manejar cada método
+    if request.method == 'GET':
+        serializer = ComidaSerializer(comida)
+        return Response(serializer.data)
+        
+    elif request.method == 'PUT':
         serializer = CrearComidaSerializer(comida, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+        
     elif request.method == 'DELETE':
         comida.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

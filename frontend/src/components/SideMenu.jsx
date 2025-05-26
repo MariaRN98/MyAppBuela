@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { FaBars, FaTimes, FaNotesMedical, FaCalendarAlt, FaPills, FaShoppingCart, FaUtensils } from 'react-icons/fa';
+import { FaBars, FaTimes, FaNotesMedical, FaCalendarAlt, FaPills, FaShoppingCart, FaUtensils, FaUserCircle, FaUserClock } from 'react-icons/fa';
 
 const SideMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +11,9 @@ const SideMenu = () => {
     { path: 'eventos', icon: <FaCalendarAlt />, label: 'Eventos' },
     { path: 'medicamentos', icon: <FaPills />, label: 'Medicamentos' },
     { path: 'compras', icon: <FaShoppingCart />, label: 'Compras' },
-    { path: 'comidas', icon: <FaUtensils />, label: 'Comidas' }
+    { path: '', icon: <FaUserCircle />, label: 'Perfil' },
+    { path: 'comidas', icon: <FaUtensils />, label: 'Comidas' },
+    { path: 'turnos', icon: <FaUserClock />, label: 'Turnos' }
   ];
 
   return (
@@ -28,7 +30,7 @@ const SideMenu = () => {
           {menuItems.map((item) => (
             <Link
               key={item.path}
-              to={`/dependiente/${dependienteId}/${item.path}`}
+              to={`/dependientes/${dependienteId}/${item.path}`}
               className="menu-item"
               onClick={() => setIsOpen(false)}
             >

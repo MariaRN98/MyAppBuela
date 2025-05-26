@@ -135,6 +135,7 @@ class CrearCompraSerializer(serializers.ModelSerializer):
         model = Compra
         fields = ['producto', 'cantidad', 'precio_aprx_unid', 'tienda', 'comprado']
 
+#turnos
 class TurnoSerializer(serializers.ModelSerializer):
     usuario_nombre = serializers.SerializerMethodField()
     

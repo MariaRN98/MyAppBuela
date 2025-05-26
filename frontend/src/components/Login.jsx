@@ -1,56 +1,7 @@
-// import React, { useState } from 'react';
-// import { useNavigate, Link } from 'react-router-dom';
-// import api from '../services/api';
-
-// const Login = () => {
-//   const [username, setUsername] = useState('');
-//   const [password, setPassword] = useState('');
-//   const [error, setError] = useState('');
-//   const navigate = useNavigate();
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const response = await api.post('/api/auth/login/', { username, password });
-//       localStorage.setItem('access_token', response.data.access_token);
-//       localStorage.setItem('refresh_token', response.data.refresh_token);
-//       navigate('/dashboard');
-//     } catch (err) {
-//       setError('Credenciales incorrectas');
-//     }
-//   };
-
-//   return (
-//     <div className="login-container">
-//       <h1>Iniciar Sesión</h1>
-//       {error && <p className="error">{error}</p>}
-//       <form onSubmit={handleSubmit}>
-//         <input
-//           type="text"
-//           placeholder="Usuario"
-//           value={username}
-//           onChange={(e) => setUsername(e.target.value)}
-//           required
-//         />
-//         <input
-//           type="password"
-//           placeholder="Contraseña"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           required
-//         />
-//         <button type="submit">Entrar</button>
-//       </form>
-//       <Link to="/register">¿No tienes cuenta? Regístrate</Link>
-//     </div>
-//   );
-// };
-
-// export default Login;
-
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../services/api';
+import './Login.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');
