@@ -1,0 +1,166 @@
+.ver-usuario-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: none;
+  border: none;
+  color: #2196F3;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}
+
+.user-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #e3f2fd;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #2196F3;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-header h1 {
+  margin: 0.5rem 0 0;
+  color: #333;
+}
+
+.username {
+  color: #666;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.user-details {
+  margin: 2rem 0;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.icon {
+  font-size: 1.5rem;
+  color: #2196F3;
+}
+
+.detail-item h3 {
+  margin: 0 0 0.3rem;
+  color: #555;
+  font-size: 1rem;
+}
+
+.detail-item p {
+  margin: 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.user-dependientes {
+  margin-top: 3rem;
+}
+
+.user-dependientes h2 {
+  color: #444;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.dependientes-list {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.dependiente-card {
+  padding: 1rem;
+  border-radius: 8px;
+  background: #f9f9f9;
+  border-left: 4px solid #2196F3;
+}
+
+.dependiente-card h3 {
+  margin: 0 0 0.5rem;
+  color: #333;
+}
+
+.rol {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.rol.admin {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.rol.editor {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.rol.lector {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.no-dependientes {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: #f44336;
+}

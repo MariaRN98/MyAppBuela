@@ -6,7 +6,6 @@ from django.contrib.auth.models import AbstractUser
 # Usuario
 class Usuario(AbstractUser):
     foto_perfil = models.ImageField(upload_to="usuarios/", null=True, blank=True)
-    #email = models.EmailField(unique=True, max_length=100)
     fecha_nacimiento = models.DateField(null=True, blank=True) 
     telefono = models.CharField(max_length=15, unique=True, null=True, blank=True)
 
@@ -40,6 +39,9 @@ class Acceso(models.Model):
             ('Lector', 'Lector'),
         ), max_length=100, default='Lector'
     )
+    class Meta:
+        unique_together = ('usuario', 'dependiente')
+
     def __str__(self):
         return f'{self.usuario, self.rol}'
 
@@ -50,6 +52,7 @@ class Nota(models.Model):
     titulo = models.CharField(max_length=100)
     cuerpo = models.TextField()
     fecha_publicacoin = models.DateTimeField(null=True, blank=True) 
+
     def __str__(self):
         return f'{self.titulo, self.cuerpo}'
 
@@ -68,7 +71,7 @@ class Turno(models.Model):
             ('Domingo', 'Domingo'),
         ), max_length=100
     )
-    hora_inicio = models.TimeField(null=True, blank=True) 
+    hora_inicio = models.TimeField() 
     hora_fin = models.TimeField(null=True, blank=True) 
 
     def __str__(self):
@@ -90,7 +93,7 @@ class Medicamento(models.Model):
             ('Domingo', 'Domingo'),
         ), max_length=100
     )
-    hora = models.TimeField(null=True, blank=True) 
+    hora = models.TimeField() 
     tomado = models.BooleanField(default=False)
 
     def __str__(self):
@@ -132,7 +135,7 @@ class Evento(models.Model):
     dependiente = models.ForeignKey(Dependiente, on_delete=models.CASCADE, related_name='dependendiente_evento')
     titulo = models.CharField(max_length=100)
     descripcion = models.TextField()
-    fecha_inicio = models.DateTimeField(null=True, blank=True)
+    fecha_inicio = models.DateTimeField()
     fecha_fin = models.DateTimeField(null=True, blank=True)
     tipo_evento = models.CharField(choices=
         (
@@ -145,8 +148,6 @@ class Evento(models.Model):
         ), max_length=100
     )
     
-    # recordatorio = models.BooleanField(default=False)  # Opcional: alertas
-    # creado_por = models.ForeignKey(Usuario, on_delete=models.CASCADE)  # Quién lo creó
 
     def __str__(self):
         return f'{self.titulo}'
@@ -156,8 +157,8 @@ class Compra(models.Model):
     dependiente = models.ForeignKey(Dependiente, on_delete=models.CASCADE, related_name='dependendiente_compra')
     producto = models.CharField(max_length=100)
     cantidad = models.IntegerField()
-    precio_aprx_unid = models.DecimalField(max_digits=10, decimal_places=2)
-    tienda = models.CharField(max_length=100)
+    precio_aprx_unid = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    tienda = models.CharField(max_length=100, null=True, blank=True)
     comprado = models.BooleanField(default=False)
 
     def __str__(self):

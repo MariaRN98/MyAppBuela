@@ -184,3 +184,40 @@ class MarcarComidoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comida
         fields = ['comido']  # Solo permite actualizar este campo
+
+class UsuarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuario
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 
+                 'foto_perfil', 'fecha_nacimiento', 'telefono']
+
+class DependienteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Dependiente
+        fields = ['id', 'nombre', 'apellidos']
+
+class AccesoSerializer(serializers.ModelSerializer):
+    dependiente = DependienteSerializer()
+    
+    class Meta:
+        model = Acceso
+        fields = ['id', 'dependiente', 'rol']
+
+class UsuarioSimpleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuario
+        fields = ['id', 'first_name', 'last_name', 'email']
+
+class AccesoSerializer(serializers.ModelSerializer):
+    usuario = UsuarioSimpleSerializer()
+    
+    class Meta:
+        model = Acceso
+        fields = ['id', 'usuario', 'rol']
+
+class NuevoAccesoSerializer(serializers.ModelSerializer):
+    usuario = serializers.PrimaryKeyRelatedField(queryset=Usuario.objects.all())  # Acepta un ID en lugar de un objeto completo
+
+    class Meta:
+        model = Acceso
+        fields = ['id', 'usuario', 'dependiente', 'rol']

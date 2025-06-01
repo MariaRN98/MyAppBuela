@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { FaBars, FaTimes, FaNotesMedical, FaCalendarAlt, FaPills, FaShoppingCart, FaUtensils, FaUserCircle, FaUserClock } from 'react-icons/fa';
+import { FaBars, FaTimes, FaNotesMedical, FaCalendarAlt, FaPills, FaShoppingCart, FaUtensils, FaUserCircle, FaUserClock, FaIdCard  } from 'react-icons/fa';
 
 const SideMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +13,7 @@ const SideMenu = () => {
     { path: 'compras', icon: <FaShoppingCart />, label: 'Compras' },
     { path: '', icon: <FaUserCircle />, label: 'Perfil' },
     { path: 'comidas', icon: <FaUtensils />, label: 'Comidas' },
+    { path: 'accesos', icon: <FaIdCard  />, label: 'Gestion de Acceso' },
     { path: 'turnos', icon: <FaUserClock />, label: 'Turnos' }
   ];
 

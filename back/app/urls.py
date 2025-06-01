@@ -7,7 +7,6 @@ from .views import *
 
 urlpatterns = [
     path('api/auth/login/', LoginView.as_view(), name='login'),
-    #path('api/auth/registro/', RegistroView.as_view(), name='registro'),
     path('api/auth/register/', register_view, name='register'),
     path('api/home/', home_data, name='home-data'),
     path('api/dependientes/crear/', crear_dependiente, name='crear-dependiente'),
@@ -55,5 +54,20 @@ urlpatterns = [
 
     #logout
     path('api/auth/logout/', LogoutView.as_view(), name='logout'),
+
+    #usuario
+    path('api/current-user/', current_user, name='current-user'),
+    path('api/dependientes-usuario/', dependientes_usuario, name='dependientes-usuario'),
+    path('api/desactivar-cuenta/', desactivar_cuenta, name='desactivar-cuenta'),
+    path('api/dependientes/<int:dependiente_id>/eliminar-acceso/', eliminar_acceso, name='eliminar-acceso'),
+    path('api/usuarios/', lista_usuarios, name='lista-usuarios'),
+
+    #acceso
+    path('api/dependientes/<int:dependiente_id>/accesos/', lista_accesos, name='lista-accesos'),
+    path('api/dependientes/<int:dependiente_id>/accesos/<int:acceso_id>/', eliminar_acceso, name='eliminar-acceso'),
+    path('api/dependientes/<int:dependiente_id>/accesos/nuevo/', crear_acceso, name='crear-acceso'),  
     
+    path('api/usuarios/buscar/', buscar_usuario_por_telefono, name='buscar-usuario'),
+    path('api/dependientes/<int:dependiente_id>/accesos/<int:acceso_id>/editar/', editar_acceso, name='editar-acceso'),
+    path('api/usuarios/<int:usuario_id>/', ver_usuario, name='ver-usuario'),
 ]

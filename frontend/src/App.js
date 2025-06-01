@@ -22,7 +22,12 @@ import FormularioMedicamento from './components/FormularioMedicamento';
 import ListaMedicamentos from './components/ListaMedicamentos';
 import ComidasSemanario from './components/ComidasSemanario';
 import FormularioComida from './components/FormularioComida';
-
+import PerfilUsuario from './components/PerfilUsuario';
+import EditarPerfil from './components/EditarPerfil';
+import GestionAccesos from './components/GestionAccesos';
+import EditarAcceso from './components/EditarAcceso';
+import VerUsuario from './components/VerUsuario';
+import AgregarUsuario from './components/AgregarUsuario';
 // Layout que incluye el Header
 const LayoutWithHeader = () => (
   <>
@@ -43,7 +48,8 @@ function App() {
         <Route element={<LayoutWithHeader />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/crear-dependiente" element={<CreateDependiente />} />
-          <Route path="/perfil" element={<div>Perfil del Usuario</div>} />
+          <Route path="/perfil" element={<PerfilUsuario />} />
+          <Route path="/editar-perfil" element={<EditarPerfil />} />
           <Route path="/" element={<Dashboard />} />
         </Route>
 
@@ -71,6 +77,11 @@ function App() {
 <Route path="/dependientes/:dependienteId/comidas" element={<ComidasSemanario />} />
 <Route path="/dependientes/:dependienteId/comidas/crear" element={<FormularioComida editMode={false} />} />
 <Route path="/dependientes/:dependienteId/comidas/:comidaId/editar" element={<FormularioComida editMode={true} />} />
+<Route path="/dependientes/:dependienteId/accesos" element={<GestionAccesos />} />
+      <Route path="/dependientes/:dependienteId/accesos" element={<GestionAccesos />} />
+      <Route path="/dependientes/:dependienteId/accesos/:accesoId/editar" element={<EditarAcceso />} />
+          <Route path=":dependienteId/usuarios/:usuarioId" element={<VerUsuario />} />
+      <Route path="/dependientes/:dependienteId/accesos/nuevo" element={<AgregarUsuario />} />
           {/* Añade aquí el resto de rutas de dependiente */}
         </Route>
       </Routes>

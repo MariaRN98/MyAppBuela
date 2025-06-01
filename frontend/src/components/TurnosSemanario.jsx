@@ -4,7 +4,7 @@ import { FaPlus, FaUserClock, FaEdit, FaTrash, FaUser } from 'react-icons/fa';
 import api from '../services/api';
 import './TurnosSemanario.css';
 
-const diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+const diasSemana = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
 const horasDelDia = Array.from({ length: 14 }, (_, i) => i + 7); // De 7:00 a 20:00
 
 const TurnosSemanario = () => {

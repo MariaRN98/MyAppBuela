@@ -1,0 +1,115 @@
+.gestion-accesos-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.accesos-list {
+  margin: 2rem 0;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+  font-weight: bold;
+  padding: 1rem;
+  background: #f5f5f5;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+}
+
+.acceso-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.rol {
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.rol.admin {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.rol.editor {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.rol.lector {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.acciones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.btn-editar {
+  background-color: #2196F3;
+  color: white;
+}
+
+.btn-eliminar {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-ver {
+  background-color: #FF9800;
+  color: white;
+}
+
+.footer-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.btn-cancelar {
+  background-color: #9E9E9E;
+  color: white;
+}
+
+.btn-agregar {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: #f44336;
+}
