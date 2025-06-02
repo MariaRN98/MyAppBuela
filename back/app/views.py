@@ -102,15 +102,6 @@ def tiene_permiso_escritura(usuario, dependiente):
         rol__in=['Admin', 'Editor']
     ).exists()
 
-# Listar todas las notas de un dependiente
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def lista_notas(request, dependiente_id):
-#     dependiente = get_object_or_404(Dependiente, pk=dependiente_id)
-#     notas = Nota.objects.filter(dependiente=dependiente)
-#     serializer = NotaSerializer(notas, many=True)
-#     return Response(serializer.data)
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def lista_notas(request, dependiente_id):
@@ -123,23 +114,7 @@ def lista_notas(request, dependiente_id):
     serializer = NotaSerializer(notas, many=True)
     return Response(serializer.data)
 
-# Crear nueva nota (solo Admin/Editor)
-# @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
-# def crear_nota(request, dependiente_id):
-#     dependiente = get_object_or_404(Dependiente, pk=dependiente_id)
-    
-#     if not tiene_permiso_escritura(request.user, dependiente):
-#         return Response(
-#             {"error": "Solo administradores o editores pueden crear notas"},
-#             status=status.HTTP_403_FORBIDDEN
-#         )
-    
-#     serializer = NotaSerializer(data=request.data)
-#     if serializer.is_valid():
-#         serializer.save(usuario=request.user, dependiente=dependiente)
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def crear_nota(request, dependiente_id):
@@ -162,33 +137,7 @@ def crear_nota(request, dependiente_id):
     return Response(serializer.errors, status=400)
 
 # Ver/Editar/Eliminar nota específica
-# @api_view(['GET', 'PUT', 'DELETE'])
-# @permission_classes([IsAuthenticated])
-# def detalle_nota(request, dependiente_id, nota_id):
-#     nota = get_object_or_404(Nota, pk=nota_id, dependiente_id=dependiente_id)
-    
-#     # Verificar permisos para editar/eliminar
-#     if request.method in ['PUT', 'DELETE']:
-#         if nota.usuario != request.user and not tiene_permiso_escritura(request.user, nota.dependiente):
-#             return Response(
-#                 {"error": "No tienes permisos para esta acción"},
-#                 status=status.HTTP_403_FORBIDDEN
-#             )
-    
-#     if request.method == 'GET':
-#         serializer = NotaSerializer(nota)
-#         return Response(serializer.data)
-    
-#     elif request.method == 'PUT':
-#         serializer = NotaSerializer(nota, data=request.data, partial=True)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-#     elif request.method == 'DELETE':
-#         nota.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
+
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def detalle_nota(request, dependiente_id, nota_id):
@@ -458,32 +407,7 @@ def crear_turno(request, dependiente_id):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# Editar/Eliminar turno (solo Admin)
-# @api_view(['PUT', 'DELETE'])
-# @permission_classes([IsAuthenticated])
-# def gestionar_turno(request, dependiente_id, turno_id):
-#     turno = get_object_or_404(
-#         Turno,
-#         pk=turno_id,
-#         dependiente_id=dependiente_id
-#     )
-    
-#     if not es_admin_dependiente(request.user, dependiente_id):
-#         return Response(
-#             {"error": "Solo el administrador puede modificar turnos"},
-#             status=status.HTTP_403_FORBIDDEN
-#         )
-    
-#     if request.method == 'PUT':
-#         serializer = TurnoSerializer(turno, data=request.data, partial=True, context={'dependiente': turno.dependiente})
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-#     elif request.method == 'DELETE':
-#         turno.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])

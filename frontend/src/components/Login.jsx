@@ -60,8 +60,6 @@ const Login = () => {
       </form>
       <div className="login-links">
         <Link to="/register">¿No tienes cuenta? Regístrate</Link>
-        {/* Opcional: Link para recuperar contraseña */}
-        <Link to="/reset-password" className="secondary-link">¿Olvidaste tu contraseña?</Link>
       </div>
     </div>
   );

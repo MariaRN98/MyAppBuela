@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from .models import *
+from datetime import date
 
 #login
 class LoginSerializer(serializers.Serializer):
@@ -36,9 +37,21 @@ class RegistroSerializer(serializers.ModelSerializer):
             'foto_perfil',
         ]
 
+    def validate_email(self, value):
+        if Usuario.objects.filter(email=value).exists():
+            raise serializers.ValidationError("El email ya está en uso.")
+        return value
+
     def validate(self, data):
+        # Validar que las contraseñas coincidan
         if data['password'] != data['repetir_password']:
             raise serializers.ValidationError("Las contraseñas no coinciden.")
+        
+        # Validar que la fecha de nacimiento no sea posterior al día actual
+        fecha_nacimiento = data.get('fecha_nacimiento')
+        if fecha_nacimiento and fecha_nacimiento > date.today():
+            raise serializers.ValidationError("La fecha de nacimiento no puede ser posterior al día actual.")
+        
         return data
 
     def create(self, validated_data):
@@ -49,7 +62,19 @@ class RegistroSerializer(serializers.ModelSerializer):
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'foto_perfil']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'foto_perfil', 'telefono', 'fecha_nacimiento']
+    
+    def validate_email(self, value):
+        # Verifica si el email ya está en uso por otro usuario
+        if Usuario.objects.filter(email=value).exclude(id=self.instance.id).exists():
+            raise serializers.ValidationError("Este email ya está en uso por otro usuario.")
+        return value
+    
+    def validate_fecha_nacimiento(self, value):
+        # Verifica que la fecha no sea posterior al día actual
+        if value and value > date.today():
+            raise serializers.ValidationError("La fecha de nacimiento no puede ser posterior al día actual.")
+        return value
 
 class DependienteSerializer(serializers.ModelSerializer):
     class Meta:

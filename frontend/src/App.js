@@ -28,6 +28,9 @@ import GestionAccesos from './components/GestionAccesos';
 import EditarAcceso from './components/EditarAcceso';
 import VerUsuario from './components/VerUsuario';
 import AgregarUsuario from './components/AgregarUsuario';
+import Error404 from './components/Error404';
+import ProtectedRoute from './components/ProtectedRoute';
+
 // Layout que incluye el Header
 const LayoutWithHeader = () => (
   <>
@@ -43,6 +46,7 @@ function App() {
         {/* Rutas SIN Header */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="*" element={<Error404 />} />
         
         {/* Rutas CON Header */}
         <Route element={<LayoutWithHeader />}>
@@ -58,31 +62,33 @@ function App() {
           <Route path=":dependienteId/notas" element={<NotasDependiente />} />
           <Route path=":dependienteId/notas/crear" element={<NotaForm editMode={false} />} />
           <Route path=":dependienteId/notas/:notaId" element={<NotaForm editMode={true} />} />
-<Route path=":dependienteId" element={<PerfilDependiente />} />
-<Route path=":dependienteId/editar" element={<EditarDependiente />} />
-<Route path=":dependienteId/eventos" element={<EventosDependiente />} />
-<Route path=":dependienteId/eventos/crear" element={<EventoForm editMode={false} />} />
-<Route path=":dependienteId/eventos/:eventoId/editar" element={<EventoForm editMode={true} />} />
-<Route path="/dependientes/:dependienteId/calendario" element={<CalendarioEventos />} />
-<Route path=":dependienteId/compras" element={<ListaCompras />} />
-<Route path=":dependienteId/compras/crear" element={<CompraForm editMode={false} />} />
-<Route path=":dependienteId/compras/:compraId/editar" element={<CompraForm editMode={true} />} />
-<Route path=":dependienteId/turnos" element={<TurnosSemanario />} />
-<Route path=":dependienteId/turnos/crear" element={<TurnoForm editMode={false} />} />
-<Route path=":dependienteId/turnos/:turnoId/editar" element={<TurnoForm editMode={true} />} />
-<Route path="/dependientes/:dependienteId/medicamentos" element={<MedicamentosSemanario />} />
-<Route path="/dependientes/:dependienteId/medicamentos/crear" element={<FormularioMedicamento editMode={false} />} />
-<Route path="/dependientes/:dependienteId/medicamentos/:medicamentoId/editar" element={<FormularioMedicamento editMode={true} />} />
-<Route path="/dependientes/:dependienteId/medicamentos/lista" element={<ListaMedicamentos />} />
-<Route path="/dependientes/:dependienteId/comidas" element={<ComidasSemanario />} />
-<Route path="/dependientes/:dependienteId/comidas/crear" element={<FormularioComida editMode={false} />} />
-<Route path="/dependientes/:dependienteId/comidas/:comidaId/editar" element={<FormularioComida editMode={true} />} />
-<Route path="/dependientes/:dependienteId/accesos" element={<GestionAccesos />} />
-      <Route path="/dependientes/:dependienteId/accesos" element={<GestionAccesos />} />
-      <Route path="/dependientes/:dependienteId/accesos/:accesoId/editar" element={<EditarAcceso />} />
+          <Route path=":dependienteId" element={<PerfilDependiente />} />
+          <Route path=":dependienteId/editar" element={<EditarDependiente />} />
+          <Route path=":dependienteId/eventos" element={<EventosDependiente />} />
+          <Route path=":dependienteId/eventos/crear" element={<EventoForm editMode={false} />} />
+          <Route path=":dependienteId/eventos/:eventoId/editar" element={<EventoForm editMode={true} />} />
+          <Route path=":dependienteId/calendario" element={<CalendarioEventos />} />
+          <Route path=":dependienteId/compras" element={<ListaCompras />} />
+          <Route path=":dependienteId/compras/crear" element={<CompraForm editMode={false} />} />
+          <Route path=":dependienteId/compras/:compraId/editar" element={<CompraForm editMode={true} />} />
+          <Route path=":dependienteId/turnos" element={<TurnosSemanario />} />
+          <Route path=":dependienteId/turnos/crear" element={<TurnoForm editMode={false} />} />
+          <Route path=":dependienteId/turnos/:turnoId/editar" element={<TurnoForm editMode={true} />} />
+          <Route path=":dependienteId/medicamentos" element={<MedicamentosSemanario />} />
+          <Route path=":dependienteId/medicamentos/crear" element={<FormularioMedicamento editMode={false} />} />
+          <Route path=":dependienteId/medicamentos/:medicamentoId/editar" element={<FormularioMedicamento editMode={true} />} />
+          <Route path=":dependienteId/medicamentos/lista" element={<ListaMedicamentos />} />
+          <Route path=":dependienteId/comidas" element={<ComidasSemanario />} />
+          <Route path=":dependienteId/comidas/crear" element={<FormularioComida editMode={false} />} />
+          <Route path=":dependienteId/comidas/:comidaId/editar" element={<FormularioComida editMode={true} />} />
+          <Route path=":dependienteId/accesos" element={
+              <ProtectedRoute rolesPermitidos={['admin']}>
+                <GestionAccesos />
+              </ProtectedRoute>
+            } />
+          <Route path=":dependienteId/accesos/:accesoId/editar" element={<EditarAcceso />} />
           <Route path=":dependienteId/usuarios/:usuarioId" element={<VerUsuario />} />
-      <Route path="/dependientes/:dependienteId/accesos/nuevo" element={<AgregarUsuario />} />
-          {/* Añade aquí el resto de rutas de dependiente */}
+          <Route path=":dependienteId/accesos/nuevo" element={<AgregarUsuario />} />
         </Route>
       </Routes>
     </Router>

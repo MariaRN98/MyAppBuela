@@ -1,0 +1,27 @@
+.error-404-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.error-404-container h1 {
+  font-size: 3rem;
+  color: #ff4d4f;
+}
+
+.error-404-container p {
+  font-size: 1.2rem;
+  margin: 20px 0;
+}
+
+.btn-volver {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.btn-volver:hover {
+  background-color: #0056b3;
+}

@@ -20,7 +20,14 @@ const GestionAccesos = () => {
           api.get(`/api/dependientes/${dependienteId}/accesos/`)
         ]);
         setDependiente(dependienteRes.data);
-        setAccesos(accesosRes.data);
+
+        // Ordenar accesos por rol (admin, editor, lector)
+        const rolesOrden = ['admin', 'editor', 'lector'];
+        const accesosOrdenados = accesosRes.data.sort((a, b) => {
+          return rolesOrden.indexOf(a.rol.toLowerCase()) - rolesOrden.indexOf(b.rol.toLowerCase());
+        });
+
+        setAccesos(accesosOrdenados);
       } catch (err) {
         setError('Error cargando datos');
       } finally {
