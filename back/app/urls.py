@@ -67,7 +67,7 @@ urlpatterns = [
     path('api/dependientes/<int:dependiente_id>/accesos/', lista_accesos, name='lista-accesos'),
     path('api/dependientes/<int:dependiente_id>/accesos/<int:acceso_id>/', eliminar_acceso, name='eliminar-acceso'),
     path('api/dependientes/<int:dependiente_id>/accesos/nuevo/', crear_acceso, name='crear-acceso'),  
-    
+    path('api/dependientes/<int:dependiente_id>/usuarios-con-acceso/', usuarios_con_acceso, name='usuarios-con-acceso'),
     path('api/usuarios/buscar/', buscar_usuario_por_telefono, name='buscar-usuario'),
     path('api/dependientes/<int:dependiente_id>/accesos/<int:acceso_id>/editar/', editar_acceso, name='editar-acceso'),
     path('api/usuarios/<int:usuario_id>/', ver_usuario, name='ver-usuario'),

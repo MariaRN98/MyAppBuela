@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { FaPlus, FaCalendarAlt, FaEdit, FaTrash } from 'react-icons/fa';
 import api from '../services/api';
 import './EventosDependiente.css';
@@ -49,8 +49,14 @@ const EventosDependiente = () => {
     <div className="eventos-container">
       <div className="eventos-header">
         <h2>
-          <FaCalendarAlt /> Calendario de Eventos
+          <FaCalendarAlt /> Lista de Eventos
         </h2>
+        <button 
+          onClick={() => navigate(`/dependientes/${dependienteId}/calendario`)} 
+          className="btn-toggle-view"
+        >
+          Ver Calendario
+        </button>
         <button 
           onClick={() => navigate(`/dependientes/${dependienteId}/eventos/crear`)}
           className="btn-add"

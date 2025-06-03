@@ -1,16 +1,14 @@
 from django.shortcuts import render
 
 # views.py
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import *
-from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
-from .permissions import EsCreadorOAdmin
 from django.shortcuts import get_object_or_404
 
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
@@ -22,12 +20,12 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from .models import Dependiente, Nota, Acceso
 from .serializers import NotaSerializer
 
 from django.contrib.auth import logout
+from django.db.models import Q
 
 
 class LoginView(APIView):
@@ -405,7 +403,33 @@ def crear_turno(request, dependiente_id):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def usuarios_con_acceso(request, dependiente_id):
+    try:
+        # Verificar que el usuario tiene acceso al dependiente
+        if not Acceso.objects.filter(usuario=request.user, dependiente_id=dependiente_id).exists():
+            return Response(
+                {"error": "No tienes permisos para ver este dependiente"},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        
+        # Obtener IDs de usuarios con acceso
+        usuarios_ids = Acceso.objects.filter(
+            dependiente_id=dependiente_id
+        ).values_list('usuario_id', flat=True)
+        
+        # Obtener usuarios con esos IDs
+        usuarios = Usuario.objects.filter(id__in=usuarios_ids)
+        
+        serializer = UsuarioSimpleSerializer(usuarios, many=True)
+        return Response(serializer.data)
+        
+    except Exception as e:
+        return Response(
+            {"error": str(e)},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])

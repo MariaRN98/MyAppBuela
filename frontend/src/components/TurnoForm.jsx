@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FaUserClock, FaSave, FaTimes } from 'react-icons/fa';
+import { FaUserClock, FaSave, FaTimes, FaSpinner } from 'react-icons/fa';
 import api from '../services/api';
 import './TurnoForm.css';
 
@@ -13,70 +13,141 @@ const TurnoForm = ({ editMode }) => {
     hora_fin: '12:00'
   });
   const [usuarios, setUsuarios] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const horasDisponibles = Array.from({ length: 13 }, (_, i) => {
-    const hora = i + 8; // De 8:00 a 20:00
+    const hora = i + 8;
     return `${hora.toString().padStart(2, '0')}:00`;
   });
+
+  const handleChange = (e) => {
+  const { name, value } = e.target;
+  setFormData({
+    ...formData,
+    [name]: value,
+  });
+};
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const usuariosRes = await api.get('/api/usuarios/');
-        setUsuarios(usuariosRes.data);
+        setLoading(true);
+        setError('');
         
+        // 1. Obtener usuarios con acceso específico
+        const { data: usuariosConAcceso } = await api.get(
+          `/api/dependientes/${dependienteId}/usuarios-con-acceso/`
+        );
+        
+        if (!usuariosConAcceso || usuariosConAcceso.length === 0) {
+          throw new Error('No hay cuidadores disponibles para este dependiente');
+        }
+
+        setUsuarios(usuariosConAcceso);
+
+        // 2. Si es edición, cargar datos del turno
         if (editMode) {
-          const turnoRes = await api.get(`/api/dependientes/${dependienteId}/turnos/${turnoId}/`);
-          setFormData(turnoRes.data);
+          const { data: turno } = await api.get(
+            `/api/dependientes/${dependienteId}/turnos/${turnoId}/`
+          );
+          
+          // Verificar que el usuario asignado tenga acceso
+          const usuarioValido = usuariosConAcceso.some(
+            u => u.id === turno.usuario
+          );
+          
+          if (!usuarioValido && turno.usuario) {
+            throw new Error('El cuidador asignado no tiene acceso actualmente');
+          }
+
+          setFormData({
+            usuario: usuarioValido ? turno.usuario : '',
+            dias_semana: turno.dias_semana,
+            hora_inicio: turno.hora_inicio,
+            hora_fin: turno.hora_fin
+          });
         }
       } catch (err) {
-        setError('Error al cargar los datos');
+        console.error('Error:', err);
+        setError(err.message || 'Error al cargar los datos');
+      } finally {
+        setLoading(false);
       }
     };
+
     fetchData();
   }, [dependienteId, turnoId, editMode]);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
+      
+      const payload = {
+        ...formData,
+        dependiente: dependienteId
+      };
+
       if (editMode) {
-        await api.put(`/api/dependientes/${dependienteId}/turnos/${turnoId}/`, formData);
+        await api.put(
+          `/api/dependientes/${dependienteId}/turnos/${turnoId}/`, 
+          payload
+        );
       } else {
-        await api.post(`/api/dependientes/${dependienteId}/turnos/crear/`, {
-          ...formData,
-          dependiente: dependienteId
-        });
+        await api.post(
+          `/api/dependientes/${dependienteId}/turnos/crear/`, 
+          payload
+        );
       }
+      
       navigate(`/dependientes/${dependienteId}/turnos`);
     } catch (err) {
       setError(err.response?.data?.message || 'Error al guardar el turno');
+    } finally {
+      setLoading(false);
     }
   };
 
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <FaSpinner className="spinner" />
+        <p>Cargando datos...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="turno-form-container">
-      <h2><FaUserClock /> {editMode ? 'Editar Turno' : 'Crear Nuevo Turno'}</h2>
-      {error && <div className="error">{error}</div>}
+      <h2>
+        <FaUserClock /> {editMode ? 'Editar Turno' : 'Crear Nuevo Turno'}
+      </h2>
       
+      {error && (
+        <div className="alert error">
+          {error}
+          <button onClick={() => setError('')} className="close-btn">
+            <FaTimes />
+          </button>
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Cuidador:</label>
           <select
             name="usuario"
             value={formData.usuario}
-            onChange={handleChange}
+            onChange={(e) => setFormData({...formData, usuario: e.target.value})}
             required
+            disabled={loading || usuarios.length === 0}
           >
-            <option value="">Seleccione un cuidador</option>
+            <option value="">{usuarios.length ? 'Seleccione un cuidador' : 'No hay cuidadores disponibles'}</option>
             {usuarios.map(user => (
               <option key={user.id} value={user.id}>
-                {user.first_name} {user.last_name}
+                {user.first_name} {user.last_name} ({user.email})
               </option>
             ))}
           </select>

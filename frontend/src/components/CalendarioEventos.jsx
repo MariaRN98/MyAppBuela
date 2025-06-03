@@ -6,6 +6,7 @@ import esES from 'date-fns/locale/es';
 import api from '../services/api';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './CalendarioEventos.css';
+import { useNavigate } from 'react-router-dom';
 
 const locales = {
   'es': esES,
@@ -23,6 +24,7 @@ const CalendarioEventos = () => {
   const { dependienteId } = useParams();
   const [eventos, setEventos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEventos = async () => {
@@ -79,7 +81,15 @@ const CalendarioEventos = () => {
 
   return (
     <div className="calendario-container">
-      <h2>Calendario de Eventos</h2>
+            <div className="calendario-header">
+        <h2>Calendario de Eventos</h2>
+        <button 
+          onClick={() => navigate(`/dependientes/${dependienteId}/eventos`)} 
+          className="btn-toggle-view"
+        >
+          Ver Lista
+        </button>
+      </div>
       <div className="calendario-wrapper">
         <Calendar
           localizer={localizer}
