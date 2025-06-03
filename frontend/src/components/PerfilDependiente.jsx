@@ -85,12 +85,11 @@ const PerfilDependiente = () => {
             <p><strong>Enfermedades:</strong> {dependiente.enfermedades || 'Ninguna conocida'}</p>
             <p><strong>Alergias:</strong> {dependiente.alergias || 'Ninguna conocida'}</p>
             <p><strong>Vacunas:</strong> {dependiente.vacunas || 'Al día'}</p>
-            <p><strong>Medicamentos:</strong> {dependiente.medicamentos || 'Ninguno'}</p>
           </div>
         </div>
       </div>
 
-      <div className="perfil-links">
+      {/* <div className="perfil-links">
         <Link to={`/dependientes/${dependienteId}/notas`} className="section-link">
           Ver Notas
         </Link>
@@ -100,7 +99,7 @@ const PerfilDependiente = () => {
         <Link to={`/dependientes/${dependienteId}/eventos`} className="section-link">
           Ver Eventos
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };

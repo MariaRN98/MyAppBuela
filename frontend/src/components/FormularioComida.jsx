@@ -84,7 +84,7 @@ const FormularioComida = ({ editMode }) => {
               value={formData.dias_semana}
               onChange={(e) => setFormData({...formData, dias_semana: e.target.value})}
             >
-              {['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'].map(dia => (
+              {['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'].map(dia => (
                 <option key={dia} value={dia}>{dia}</option>
               ))}
             </select>

@@ -22,7 +22,7 @@ class Dependiente(models.Model):
     enfermedades = models.TextField()
     alergias = models.TextField()
     vacunas = models.TextField()
-    medicamentos = models.TextField()
+    medicamentos = models.TextField(null=True, blank=True)
     
 
     def __str__(self):
@@ -73,6 +73,7 @@ class Turno(models.Model):
     )
     hora_inicio = models.TimeField() 
     hora_fin = models.TimeField(null=True, blank=True) 
+
 
     def __str__(self):
         return f'{self.usuario, self.hora_inicio, self.hora_fin}'

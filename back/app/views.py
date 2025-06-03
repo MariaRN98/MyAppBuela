@@ -29,23 +29,21 @@ from .serializers import NotaSerializer
 
 from django.contrib.auth import logout
 
+
 class LoginView(APIView):
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
-        
+
         # Generar token JWT
         refresh = RefreshToken.for_user(user)
+        user_serializer = UsuarioConAccesosSerializer(user)
+
         return Response({
             'access_token': str(refresh.access_token),
             'refresh_token': str(refresh),
-            'user': {
-                'id': user.id,
-                'username': user.username,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-            }
+            'user': user_serializer.data  # Incluye los accesos en la respuesta
         })
     
 
@@ -944,4 +942,12 @@ def ver_usuario_dependiente(request, dependiente_id, usuario_id):
 def lista_usuarios(request):
     usuarios = Usuario.objects.all()
     serializer = UsuarioSimpleSerializer(usuarios, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def actualizar_localstorage(request):
+    accesos = Acceso.objects.filter(usuario=request.user).select_related('dependiente')
+    serializer = ActualizarLocalStorageSerializer(accesos, many=True)
     return Response(serializer.data)

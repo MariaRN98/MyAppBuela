@@ -26,7 +26,8 @@ const Login = () => {
         last_name: response.data.user.last_name,
         email: response.data.user.email,
         foto_perfil: response.data.user.foto_perfil || null,
-        telefono: response.data.user.telefono || ''
+        telefono: response.data.user.telefono || '',
+        accesos: response.data.user.accesos // Almacena los accesos
       }));
       
       navigate('/dashboard');

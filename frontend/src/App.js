@@ -58,8 +58,12 @@ function App() {
         </Route>
 
                 {/* Rutas con menú de dependiente */}
-        <Route path="/dependientes" element={<DependienteLayout />}>
-          <Route path=":dependienteId/notas" element={<NotasDependiente />} />
+        {/* <Route path="/dependientes" element={
+              <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>
+                <DependienteLayout />
+              </ProtectedRoute>
+            }>
+          <Route path=":dependienteId/notas" element={<ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}><NotasDependiente /></ProtectedRoute>} />
           <Route path=":dependienteId/notas/crear" element={<NotaForm editMode={false} />} />
           <Route path=":dependienteId/notas/:notaId" element={<NotaForm editMode={true} />} />
           <Route path=":dependienteId" element={<PerfilDependiente />} />
@@ -82,14 +86,152 @@ function App() {
           <Route path=":dependienteId/comidas/crear" element={<FormularioComida editMode={false} />} />
           <Route path=":dependienteId/comidas/:comidaId/editar" element={<FormularioComida editMode={true} />} />
           <Route path=":dependienteId/accesos" element={
-              <ProtectedRoute rolesPermitidos={['admin']}>
+              <ProtectedRoute rolesPermitidos={['Admin']}>
                 <GestionAccesos />
               </ProtectedRoute>
             } />
           <Route path=":dependienteId/accesos/:accesoId/editar" element={<EditarAcceso />} />
           <Route path=":dependienteId/usuarios/:usuarioId" element={<VerUsuario />} />
           <Route path=":dependienteId/accesos/nuevo" element={<AgregarUsuario />} />
-        </Route>
+        </Route> */}
+
+        <Route path="/dependientes" element={
+  <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>
+    <DependienteLayout />
+  </ProtectedRoute>
+}>
+  <Route path=":dependienteId/notas" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>
+      <NotasDependiente />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/notas/crear" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor']}>
+      <NotaForm editMode={false} />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/notas/:notaId" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor']}>
+      <NotaForm editMode={true} />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>
+      <PerfilDependiente />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/editar" element={
+    <ProtectedRoute rolesPermitidos={['Admin']}>
+      <EditarDependiente />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/eventos" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>
+      <EventosDependiente />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/eventos/crear" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor']}>
+      <EventoForm editMode={false} />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/eventos/:eventoId/editar" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor']}>
+      <EventoForm editMode={true} />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/calendario" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>
+      <CalendarioEventos />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/compras" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>
+      <ListaCompras />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/compras/crear" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor']}>
+      <CompraForm editMode={false} />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/compras/:compraId/editar" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor']}>
+      <CompraForm editMode={true} />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/turnos" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>
+      <TurnosSemanario />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/turnos/crear" element={
+    <ProtectedRoute rolesPermitidos={['Admin']}>
+      <TurnoForm editMode={false} />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/turnos/:turnoId/editar" element={
+    <ProtectedRoute rolesPermitidos={['Admin']}>
+      <TurnoForm editMode={true} />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/medicamentos" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>
+      <MedicamentosSemanario />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/medicamentos/crear" element={
+    <ProtectedRoute rolesPermitidos={['Admin']}>
+      <FormularioMedicamento editMode={false} />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/medicamentos/:medicamentoId/editar" element={
+    <ProtectedRoute rolesPermitidos={['Admin']}>
+      <FormularioMedicamento editMode={true} />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/medicamentos/lista" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>
+      <ListaMedicamentos />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/comidas" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>
+      <ComidasSemanario />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/comidas/crear" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor']}>
+      <FormularioComida editMode={false} />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/comidas/:comidaId/editar" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor']}>
+      <FormularioComida editMode={true} />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/accesos" element={
+    <ProtectedRoute rolesPermitidos={['Admin']}>
+      <GestionAccesos />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/accesos/:accesoId/editar" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor']}>
+      <EditarAcceso />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/usuarios/:usuarioId" element={
+    <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>
+      <VerUsuario />
+    </ProtectedRoute>
+  } />
+  <Route path=":dependienteId/accesos/nuevo" element={
+    <ProtectedRoute rolesPermitidos={['Admin']}>
+      <AgregarUsuario />
+    </ProtectedRoute>
+  } />
+</Route>
+
       </Routes>
     </Router>
   );

@@ -6,6 +6,7 @@ from rest_framework_simplejwt.views import (
 from .views import *
 
 urlpatterns = [
+    path('api/auth/actualizar-localstorage/', actualizar_localstorage, name='actualizar_localstorage'),
     path('api/auth/login/', LoginView.as_view(), name='login'),
     path('api/auth/register/', register_view, name='register'),
     path('api/home/', home_data, name='home-data'),

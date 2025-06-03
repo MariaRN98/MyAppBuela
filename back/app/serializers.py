@@ -16,6 +16,24 @@ class LoginSerializer(serializers.Serializer):
         if not user:
             raise serializers.ValidationError("Credenciales incorrectas")
         return user
+    
+class UsuarioConAccesosSerializer(serializers.ModelSerializer):
+    accesos = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Usuario
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'foto_perfil', 'telefono', 'fecha_nacimiento', 'accesos']
+
+    def get_accesos(self, obj):
+        accesos = Acceso.objects.filter(usuario=obj).select_related('dependiente')
+        return [
+            {
+                'dependienteId': acceso.dependiente.id,
+                'dependienteNombre': acceso.dependiente.nombre,
+                'rol': acceso.rol
+            }
+            for acceso in accesos
+        ]
 
 #registro 
 class RegistroSerializer(serializers.ModelSerializer):
@@ -86,7 +104,7 @@ class DependienteCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dependiente
         fields = ['nombre', 'apellidos', 'fecha_nacimiento', 'movilidad', 
-                 'enfermedades', 'alergias', 'vacunas', 'medicamentos']
+                 'enfermedades', 'alergias', 'vacunas']
         
 #notas
 class NotaSerializer(serializers.ModelSerializer):
@@ -124,7 +142,7 @@ class DependienteDetailSerializer(serializers.ModelSerializer):
         model = Dependiente
         fields = [
             'id', 'foto_perfil', 'nombre', 'apellidos', 'fecha_nacimiento',
-            'movilidad', 'alergias', 'medicamentos', 'enfermedades', 'vacunas', 'cuidadores'
+            'movilidad', 'alergias', 'enfermedades', 'vacunas', 'cuidadores'
         ]
     
     def get_cuidadores(self, obj):
@@ -246,3 +264,12 @@ class NuevoAccesoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Acceso
         fields = ['id', 'usuario', 'dependiente', 'rol']
+
+
+class ActualizarLocalStorageSerializer(serializers.ModelSerializer):
+    dependienteId = serializers.IntegerField(source='dependiente.id')
+    dependienteNombre = serializers.CharField(source='dependiente.nombre')
+    
+    class Meta:
+        model = Acceso
+        fields = ['dependienteId', 'dependienteNombre', 'rol']
