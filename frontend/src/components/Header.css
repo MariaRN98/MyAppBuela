@@ -29,13 +29,20 @@
   cursor: pointer;
 }
 
-.profile-pic {
-  width: 40px;
-  height: 40px;
+.profile-pic, .foto-perfil, .dependiente-photo, .user-photo {
+  width: 50px; /* Ajusta según el diseño */
+  height: 50px; /* Ajusta según el diseño */
   border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid white;
+  background-color: #f0f0f0; /* Fondo para el ícono */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888; /* Color del ícono */
+  font-size: 30px;
 }
+
+
+
 
 .user-name {
   font-weight: 500;
@@ -63,3 +70,4 @@
 .dropdown-item:hover {
   background: #f5f5f5;
 }
+

@@ -422,7 +422,7 @@ def usuarios_con_acceso(request, dependiente_id):
         # Obtener usuarios con esos IDs
         usuarios = Usuario.objects.filter(id__in=usuarios_ids)
         
-        serializer = UsuarioSimpleSerializer(usuarios, many=True)
+        serializer = UsuarioSerializer(usuarios, many=True)
         return Response(serializer.data)
         
     except Exception as e:
@@ -664,13 +664,6 @@ def marcar_comido(request, dependiente_id, comida_id):
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-#header
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def current_user(request):
-    user = request.user
-    serializer = UsuarioSerializer(user)
-    return Response(serializer.data)
 
 #listado dependientes
 # views.py
@@ -712,7 +705,8 @@ class LogoutView(APIView):
 @permission_classes([IsAuthenticated])
 def current_user(request):
     if request.method == 'GET':
-        serializer = UsuarioSerializer(request.user)
+        user = request.user
+        serializer = UsuarioSerializer(user, context={'request': request})
         return Response(serializer.data)
     
     elif request.method == 'PUT':
@@ -846,7 +840,7 @@ def editar_acceso(request, dependiente_id, acceso_id):
 @permission_classes([IsAuthenticated])
 def lista_usuarios(request):
     usuarios = Usuario.objects.all()
-    serializer = UsuarioSimpleSerializer(usuarios, many=True)
+    serializer = UsuarioSerializer(usuarios, many=True)
     return Response(serializer.data)
 
 
@@ -891,7 +885,7 @@ def buscar_usuario_por_telefono(request):
     
     try:
         usuario = Usuario.objects.get(telefono=telefono)
-        serializer = UsuarioSimpleSerializer(usuario)
+        serializer = UsuarioSerializer(usuario)
         return Response(serializer.data)
     except Usuario.DoesNotExist:
         return Response({"error": "Usuario no encontrado"}, status=404)
@@ -965,7 +959,7 @@ def ver_usuario_dependiente(request, dependiente_id, usuario_id):
 @permission_classes([IsAuthenticated])
 def lista_usuarios(request):
     usuarios = Usuario.objects.all()
-    serializer = UsuarioSimpleSerializer(usuarios, many=True)
+    serializer = UsuarioSerializer(usuarios, many=True)
     return Response(serializer.data)
 
 

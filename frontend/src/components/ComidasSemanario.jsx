@@ -29,12 +29,16 @@ const ComidasSemanario = () => {
     fetchComidas();
   }, [dependienteId]);
 
-  const getComidasPorDiaYHora = (dia, hora) => {
-    return comidas.filter(comida => 
-      comida.dias_semana === dia && 
-      parseInt(comida.hora.split(':')[0]) === hora
-    );
-  };
+
+  const handleDelete = async (comidaId) => {
+  try {
+    await api.delete(`/api/dependientes/${dependienteId}/comidas/${comidaId}/`);
+    setComidas(comidas.filter(comida => comida.id !== comidaId));
+  } catch (err) {
+    setError('Error al eliminar la comida');
+    console.error(err);
+  }
+};
 
   const handleMarcarComido = async (comidaId, comido) => {
     try {

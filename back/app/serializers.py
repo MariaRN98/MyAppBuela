@@ -1,10 +1,10 @@
 # serializers.py
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from .models import *
 from datetime import date
+from django.conf import settings
 
 #login
 class LoginSerializer(serializers.Serializer):
@@ -78,6 +78,7 @@ class RegistroSerializer(serializers.ModelSerializer):
         return Usuario.objects.create(**validated_data)
     
 class UsuarioSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Usuario
         fields = ['id', 'username', 'email', 'first_name', 'last_name', 'foto_perfil', 'telefono', 'fecha_nacimiento']
@@ -93,11 +94,30 @@ class UsuarioSerializer(serializers.ModelSerializer):
         if value and value > date.today():
             raise serializers.ValidationError("La fecha de nacimiento no puede ser posterior al día actual.")
         return value
+    
+    def get_foto_perfil(self, obj):
+        if obj.foto_perfil:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.foto_perfil.url)
+        return None
+
+# class DependienteSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Dependiente
+#         fields = '__all__'
 
 class DependienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dependiente
-        fields = '__all__'
+        fields = ['id', 'nombre', 'apellidos', 'fecha_nacimiento', 'movilidad', 'enfermedades', 'alergias', 'vacunas', 'foto_perfil']
+
+    def get_foto_perfil(self, obj):
+        if obj.foto_perfil:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.foto_perfil.url)
+        return None
 
 #crear abuela
 class DependienteCreateSerializer(serializers.ModelSerializer):
@@ -228,16 +248,10 @@ class MarcarComidoSerializer(serializers.ModelSerializer):
         model = Comida
         fields = ['comido']  # Solo permite actualizar este campo
 
-class UsuarioSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Usuario
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 
-                 'foto_perfil', 'fecha_nacimiento', 'telefono']
-
-class DependienteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Dependiente
-        fields = ['id', 'nombre', 'apellidos']
+# class DependienteSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Dependiente
+#         fields = ['id', 'nombre', 'apellidos']
 
 class AccesoSerializer(serializers.ModelSerializer):
     dependiente = DependienteSerializer()
@@ -246,13 +260,9 @@ class AccesoSerializer(serializers.ModelSerializer):
         model = Acceso
         fields = ['id', 'dependiente', 'rol']
 
-class UsuarioSimpleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Usuario
-        fields = ['id', 'first_name', 'last_name', 'email']
 
 class AccesoSerializer(serializers.ModelSerializer):
-    usuario = UsuarioSimpleSerializer()
+    usuario = UsuarioSerializer()
     
     class Meta:
         model = Acceso

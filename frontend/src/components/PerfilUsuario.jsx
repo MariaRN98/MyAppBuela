@@ -69,23 +69,26 @@ const PerfilUsuario = () => {
             <h1><FaUser /> Mi Perfil</h1>
           </div>
           
-          <div className="perfil-info">
-            {usuario.foto_perfil && (
-              <img 
-                src={usuario.foto_perfil} 
-                alt="Foto de perfil" 
-                className="foto-perfil"
-              />
-            )}
-            
-            <div className="datos-usuario">
-              <p><strong>Usuario:</strong> {usuario.username}</p>
-              <p><strong>Email:</strong> {usuario.email}</p>
-              <p><strong>Nombre:</strong> {usuario.first_name} {usuario.last_name}</p>
-              <p><strong>Teléfono:</strong> {usuario.telefono || 'No especificado'}</p>
-              <p><strong>Fecha Nacimiento:</strong> {usuario.fecha_nacimiento || 'No especificada'}</p>
+        <div className="perfil-info">
+          {usuario.foto_perfil ? (
+            <img 
+              src={usuario.foto_perfil} 
+              alt="Foto de perfil" 
+              className="foto-perfil"
+            />
+          ) : (
+            <div className="foto-perfil">
+              <FaUser size={100} />
             </div>
+          )}
+          <div className="datos-usuario">
+            <p><strong>Usuario:</strong> {usuario.username}</p>
+            <p><strong>Email:</strong> {usuario.email}</p>
+            <p><strong>Nombre:</strong> {usuario.first_name} {usuario.last_name}</p>
+            <p><strong>Teléfono:</strong> {usuario.telefono || 'No especificado'}</p>
+            <p><strong>Fecha Nacimiento:</strong> {usuario.fecha_nacimiento || 'No especificada'}</p>
           </div>
+        </div>
 
            <div className="perfil-acciones">
             <button 

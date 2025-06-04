@@ -70,67 +70,6 @@ const EditarPerfil = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setIsSubmitting(true);
-  //   setErrors({});
-    
-  //   // Validación frontend
-  //   if (!validateForm()) {
-  //     setIsSubmitting(false);
-  //     return;
-  //   }
-
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('first_name', usuario.first_name);
-  //     formData.append('last_name', usuario.last_name);
-  //     formData.append('email', usuario.email);
-  //     formData.append('telefono', usuario.telefono);
-  //     formData.append('fecha_nacimiento', usuario.fecha_nacimiento);
-  //     if (usuario.foto_perfil instanceof File) {
-  //       formData.append('foto_perfil', usuario.foto_perfil);
-  //     }
-
-  //     const response = await api.put('/api/current-user/', formData, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data'
-  //       }
-  //     });
-
-  //     navigate('/perfil', { 
-  //       state: { 
-  //         mensaje: 'Perfil actualizado correctamente',
-  //         tipo: 'exito'
-  //       } 
-  //     });
-  //   } catch (err) {
-  //     if (err.response?.data) {
-  //       // Manejo de errores del backend
-  //       const backendErrors = err.response.data;
-  //       const formattedErrors = {};
-        
-  //       if (typeof backendErrors === 'object') {
-  //         for (const key in backendErrors) {
-  //           if (Array.isArray(backendErrors[key])) {
-  //             formattedErrors[key] = backendErrors[key][0];
-  //           } else if (typeof backendErrors[key] === 'string') {
-  //             formattedErrors[key] = backendErrors[key];
-  //           }
-  //         }
-  //       } else if (typeof backendErrors === 'string') {
-  //         formattedErrors.general = backendErrors;
-  //       }
-        
-  //       setErrors(formattedErrors);
-  //     } else {
-  //       setErrors({ general: 'Error de conexión con el servidor' });
-  //     }
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
   e.preventDefault();
   setIsSubmitting(true);
@@ -153,11 +92,6 @@ const EditarPerfil = () => {
       formData.append('foto_perfil', usuario.foto_perfil);
     }
 
-    const response = await api.put('/api/current-user/', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
 
     navigate('/perfil', { 
       state: { 

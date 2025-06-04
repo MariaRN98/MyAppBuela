@@ -50,17 +50,6 @@ const MedicamentosSemanario = () => {
     }
   };
 
-//   const handleDelete = async (medicamentoId) => {
-//     if (window.confirm('¿Eliminar este medicamento?')) {
-//       try {
-//         await api.delete(`/api/dependientes/${dependienteId}/medicamentos/${medicamentoId}/`);
-//         setMedicamentos(medicamentos.filter(m => m.id !== medicamentoId));
-//       } catch (err) {
-//         setError('Error al eliminar el medicamento');
-//       }
-//     }
-//   };
-
 const handleDelete = async (medicamentoId) => {
   if (window.confirm('¿Eliminar este medicamento?')) {
     try {

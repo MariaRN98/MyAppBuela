@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { FaUser } from 'react-icons/fa';
 import api from '../services/api';
 import './PerfilDependiente.css';
 
@@ -61,12 +62,13 @@ const PerfilDependiente = () => {
         <div className="perfil-foto">
           {dependiente.foto_perfil ? (
             <img 
-              src={dependiente.foto_perfil} 
+              src={`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}${dependiente.foto_perfil}`} 
               alt={`${dependiente.nombre} ${dependiente.apellidos}`}
+              className="dependiente-photo"
             />
           ) : (
-            <div className="avatar-placeholder">
-              {dependiente.nombre.charAt(0)}{dependiente.apellidos.charAt(0)}
+            <div className="dependiente-photo">
+              <FaUser size={100} />
             </div>
           )}
         </div>
@@ -88,18 +90,6 @@ const PerfilDependiente = () => {
           </div>
         </div>
       </div>
-
-      {/* <div className="perfil-links">
-        <Link to={`/dependientes/${dependienteId}/notas`} className="section-link">
-          Ver Notas
-        </Link>
-        <Link to={`/dependientes/${dependienteId}/medicamentos`} className="section-link">
-          Ver Medicamentos
-        </Link>
-        <Link to={`/dependientes/${dependienteId}/eventos`} className="section-link">
-          Ver Eventos
-        </Link>
-      </div> */}
     </div>
   );
 };

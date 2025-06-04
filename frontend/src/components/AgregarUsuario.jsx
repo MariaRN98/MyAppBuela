@@ -71,37 +71,45 @@ const AgregarUsuario = () => {
         {error && <div className="error-message">{error}</div>}
       </div>
 
-      {usuarioEncontrado && (
-        <div className="user-found-section">
-          <div className="user-card">
-            <div className="user-icon">
-              <FaUser size={40} />
-            </div>
-            <div className="user-info">
-              <h3>{usuarioEncontrado.first_name} {usuarioEncontrado.last_name}</h3>
-              <p>Teléfono: {usuarioEncontrado.telefono}</p>
-              <p>Email: {usuarioEncontrado.email}</p>
-            </div>
-          </div>
+{usuarioEncontrado && (
+  <div className="user-found-section">
+    <div className="user-card">
+      <div className="user-icon">
+        {usuarioEncontrado.foto_perfil ? (
+          <img 
+            src={`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}${usuarioEncontrado.foto_perfil}`} 
+            alt="Foto del usuario" 
+            className="user-photo"
+          />
+        ) : (
+          <FaUser size={40} />
+        )}
+      </div>
+      <div className="user-info">
+        <h3>{usuarioEncontrado.first_name} {usuarioEncontrado.last_name}</h3>
+        <p>Teléfono: {usuarioEncontrado.telefono}</p>
+        <p>Email: {usuarioEncontrado.email}</p>
+      </div>
+    </div>
 
-          <div className="role-section">
-            <h4>Asignar Rol:</h4>
-            <div className="role-badge lector">Lector</div>
-            <p className="role-description">
-              Podrá ver la información pero no realizar modificaciones
-            </p>
-          </div>
+    <div className="role-section">
+      <h4>Asignar Rol:</h4>
+      <div className="role-badge lector">Lector</div>
+      <p className="role-description">
+        Podrá ver la información pero no realizar modificaciones
+      </p>
+    </div>
 
-          <div className="action-buttons">
-            <button onClick={() => navigate(`/dependientes/${dependienteId}/accesos`)} className="cancel-btn">
-              <FaTimes /> Cancelar
-            </button>
-            <button onClick={asignarAcceso} className="confirm-btn">
-              <FaUserPlus /> Confirmar Acceso
-            </button>
-          </div>
-        </div>
-      )}
+    <div className="action-buttons">
+      <button onClick={() => navigate(`/dependientes/${dependienteId}/accesos`)} className="cancel-btn">
+        <FaTimes /> Cancelar
+      </button>
+      <button onClick={asignarAcceso} className="confirm-btn">
+        <FaUserPlus /> Confirmar Acceso
+      </button>
+    </div>
+  </div>
+)}
     </div>
   );
 };
