@@ -1,18 +1,7 @@
-.perfil-container {
-  margin: 6rem 2rem 2rem;
-  max-width: 1200px;
-}
-
-.perfil-header {
+/* .perfil-actions {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.perfil-actions {
-  display: flex;
-  gap: 1rem;
+  justify-content: space-between; 
+  margin-top: 2rem; 
 }
 
 .btn-edit, .btn-delete {
@@ -22,6 +11,7 @@
   font-size: 1rem;
   cursor: pointer;
   text-decoration: none;
+  width: 45%; 
 }
 
 .btn-edit {
@@ -29,48 +19,58 @@
   color: white;
 }
 
+.btn-edit:hover {
+  background: #2980b9;
+}
+
 .btn-delete {
   background: #e74c3c;
   color: white;
 }
 
+.btn-delete:hover {
+  background: #c0392b;
+}
+
+.perfil-container {
+  margin: 6rem auto 2rem;
+  max-width: 600px;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.perfil-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
 .perfil-content {
   display: flex;
-  gap: 3rem;
-  margin-bottom: 2rem;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .perfil-foto {
-  flex: 0 0 250px;
+  width: 100%; 
+  max-width: 250px; 
+  margin: 0 auto; 
 }
 
-.perfil-foto img {
-  width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.avatar-placeholder {
-  width: 250px;
-  height: 250px;
-  background: #3498db;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 4rem;
-  border-radius: 8px;
+.perfil-foto img, .avatar-placeholder {
+  width: 100%; 
+  height: auto; 
 }
 
 .perfil-info {
-  flex: 1;
-}
-
-.info-group {
-  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; 
 }
 
 .info-group h3 {
+  font-size: 1.2rem; 
   color: #2c3e50;
   border-bottom: 2px solid #3498db;
   padding-bottom: 0.5rem;
@@ -78,12 +78,14 @@
 }
 
 .info-group p {
+  font-size: 1rem; 
   margin: 0.5rem 0;
 }
 
 .perfil-links {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 1rem; 
   margin-top: 2rem;
 }
 
@@ -93,9 +95,146 @@
   color: white;
   text-decoration: none;
   border-radius: 4px;
+  text-align: center; 
   transition: background 0.2s;
 }
 
 .section-link:hover {
   background: #27ae60;
+}
+
+@media (max-width: 768px) {
+  .perfil-container {
+    margin: 4rem 1rem 2rem; 
+  }
+
+  .perfil-content {
+    gap: 1rem; 
+  }
+
+  .perfil-info {
+    gap: 0.5rem; 
+  }
+
+  .info-group h3 {
+    font-size: 1rem; 
+  }
+
+  .info-group p {
+    font-size: 0.9rem; 
+  }
+
+  .perfil-links {
+    gap: 0.5rem; 
+  }
+} */
+
+.register-container {
+  max-width: 600px;
+  margin: 6rem auto 2rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.register-container h1 {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.foto-perfil-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.foto-preview {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #4CAF50;
+  margin-bottom: 1rem;
+}
+
+.foto-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.foto-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  color: #777;
+}
+
+.form-group-dep {
+  margin-bottom: 1.5rem;
+}
+
+.form-group-dep label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+/* Asegura que el texto de los párrafos esté alineado a la izquierda */
+.form-group-dep p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+  text-align: left; /* Alinea el texto a la izquierda */
+}
+
+.form-actions-dep {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  text-align: center;
+  gap: 1rem; /* Espacio entre botones */
+  margin-top: 2rem;
+  width: 100%; /* Asegura que ocupe todo el ancho */
+  flex-wrap: wrap; /* Permite que los botones se ajusten en dispositivos pequeños */
+}
+
+.register-container .form-actions-dep .btn-edit-dep,
+.register-container .form-actions-dep .btn-delete-dep {
+  display: flex; /* Asegura que el contenido interno se alinee correctamente */
+  justify-content: center; /* Centra el texto horizontalmente */
+  align-items: center; /* Centra el texto verticalmente */
+  text-align: center; /* Centra el texto dentro del botón */
+  padding: 0.75rem 1.5rem;
+  min-width: 120px; /* Ancho mínimo para consistencia */
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.register-container .form-actions-dep .btn-edit-dep {
+  background: #ff9800; /* Cambia el fondo */
+  color: white; /* Asegura que el color del texto no cambie */
+}
+
+.register-container .form-actions-dep .btn-delete-dep {
+  background: red; /* Cambia el fondo */
+  color: white; /* Asegura que el color del texto no cambie */
+}
+.register-container .form-actions-dep .btn-edit-dep:hover {
+  transform: scale(1.1); /* Aumenta el tamaño del botón */
+  transition: transform 0.3s ease, background 0.3s ease; /* Suaviza la animación */
+}
+
+.register-container .form-actions-dep .btn-delete-dep:hover {
+  transform: scale(1.1); /* Aumenta el tamaño del botón */
+  transition: transform 0.3s ease, background 0.3s ease; /* Suaviza la animación */
 }

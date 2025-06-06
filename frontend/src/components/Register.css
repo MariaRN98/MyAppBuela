@@ -1,4 +1,5 @@
 .password-strength-bar {
+  width: 90%; 
   height: 8px;
   background-color: #e0e0e0;
   border-radius: 4px;
@@ -17,29 +18,23 @@
 }
 
 .strength-1 {
-  background-color: #ff4d4f; /* Rojo */
+  background-color: #ff4d4f;
 }
 
 .strength-2 {
-  background-color: #ff7a45; /* Naranja */
+  background-color: #ff7a45; 
 }
 
 .strength-3 {
-  background-color: #ffa940; /* Amarillo */
+  background-color: #ffa940;
 }
 
 .strength-4 {
-  background-color: #52c41a; /* Verde claro */
+  background-color: #52c41a; 
 }
 
 .strength-5 {
-  background-color: #389e0d; /* Verde oscuro */
-}
-
-.password-strength-text {
-  font-size: 0.9rem;
-  color: #555;
-  margin-top: 5px;
+  background-color: #389e0d; 
 }
 
 .register-container {
@@ -58,22 +53,40 @@
 }
 
 .form-group {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 1.5rem;
+  align-items: center; 
 }
 
 .form-group label {
-  display: block;
+  width: 90%;
   margin-bottom: 0.5rem;
   font-weight: 500;
   color: #444;
+  text-align: left;
 }
 
 .form-group input {
-  width: 100%;
+  width: 90%; 
   padding: 0.8rem;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
+}
+
+.password-strength-text {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 5px;
+  text-align: left !important; 
+}
+
+.form-group .password-strength-text {
+  text-align: left;
+  width: 90%;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 .form-group input[type="file"] {
@@ -129,4 +142,48 @@
 
 .cancel-btn:hover {
   background-color: #7f8c8d;
+}
+
+.foto-perfil-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.foto-preview {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #4CAF50;
+  margin-bottom: 1rem;
+}
+
+.foto-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.foto-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  color: #777;
+  border-radius: 50%;
+}
+
+.btn-cambiar-foto {
+  background-color: #2196F3;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }

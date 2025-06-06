@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../services/api';
 import './Dashboard.css';
+import { FaPlus } from 'react-icons/fa';
 
 const Dashboard = () => {
   const [dependientes, setDependientes] = useState([]);
@@ -23,19 +24,20 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <h1>Tus Dependientes</h1>
-      <ul>
+      <h1>Personas a tu cuidado</h1>
+      <div className="dependientes-list">
         {dependientes.map((dependiente) => (
-          <li key={dependiente.id}>
-            <Link to={`/dependientes/${dependiente.id}`}>
-              {dependiente.nombre} {dependiente.apellidos}
+          <div className="dependiente-card" key={dependiente.id}>
+            <h3>{dependiente.nombre} {dependiente.apellidos}</h3>
+            <Link to={`/dependientes/${dependiente.id}`} className="dependiente-link">
+              Ver detalles
             </Link>
-          </li>
+          </div>
         ))}
-      </ul>
-      <Link to="/crear-dependiente" className="add-btn">
-        Añadir Dependiente
-      </Link>
+      </div>
+        <Link to="/crear-dependiente" className="add-btn">
+          <FaPlus /> {/* Usa el ícono en lugar del carácter + */}
+        </Link>
     </div>
   );
 };

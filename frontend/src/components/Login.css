@@ -41,6 +41,9 @@
   font-size: 1rem;
   cursor: pointer;
   margin-top: 1rem;
+  text-align: center; 
+  justify-content: center;
+  align-items: center;
 }
 
 .login-container button:hover {
