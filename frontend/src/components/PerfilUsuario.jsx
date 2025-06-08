@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaUser, FaEdit, FaTrash, FaUsers, FaArrowLeft, FaPowerOff } from 'react-icons/fa';
+import { FaUser, FaUsers, FaArrowLeft, } from 'react-icons/fa';
 import api from '../services/api';
 import './PerfilUsuario.css';
 
@@ -14,11 +14,9 @@ const PerfilUsuario = () => {
   useEffect(() => {
     const cargarDatos = async () => {
       try {
-        // Obtener datos del usuario
         const userResponse = await api.get('/api/current-user/');
         setUsuario(userResponse.data);
-        
-        // Obtener dependientes del usuario
+
         const dependientesResponse = await api.get('/api/dependientes-usuario/');
         setDependientes(dependientesResponse.data);
       } catch (err) {
@@ -33,9 +31,9 @@ const PerfilUsuario = () => {
   const handleDesactivarCuenta = async () => {
     if (window.confirm(
       `¿Desactivar tu cuenta?\n\n` +
-      `✅ Tus datos se conservarán\n` +
-      `🔒 No podrás iniciar sesión\n` +
-      `📞 Contacta al administrador para reactivarla`
+      `Tus datos se conservarán\n` +
+      `No podrás iniciar sesión\n` +
+      `Contacta al administrador para reactivarla`
     )) {
       try {
         await api.post('/api/desactivar-cuenta/');
@@ -62,69 +60,85 @@ const PerfilUsuario = () => {
   if (!usuario) return <div className="error">Error cargando perfil</div>;
 
   return (
-    <div className="perfil-container">
+    <div className="register-container">
       {!mostrarDependientes ? (
         <>
-          <div className="perfil-header">
-            <h1><FaUser /> Mi Perfil</h1>
-          </div>
-          
-        <div className="perfil-info">
-          {usuario.foto_perfil ? (
-            <img 
-              src={usuario.foto_perfil} 
-              alt="Foto de perfil" 
-              className="foto-perfil"
-            />
-          ) : (
-            <div className="foto-perfil">
-              <FaUser size={100} />
-            </div>
-          )}
-          <div className="datos-usuario">
-            <p><strong>Usuario:</strong> {usuario.username}</p>
-            <p><strong>Email:</strong> {usuario.email}</p>
-            <p><strong>Nombre:</strong> {usuario.first_name} {usuario.last_name}</p>
-            <p><strong>Teléfono:</strong> {usuario.telefono || 'No especificado'}</p>
-            <p><strong>Fecha Nacimiento:</strong> {usuario.fecha_nacimiento || 'No especificada'}</p>
-          </div>
-        </div>
+          <h1>{usuario.first_name} {usuario.last_name}</h1>
 
-           <div className="perfil-acciones">
+          <div className="foto-perfil-group">
+            <div className="foto-preview">
+              {usuario.foto_perfil ? (
+                <img 
+                  src={usuario.foto_perfil} 
+                  alt="Foto de perfil"
+                />
+              ) : (
+                <div className="foto-placeholder">
+                  <FaUser size={100} color="#777" />
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="form-group-usu">
+            <label>Usuario</label>
+            <p>{usuario.username}</p>
+          </div>
+
+          <div className="form-group-usu">
+            <label>Email</label>
+            <p>{usuario.email}</p>
+          </div>
+
+          <div className="form-group-usu">
+            <label>Teléfono</label>
+            <p>{usuario.telefono || 'No especificado'}</p>
+          </div>
+
+          <div className="form-group-usu">
+            <label>Fecha de Nacimiento</label>
+            <p>
+              {usuario.fecha_nacimiento 
+                ? new Date(usuario.fecha_nacimiento).toLocaleDateString('es-ES', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                  })
+                : 'No especificada'}
+            </p>
+          </div>
+
+          <div className="form-actions-usu">
+          
             <button 
-              onClick={() => navigate('/editar-perfil')}
-              className="btn-editar"
-            >
-              <FaEdit /> Editar Perfil
+              onClick={handleDesactivarCuenta} 
+              className="btn-delete-usu"
+            > Desactivar Cuenta
             </button>
-            
             <button 
-              onClick={handleDesactivarCuenta}
-              className="btn-desactivar"
-            >
-              <FaPowerOff /> Desactivar Cuenta
+              onClick={() => navigate('/editar-perfil')} 
+              className="btn-edit-usu"
+            > Editar Perfil
             </button>
-            
             <button 
-              onClick={() => setMostrarDependientes(true)}
+              onClick={() => setMostrarDependientes(true)} 
               className="btn-dependientes"
-            >
-              <FaUsers /> Personas que cuido
+            >Personas que cuido
             </button>
           </div>
         </>
       ) : (
         <>
           <button 
-            onClick={() => setMostrarDependientes(false)}
+            onClick={() => setMostrarDependientes(false)} 
             className="btn-volver"
           >
             <FaArrowLeft /> Volver al perfil
           </button>
-          
+
           <div className="dependientes-container">
-            <h2><FaUsers /> Personas que cuido</h2>
-            
+            <h1><FaUsers /> Personas que cuido</h1>
+
             {dependientes.length === 0 ? (
               <p>No tienes personas asignadas actualmente</p>
             ) : (
@@ -135,20 +149,20 @@ const PerfilUsuario = () => {
                       <h3>{dependiente.nombre} {dependiente.apellidos}</h3>
                       <p><strong>Mi acceso:</strong> {dependiente.rol}</p>
                     </div>
-                    
+
                     <div className="dependiente-acciones">
+
+                      <button
+                        onClick={() => handleEliminarDependiente(dependiente.id)}
+                        className="btn-eliminar"
+                      > Dejar de cuidar
+                      </button>
+
                       <button
                         onClick={() => navigate(`/dependientes/${dependiente.id}`)}
                         className="btn-ver"
                       >
                         Ver Perfil
-                      </button>
-                      
-                      <button
-                        onClick={() => handleEliminarDependiente(dependiente.id)}
-                        className="btn-eliminar"
-                      >
-                        <FaTrash /> Dejar de cuidar
                       </button>
                     </div>
                   </div>

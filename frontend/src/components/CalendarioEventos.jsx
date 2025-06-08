@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
-import { format, parse, startOfWeek, getDay } from 'date-fns';
+import { format, parse, startOfWeek, getDay, addMonths } from 'date-fns';
 import esES from 'date-fns/locale/es';
-import api from '../services/api';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './CalendarioEventos.css';
 import { useNavigate } from 'react-router-dom';
+import api from '../services/api';
 
 const locales = {
   'es': esES,
@@ -24,6 +24,7 @@ const CalendarioEventos = () => {
   const { dependienteId } = useParams();
   const [eventos, setEventos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentDate, setCurrentDate] = useState(new Date()); // Estado para controlar la fecha actual
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const CalendarioEventos = () => {
           start: new Date(evento.fecha_inicio),
           end: evento.fecha_fin ? new Date(evento.fecha_fin) : new Date(evento.fecha_inicio),
           desc: evento.descripcion,
-          tipo: evento.tipo_evento
+          tipo: evento.tipo_evento,
         }));
         setEventos(eventosFormateados);
       } catch (err) {
@@ -48,10 +49,22 @@ const CalendarioEventos = () => {
     fetchEventos();
   }, [dependienteId]);
 
+  // Función para manejar la navegación entre meses
+  const onNavigate = (newDate) => {
+    setCurrentDate(newDate);
+  };
+
+  // Funciones personalizadas para los botones anterior/siguiente
+  const goToPreviousMonth = () => {
+    setCurrentDate(addMonths(currentDate, -1));
+  };
+
+  const goToNextMonth = () => {
+    setCurrentDate(addMonths(currentDate, 1));
+  };
+
   const eventStyleGetter = (event) => {
-    let backgroundColor = '#3174ad'; // Color por defecto
-    
-    // Asigna colores según el tipo de evento
+    let backgroundColor = '#3174ad';
     switch(event.tipo) {
       case 'Cita medica':
         backgroundColor = '#e74c3c';
@@ -65,7 +78,6 @@ const CalendarioEventos = () => {
       default:
         backgroundColor = '#3498db';
     }
-
     return {
       style: {
         backgroundColor,
@@ -80,41 +92,48 @@ const CalendarioEventos = () => {
   if (loading) return <div>Cargando calendario...</div>;
 
   return (
-    <div className="calendario-container">
-            <div className="calendario-header">
-        <h2>Calendario de Eventos</h2>
-        <button 
-          onClick={() => navigate(`/dependientes/${dependienteId}/eventos`)} 
-          className="btn-toggle-view"
-        >
-          Ver Lista
-        </button>
-      </div>
-      <div className="calendario-wrapper">
-        <Calendar
-          localizer={localizer}
-          events={eventos}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 600 }}
-          messages={{
-            today: 'Hoy',
-            previous: 'Anterior',
-            next: 'Siguiente',
-            month: 'Mes',
-            week: 'Semana',
-            day: 'Día',
-            agenda: 'Agenda',
-            date: 'Fecha',
-            time: 'Hora',
-            event: 'Evento',
-          }}
-          eventPropGetter={eventStyleGetter}
-          defaultView="month"
-          popup
-          onSelectEvent={event => alert(`Detalles:\n${event.title}\n${event.desc}`)}
-        />
-      </div>
+  <div className="calendario-container">
+    {/* Título */}
+    <h2 className="calendario-titulo">Calendario de Eventos</h2>
+
+
+
+    {/* Calendario */}
+    <div className="calendario-wrapper">
+      <Calendar
+        localizer={localizer}
+        events={eventos}
+        startAccessor="start"
+        endAccessor="end"
+        style={{ height: 600 }}
+        date={currentDate}
+        onNavigate={onNavigate}
+        views={['month']}
+        defaultView="month"
+        //culture="es" si lo pongo en el formato español se descuadra el calendario :')
+        messages={{
+          previous: 'Anterior',
+          next: 'Siguiente',
+          today: 'Hoy',
+          
+        }}
+        
+        eventPropGetter={eventStyleGetter}
+
+        popup
+        onSelectEvent={event => alert(`Detalles:\n${event.title}\n${event.desc}`)}
+      />
+    </div>
+
+    {/* Botón Ver Lista */}
+    <div className="calendar-footer">
+      <button
+        onClick={() => navigate(`/dependientes/${dependienteId}/eventos`)}
+        className="btn-toggle-view"
+      >
+        Ver Lista
+      </button>
+    </div>
       
       <div className="leyenda">
         <h4>Leyenda:</h4>

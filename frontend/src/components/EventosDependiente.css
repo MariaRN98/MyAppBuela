@@ -1,6 +1,10 @@
 .eventos-container {
-  margin: 6rem 2rem 2rem;
-  max-width: 1200px;
+  margin: 6rem auto 2rem; /* Centra horizontalmente con auto */
+  max-width: 1200px; /* Ancho máximo para pantallas grandes */
+  padding: 0 1rem; /* Añade espacio lateral para dispositivos móviles */
+  display: flex;
+  flex-direction: column; /* Asegura que los elementos estén en columna */
+  align-items: center; /* Centra los elementos horizontalmente */
 }
 
 .eventos-header {

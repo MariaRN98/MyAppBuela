@@ -1,116 +1,145 @@
-.perfil-container {
-  max-width: 800px;
-  margin: 2rem auto;
+.register-container {
+  max-width: 600px;
+  margin: 6rem auto 2rem;
   padding: 2rem;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.perfil-header {
-  text-align: center;
-  margin-bottom: 2rem;
+.register-container h1 {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
 }
 
-.perfil-info {
+.foto-perfil-group {
   display: flex;
-  gap: 2rem;
+  flex-direction: column;
   align-items: center;
   margin-bottom: 2rem;
 }
 
-.foto-perfil {
+.foto-preview {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  object-fit: cover;
+  overflow: hidden;
   border: 3px solid #4CAF50;
-}
-
-.datos-usuario {
-  flex: 1;
-}
-
-.datos-usuario p {
-  margin: 0.5rem 0;
-  font-size: 1.1rem;
-}
-
-.perfil-acciones {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-button {
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: bold;
-  transition: all 0.3s;
-}
-
-.btn-editar {
-  background-color: #2196F3;
-  color: white;
-}
-
-.btn-desactivar {
-  background-color: #ff9800;
-  color: white;
-}
-
-.btn-desactivar:hover {
-  background-color: #e68a00;
-}
-
-.btn-dependientes {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.btn-volver {
-  background-color: #607D8B;
-  color: white;
   margin-bottom: 1rem;
 }
 
-.dependientes-container {
+.foto-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.foto-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  color: #777;
+}
+
+.form-group-usu {
+  margin-bottom: 1.5rem;
+}
+
+.form-group-usu label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.form-group-usu p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+  text-align: left; 
+}
+
+.form-actions-usu {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  text-align: center;
+  gap: 1rem; 
+  margin-top: 2rem;
+  width: 100%; 
+  flex-wrap: wrap; 
+}
+
+.register-container .form-actions-usu .btn-edit-usu,
+.register-container .form-actions-usu .btn-delete-usu,
+.register-container .form-actions-usu .btn-dependientes {
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  text-align: center; 
+  padding: 0.75rem 1.5rem;
+  min-width: 120px; 
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.register-container .form-actions-usu .btn-edit-usu {
+  background: #ff9800; 
+  color: white; 
+}
+
+.register-container .form-actions-usu .btn-delete-usu {
+  background: red; 
+  color: white; 
+}
+
+.register-container .form-actions-usu .btn-dependientes {
+  background: #2ecc71; 
+  color: white; 
+}
+
+.register-container .form-actions-usu .btn-edit-usu:hover,
+.register-container .form-actions-usu .btn-delete-usu:hover,
+.register-container .form-actions-usu .btn-dependientes:hover {
+  transform: scale(1.1); 
+  transition: transform 0.3s ease, background 0.3s ease; 
+}
+
+.dependiente-acciones {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  gap: 0.5rem; 
   margin-top: 1rem;
 }
 
 .lista-dependientes {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
+  gap: 2rem; 
   margin-top: 1.5rem;
 }
 
-.dependiente-card {
-  background: #f9f9f9;
-  padding: 1.5rem;
-  border-radius: 8px;
-  border-left: 4px solid #4CAF50;
+
+
+.dependiente-acciones .btn-ver {
+  background: #ff9800; 
+  color: white; 
 }
 
-.dependiente-acciones {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 1rem;
+.dependiente-acciones .btn-eliminar {
+  background: red; 
+  color: white; 
 }
 
-.btn-ver {
-  background-color: #FF9800;
-  color: white;
-}
-
-.loading, .error {
-  text-align: center;
-  margin-top: 2rem;
-  font-size: 1.2rem;
+.dependiente-acciones .btn-eliminar:hover,
+.dependiente-acciones .btn-ver:hover {
+  transform: scale(1.1); 
+  transition: transform 0.3s ease, background 0.3s ease; 
 }

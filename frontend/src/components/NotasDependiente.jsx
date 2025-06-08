@@ -40,56 +40,58 @@ const NotasDependiente = () => {
   if (loading) return <div>Cargando notas...</div>;
   if (error) return <div className="error">{error}</div>;
 
-  return (
-    <div className="notas-container">
-      <div className="notas-header">
-        <h2>Notas del Dependiente</h2>
-        <button 
-          onClick={() => navigate(`/dependientes/${dependienteId}/notas/crear`)}
-          className="btn-add"
-        >
-          + Nueva Nota
-        </button>
-      </div>
+return (
+  <div className="notas-container">
+    <div className="notas-header">
+      <h2>Notas del Dependiente</h2>
+    </div>
 
-      <div className="notas-list">
-        {notas.length === 0 ? (
-          <p>No hay notas registradas</p>
-        ) : (
-          notas.map(nota => (
-            <div key={nota.id} className="nota-card">
-              <div className="nota-header">
-                <h3>{nota.titulo}</h3>
-                <div className="nota-actions">
-                  <button 
-                    onClick={() => navigate(`/dependientes/${dependienteId}/notas/${nota.id}`)}
-                    className="btn-edit"
-                  >
-                    Editar
-                  </button>
-                  <button 
-                    onClick={() => handleDelete(nota.id)}
-                    className="btn-delete"
-                  >
-                    Eliminar
-                  </button>
-                </div>
-              </div>
-              <p className="nota-body">{nota.cuerpo}</p>
-              <div className="nota-footer">
-                <span className="nota-date">
-                  {new Date(nota.fecha_publicacion).toLocaleDateString()}
-                </span>
-                <span className="nota-author">
-                  Por: {nota.autor.nombre} {nota.autor.apellido}
-                </span>
+    <div className="notas-list">
+      {notas.length === 0 ? (
+        <p>No hay notas registradas</p>
+      ) : (
+        notas.map(nota => (
+          <div key={nota.id} className="nota-card">
+            <div className="nota-header">
+              <h3>{nota.titulo}</h3>
+              <div className="nota-actions">
+                <button 
+                  onClick={() => navigate(`/dependientes/${dependienteId}/notas/${nota.id}`)}
+                  className="btn-edit"
+                >
+                  Editar
+                </button>
+                <button 
+                  onClick={() => handleDelete(nota.id)}
+                  className="btn-delete"
+                >
+                  Eliminar
+                </button>
               </div>
             </div>
-          ))
-        )}
-      </div>
+            <p className="nota-body">{nota.cuerpo}</p>
+            <div className="nota-footer">
+              <span className="nota-date">
+                {new Date(nota.fecha_publicacion).toLocaleDateString()}
+              </span>
+              <span className="nota-author">
+                Por: {nota.autor.nombre} {nota.autor.apellido}
+              </span>
+            </div>
+          </div>
+        ))
+      )}
     </div>
-  );
+
+    {/* Botón flotante para crear una nueva nota */}
+    <button 
+      onClick={() => navigate(`/dependientes/${dependienteId}/notas/crear`)}
+      className="btn-float"
+    >
+      +
+    </button>
+  </div>
+);
 };
 
 export default NotasDependiente;

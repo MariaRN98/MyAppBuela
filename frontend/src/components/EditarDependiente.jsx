@@ -14,52 +14,51 @@ const EditarDependiente = () => {
     alergias: '',
     vacunas: '',
     medicamentos: '',
-    foto_perfil: null
+    foto_perfil: null,
+    previewFoto: ''
   });
-  const [preview, setPreview] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchDependiente = async () => {
-      try {
-        const response = await api.get(`/api/dependientes/${dependienteId}/`);
-        setFormData({
-          nombre: response.data.nombre,
-          apellidos: response.data.apellidos,
-          fecha_nacimiento: response.data.fecha_nacimiento.split('T')[0],
-          movilidad: response.data.movilidad,
-          enfermedades: response.data.enfermedades,
-          alergias: response.data.alergias,
-          vacunas: response.data.vacunas,
-          medicamentos: response.data.medicamentos,
-          foto_perfil: null
-        });
-        if (response.data.foto_perfil) {
-          setPreview(response.data.foto_perfil);
-        }
-      } catch (err) {
-        setError('Error al cargar el perfil');
-      }
-    };
-    fetchDependiente();
-  }, [dependienteId]);
+    window.scrollTo(0, 0);
+  }, []);
+
+useEffect(() => {
+  const fetchDependiente = async () => {
+    try {
+      const response = await api.get(`/api/dependientes/${dependienteId}/`);
+      setFormData({
+        nombre: response.data.nombre,
+        apellidos: response.data.apellidos,
+        fecha_nacimiento: response.data.fecha_nacimiento.split('T')[0],
+        movilidad: response.data.movilidad,
+        enfermedades: response.data.enfermedades,
+        alergias: response.data.alergias,
+        vacunas: response.data.vacunas,
+        medicamentos: response.data.medicamentos,
+        foto_perfil: response.data.foto_perfil || null, 
+        previewFoto: '' 
+      });
+    } catch (err) {
+      setError('Error al cargar el perfil');
+    }
+  };
+  fetchDependiente();
+}, [dependienteId]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+    const { name, value } = e.target;
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFormData({ ...formData, foto_perfil: file });
-    
-    // Crear preview de la imagen
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPreview(reader.result);
-    };
-    if (file) {
-      reader.readAsDataURL(file);
+    if (name === 'foto_perfil') {
+      const file = e.target.files[0];
+      setFormData({
+        ...formData,
+        foto_perfil: file,
+        previewFoto: file ? URL.createObjectURL(file) : ''
+      });
+    } else {
+      setFormData({ ...formData, [name]: value });
     }
   };
 
@@ -85,33 +84,70 @@ const EditarDependiente = () => {
   };
 
   return (
-    <div className="editar-container">
-      <h2>Editar Perfil</h2>
-      {error && <div className="error">{error}</div>}
-      
+    <div className="register-container">
+      <h1>Editar Perfil</h1>
+      {error && <div className="error-message">{error}</div>}
+
+      <div className="foto-perfil-group-edep">
+        <div className="foto-preview">
+          {formData.previewFoto ? (
+            <img
+              src={formData.previewFoto}
+              alt="Preview"
+            />
+          ) : formData.foto_perfil ? (
+            <img
+              src={`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}${formData.foto_perfil}`}
+              alt="Foto actual"
+            />
+          ) : (
+            <div className="foto-placeholder">
+              {/* Ícono de usuario genérico */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                fill="#777"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z" />
+              </svg>
+            </div>
+          )}
+        </div>
+        <label className="btn-cambiar-foto">
+          Cambiar foto
+          <input
+            type="file"
+            name="foto_perfil"
+            accept="image/*"
+            onChange={handleChange}
+            style={{ display: 'none' }}
+          />
+        </label>
+      </div>
+
       <form onSubmit={handleSubmit}>
-        <div className="form-row">
-          <div className="form-group">
-            <label>Nombre:</label>
-            <input
-              type="text"
-              name="nombre"
-              value={formData.nombre}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          
-          <div className="form-group">
-            <label>Apellidos:</label>
-            <input
-              type="text"
-              name="apellidos"
-              value={formData.apellidos}
-              onChange={handleChange}
-              required
-            />
-          </div>
+        <div className="form-group">
+          <label>Nombre:</label>
+          <input
+            type="text"
+            name="nombre"
+            value={formData.nombre}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Apellidos:</label>
+          <input
+            type="text"
+            name="apellidos"
+            value={formData.apellidos}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <div className="form-group">
@@ -126,21 +162,6 @@ const EditarDependiente = () => {
         </div>
 
         <div className="form-group">
-          <label>Foto de Perfil:</label>
-          <div className="foto-upload">
-            {preview && (
-              <img src={preview} alt="Preview" className="foto-preview" />
-            )}
-            <input
-              type="file"
-              name="foto_perfil"
-              onChange={handleFileChange}
-              accept="image/*"
-            />
-          </div>
-        </div>
-
-        <div className="form-group">
           <label>Movilidad:</label>
           <textarea
             name="movilidad"
@@ -150,61 +171,48 @@ const EditarDependiente = () => {
           />
         </div>
 
-        <div className="form-row">
-          <div className="form-group">
-            <label>Enfermedades:</label>
-            <textarea
-              name="enfermedades"
-              value={formData.enfermedades}
-              onChange={handleChange}
-              rows="3"
-            />
-          </div>
-          
-          <div className="form-group">
-            <label>Alergias:</label>
-            <textarea
-              name="alergias"
-              value={formData.alergias}
-              onChange={handleChange}
-              rows="3"
-            />
-          </div>
+        <div className="form-group">
+          <label>Enfermedades:</label>
+          <textarea
+            name="enfermedades"
+            value={formData.enfermedades}
+            onChange={handleChange}
+            rows="3"
+          />
         </div>
 
-        <div className="form-row">
-          <div className="form-group">
-            <label>Vacunas:</label>
-            <textarea
-              name="vacunas"
-              value={formData.vacunas}
-              onChange={handleChange}
-              rows="3"
-            />
-          </div>
-          
-          <div className="form-group">
-            <label>Medicamentos:</label>
-            <textarea
-              name="medicamentos"
-              value={formData.medicamentos}
-              onChange={handleChange}
-              rows="3"
-            />
-          </div>
+        <div className="form-group">
+          <label>Alergias:</label>
+          <textarea
+            name="alergias"
+            value={formData.alergias}
+            onChange={handleChange}
+            rows="3"
+          />
         </div>
 
-        <div className="form-actions">
-          <button type="submit" className="btn-save">
-            Guardar Cambios
-          </button>
-          <button 
-            type="button" 
-            className="btn-cancel"
+        <div className="form-group">
+          <label>Vacunas:</label>
+          <textarea
+            name="vacunas"
+            value={formData.vacunas}
+            onChange={handleChange}
+            rows="3"
+          />
+        </div>
+
+        <div className="form-actions-edep">
+          <button
+            type="button"
+            className="btn-cancel-edep"
             onClick={() => navigate(`/dependientes/${dependienteId}`)}
           >
             Cancelar
           </button>
+          <button type="submit" className="btn-save-edep">
+            Guardar
+          </button>
+
         </div>
       </form>
     </div>
