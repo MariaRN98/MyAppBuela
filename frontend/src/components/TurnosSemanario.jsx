@@ -5,7 +5,7 @@ import api from '../services/api';
 import './TurnosSemanario.css';
 
 const diasSemana = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
-const horasDelDia = Array.from({ length: 14 }, (_, i) => i + 7); // De 7:00 a 20:00
+const horasDelDia = Array.from({ length: 24 }, (_, i) => i + 0); // De 7:00 a 20:00
 
 const TurnosSemanario = () => {
   const { dependienteId } = useParams();
@@ -62,32 +62,21 @@ const TurnosSemanario = () => {
 
   if (loading) return <div className="loading">Cargando turnos...</div>;
   if (error) return <div className="error">{error}</div>;
-
   return (
-    <div className="turnos-container">
-      <div className="turnos-header">
-        <h2><FaUserClock /> Semanario de Turnos</h2>
-        <div className="semana-control">
-          <button onClick={() => cambiarSemana(-1)}>&lt; Semana anterior</button>
-          <span>
-            {semanaActual.toLocaleDateString('es-ES', { 
-              weekday: 'long', 
-              year: 'numeric', 
-              month: 'long', 
-              day: 'numeric' 
-            }).replace(/^\w/, c => c.toUpperCase())}
-          </span>
-          <button onClick={() => cambiarSemana(1)}>Próxima semana &gt;</button>
-        </div>
-        <button 
-          onClick={() => navigate(`/dependientes/${dependienteId}/turnos/crear`)}
-          className="btn-add"
-        >
-          <FaPlus /> Nuevo Turno
-        </button>
-      </div>
+  <div className="turnos-container">
+    <div className="turnos-header">
+      <h2><FaUserClock /> Semanario de Turnos</h2>
+      <button 
+        onClick={() => navigate(`/dependientes/${dependienteId}/turnos/crear`)}
+        className="btn-add"
+      >
+        <FaPlus /> Nuevo Turno
+      </button>
+    </div>
 
-      <div className="semanario">
+    {/* Contenedor para scroll horizontal */}
+    <div className="semanario-scroll-container">
+      <div className="semanario-inner">
         <div className="header-grid">
           <div className="hora-cell">Hora</div>
           {diasSemana.map(dia => (
@@ -138,7 +127,8 @@ const TurnosSemanario = () => {
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default TurnosSemanario;

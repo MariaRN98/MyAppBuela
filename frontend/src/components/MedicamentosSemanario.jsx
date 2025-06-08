@@ -65,19 +65,86 @@ const handleDelete = async (medicamentoId) => {
   if (loading) return <div className="loading">Cargando medicamentos...</div>;
   if (error) return <div className="error">{error}</div>;
 
-  return (
-    <div className="medicamentos-container">
-      <div className="medicamentos-header">
-        <h2><FaPills /> Semanario de Medicamentos</h2>
-        <button 
-          onClick={() => navigate(`/dependientes/${dependienteId}/medicamentos/crear`)}
-          className="btn-add"
-        >
-          <FaPlus /> Nuevo Medicamento
-        </button>
-      </div>
+  // return (
+  //   <div className="medicamentos-container">
+  //     <div className="medicamentos-header">
+  //       <h2><FaPills /> Semanario de Medicamentos</h2>
+  //       <button 
+  //         onClick={() => navigate(`/dependientes/${dependienteId}/medicamentos/crear`)}
+  //         className="btn-add"
+  //       >
+  //         <FaPlus /> Nuevo Medicamento
+  //       </button>
+  //     </div>
 
-      <div className="semanario">
+  //     <div className="semanario">
+  //       <div className="header-grid">
+  //         <div className="hora-cell">Hora</div>
+  //         {diasSemana.map(dia => (
+  //           <div key={dia} className="dia-cell">{dia}</div>
+  //         ))}
+  //       </div>
+
+  //       <div className="grid-container">
+  //         {horasDelDia.map(hora => (
+  //           <React.Fragment key={hora}>
+  //             <div className="hora-cell">{hora}:00</div>
+  //             {diasSemana.map(dia => {
+  //               const medicamentosCelda = getMedicamentosPorDiaYHora(dia, hora);
+  //               return (
+  //                 <div key={`${dia}-${hora}`} className="celda">
+  //                   {medicamentosCelda.map(med => (
+  //                     <div key={med.id} className={`medicamento-item ${med.tomado ? 'completado' : ''}`}>
+  //                       <div className="medicamento-info">
+  //                         <strong>{med.medicamento}</strong> ({med.dosis})
+  //                       </div>
+  //                       <div className="medicamento-actions">
+  //                         <button
+  //                           onClick={() => handleMarcarTomado(med.id, med.tomado)}
+  //                           className={`btn-check ${med.tomado ? 'active' : ''}`}
+  //                         >
+  //                           <FaCheck />
+  //                         </button>
+  //                         <button
+  //                           onClick={() => navigate(`/dependientes/${dependienteId}/medicamentos/${med.id}/editar`)}
+  //                           className="btn-edit"
+  //                         >
+  //                           <FaEdit />
+  //                         </button>
+  //                         <button
+  //                           onClick={() => handleDelete(med.id)}
+  //                           className="btn-delete"
+  //                         >
+  //                           <FaTrash />
+  //                         </button>
+  //                       </div>
+  //                     </div>
+  //                   ))}
+  //                 </div>
+  //               );
+  //             })}
+  //           </React.Fragment>
+  //         ))}
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
+
+  return (
+  <div className="medicamentos-container">
+    <div className="medicamentos-header">
+      <h2><FaPills /> Semanario de Medicamentos</h2>
+      <button 
+        onClick={() => navigate(`/dependientes/${dependienteId}/medicamentos/crear`)}
+        className="btn-add"
+      >
+        <FaPlus /> Nuevo Medicamento
+      </button>
+    </div>
+
+    {/* Contenedor para scroll horizontal */}
+    <div className="semanario-scroll-container">
+      <div className="semanario-inner">
         <div className="header-grid">
           <div className="hora-cell">Hora</div>
           {diasSemana.map(dia => (
@@ -128,7 +195,8 @@ const handleDelete = async (medicamentoId) => {
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default MedicamentosSemanario;

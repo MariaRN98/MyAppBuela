@@ -1,3 +1,4 @@
+/* Estilos generales (se mantienen igual) */
 .medicamentos-container {
   padding: 20px;
   font-family: 'Arial', sans-serif;
@@ -22,12 +23,21 @@
   gap: 5px;
 }
 
-.semanario {
+/* Contenedor del semanario para scroll horizontal */
+.semanario-scroll-container {
+  width: 100%;
+  overflow-x: auto; /* Scroll horizontal */
+  -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
   border: 1px solid #ddd;
   border-radius: 8px;
-  overflow: hidden;
 }
 
+/* Contenedor interno del semanario */
+.semanario-inner {
+  min-width: 800px; /* Ancho mínimo para forzar scroll en móvil */
+}
+
+/* Resto de estilos se mantienen igual */
 .header-grid {
   display: grid;
   grid-template-columns: 80px repeat(7, 1fr);
@@ -102,4 +112,16 @@
 .btn-delete {
   background-color: #e57373;
   color: white;
+}
+
+@media (max-width: 768px) {
+  .semanario-scroll-container {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+  
+  .semanario-inner {
+    min-width: 800px; /* Ajusta según necesidad */
+  }
 }
