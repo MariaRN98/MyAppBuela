@@ -98,7 +98,6 @@ const GestionAccesos = () => {
               <div key={acceso.id} className="acceso-item">
                 <div className="usuario-info">
                   {acceso.usuario.first_name} {acceso.usuario.last_name}
-                  <div className="email-mobile">{acceso.usuario.email}</div>
                 </div>
                 <div className={`rol ${acceso.rol.toLowerCase()}`}>
                   {acceso.rol}

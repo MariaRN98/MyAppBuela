@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaUser, FaUsers, FaArrowLeft, } from 'react-icons/fa';
+import { FaUser, FaUsers, FaArrowLeft, FaPhone } from 'react-icons/fa';
 import api from '../services/api';
 import './PerfilUsuario.css';
 

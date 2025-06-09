@@ -1,154 +1,17 @@
-/* .turnos-container {
-  margin: 6rem 2rem 2rem;
-  max-width: 1200px;
-}
 
-.turnos-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.turnos-header h2 {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #2c3e50;
-}
-
-.semana-control {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.semana-control button {
-  background: #3498db;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.semana-control span {
-  font-weight: 500;
-}
-
-.btn-add {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: #27ae60;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.semanario {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  overflow: hidden;
-}
-
-.header-grid {
-  display: grid;
-  grid-template-columns: 80px repeat(7, 1fr);
-  background: #2c3e50;
-  color: white;
-  font-weight: bold;
-}
-
-.hora-cell, .dia-cell {
-  padding: 0.75rem;
-  text-align: center;
-  border-right: 1px solid #eee;
-}
-
-.dia-cell {
-  text-transform: capitalize;
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: 80px repeat(7, 1fr);
-  grid-auto-rows: 60px;
-}
-
-.celda {
-  border: 1px solid #eee;
-  padding: 2px;
-  overflow: hidden;
-}
-
-.turno-item {
-  background: #3498db;
-  color: white;
-  border-radius: 4px;
-  padding: 4px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  font-size: 0.8rem;
-}
-
-.turno-info {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.turno-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 4px;
-}
-
-.btn-edit, .btn-delete {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 0.8rem;
-  padding: 0;
-}
-
-.btn-edit:hover {
-  color: #f1c40f;
-}
-
-.btn-delete:hover {
-  color: #e74c3c;
-}
-
-.loading, .error {
-  text-align: center;
-  margin: 2rem;
-  font-size: 1.1rem;
-}
-
-.error {
-  color: #e74c3c;
-} */
 
 .turnos-container {
-  padding: 20px;
+  padding: 2rem;
+  margin: 6rem auto 2rem;
   font-family: 'Arial', sans-serif;
 }
 
 .turnos-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  gap: 0.5rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
 }
 
 .btn-add {
