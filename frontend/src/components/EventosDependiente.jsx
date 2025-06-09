@@ -46,73 +46,75 @@ const EventosDependiente = () => {
   if (error) return <div className="error">{error}</div>;
 
   return (
-    <div className="eventos-container">
-      <div className="eventos-header">
-        <h2>
-          <FaCalendarAlt /> Lista de Eventos
-        </h2>
-        <button 
-          onClick={() => navigate(`/dependientes/${dependienteId}/calendario`)} 
-          className="btn-toggle-view"
-        >
-          Ver Calendario
-        </button>
-        <button 
-          onClick={() => navigate(`/dependientes/${dependienteId}/eventos/crear`)}
-          className="btn-add"
-        >
-          <FaPlus /> Nuevo Evento
-        </button>
-      </div>
-
-      <div className="eventos-list">
-        {eventos.length === 0 ? (
-          <p className="no-events">No hay eventos programados</p>
-        ) : (
-          eventos.map(evento => (
-            <div key={evento.id} className="evento-card">
-              <div className="evento-header">
-                <h3>{evento.titulo}</h3>
-                <span className={`evento-type ${evento.tipo_evento.toLowerCase()}`}>
-                  {evento.tipo_evento}
-                </span>
-              </div>
-              
-              <div className="evento-dates">
-                <p>
-                  <strong>Inicio:</strong> {formatDate(evento.fecha_inicio)}
-                  {evento.fecha_inicio && ` a las ${new Date(evento.fecha_inicio).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`}
-                </p>
-                {evento.fecha_fin && (
-                  <p>
-                    <strong>Fin:</strong> {formatDate(evento.fecha_fin)}
-                    {` a las ${new Date(evento.fecha_fin).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`}
-                  </p>
-                )}
-              </div>
-              
-              <p className="evento-desc">{evento.descripcion}</p>
-              
-              <div className="evento-actions">
-                <button 
-                  onClick={() => navigate(`/dependientes/${dependienteId}/eventos/${evento.id}/editar`)}
-                  className="btn-edit"
-                >
-                  <FaEdit /> Editar
-                </button>
-                <button 
-                  onClick={() => handleDelete(evento.id)}
-                  className="btn-delete"
-                >
-                  <FaTrash /> Eliminar
-                </button>
-              </div>
-            </div>
-          ))
-        )}
-      </div>
+  <div className="eventos-container">
+    <div className="eventos-header">
+      <h2>
+        <FaCalendarAlt /> Lista de Eventos
+      </h2>
+      <button 
+        onClick={() => navigate(`/dependientes/${dependienteId}/calendario`)} 
+        className="btn-toggle-view"
+      >
+        Ver Calendario
+      </button>
     </div>
-  );
+
+    <div className="eventos-list">
+      {eventos.length === 0 ? (
+        <p className="no-events">No hay eventos programados</p>
+      ) : (
+        eventos.map(evento => (
+          <div key={evento.id} className="evento-card">
+            <div className="evento-header">
+              <h3>{evento.titulo}</h3>
+              <span className={`evento-type ${evento.tipo_evento.toLowerCase()}`}>
+                {evento.tipo_evento}
+              </span>
+            </div>
+            
+            <div className="evento-dates">
+              <p>
+                <strong>Inicio:</strong> {formatDate(evento.fecha_inicio)}
+                {evento.fecha_inicio && ` a las ${new Date(evento.fecha_inicio).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`}
+              </p>
+              {evento.fecha_fin && (
+                <p>
+                  <strong>Fin:</strong> {formatDate(evento.fecha_fin)}
+                  {` a las ${new Date(evento.fecha_fin).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`}
+                </p>
+              )}
+            </div>
+            
+            <p className="evento-desc">{evento.descripcion}</p>
+            
+            <div className="evento-actions">
+              <button 
+                onClick={() => navigate(`/dependientes/${dependienteId}/eventos/${evento.id}/editar`)}
+                className="btn-edit"
+              >
+                <FaEdit /> Editar
+              </button>
+              <button 
+                onClick={() => handleDelete(evento.id)}
+                className="btn-delete"
+              >
+                <FaTrash /> Eliminar
+              </button>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+
+    {/* Botón flotante para crear un nuevo evento */}
+    <button 
+      onClick={() => navigate(`/dependientes/${dependienteId}/eventos/crear`)}
+      className="btn-float"
+    >
+      <FaPlus />
+    </button>
+  </div>
+);
 };
 
 export default EventosDependiente;

@@ -50,7 +50,7 @@ const AgregarUsuario = () => {
 
   return (
     <div className="agregar-usuario-container">
-      <div className="header">
+      <div className="nuevo_acceso_header">
         <h2>
           <FaUserPlus /> Agregar Usuario
         </h2>

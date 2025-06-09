@@ -58,42 +58,7 @@ function App() {
         </Route>
 
                 {/* Rutas con menú de dependiente */}
-        {/* <Route path="/dependientes" element={
-              <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>
-                <DependienteLayout />
-              </ProtectedRoute>
-            }>
-          <Route path=":dependienteId/notas" element={<ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}><NotasDependiente /></ProtectedRoute>} />
-          <Route path=":dependienteId/notas/crear" element={<NotaForm editMode={false} />} />
-          <Route path=":dependienteId/notas/:notaId" element={<NotaForm editMode={true} />} />
-          <Route path=":dependienteId" element={<PerfilDependiente />} />
-          <Route path=":dependienteId/editar" element={<EditarDependiente />} />
-          <Route path=":dependienteId/eventos" element={<EventosDependiente />} />
-          <Route path=":dependienteId/eventos/crear" element={<EventoForm editMode={false} />} />
-          <Route path=":dependienteId/eventos/:eventoId/editar" element={<EventoForm editMode={true} />} />
-          <Route path=":dependienteId/calendario" element={<CalendarioEventos />} />
-          <Route path=":dependienteId/compras" element={<ListaCompras />} />
-          <Route path=":dependienteId/compras/crear" element={<CompraForm editMode={false} />} />
-          <Route path=":dependienteId/compras/:compraId/editar" element={<CompraForm editMode={true} />} />
-          <Route path=":dependienteId/turnos" element={<TurnosSemanario />} />
-          <Route path=":dependienteId/turnos/crear" element={<TurnoForm editMode={false} />} />
-          <Route path=":dependienteId/turnos/:turnoId/editar" element={<TurnoForm editMode={true} />} />
-          <Route path=":dependienteId/medicamentos" element={<MedicamentosSemanario />} />
-          <Route path=":dependienteId/medicamentos/crear" element={<FormularioMedicamento editMode={false} />} />
-          <Route path=":dependienteId/medicamentos/:medicamentoId/editar" element={<FormularioMedicamento editMode={true} />} />
-          <Route path=":dependienteId/medicamentos/lista" element={<ListaMedicamentos />} />
-          <Route path=":dependienteId/comidas" element={<ComidasSemanario />} />
-          <Route path=":dependienteId/comidas/crear" element={<FormularioComida editMode={false} />} />
-          <Route path=":dependienteId/comidas/:comidaId/editar" element={<FormularioComida editMode={true} />} />
-          <Route path=":dependienteId/accesos" element={
-              <ProtectedRoute rolesPermitidos={['Admin']}>
-                <GestionAccesos />
-              </ProtectedRoute>
-            } />
-          <Route path=":dependienteId/accesos/:accesoId/editar" element={<EditarAcceso />} />
-          <Route path=":dependienteId/usuarios/:usuarioId" element={<VerUsuario />} />
-          <Route path=":dependienteId/accesos/nuevo" element={<AgregarUsuario />} />
-        </Route> */}
+        
 
         <Route path="/dependientes" element={
   <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>

@@ -42,9 +42,6 @@ const Header = () => {
             <FaUser/>
           </div>
         )}
-        <span className="user-name">
-          {userData?.first_name} {userData?.last_name}
-        </span>
         
         {isDropdownOpen && (
           <div className="dropdown-menu">
