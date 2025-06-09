@@ -56,69 +56,79 @@ const ComidasSemanario = () => {
 
   if (loading) return <div>Cargando comidas...</div>;
   if (error) return <div className="error">{error}</div>;
-
   return (
-    <div className="comidas-container">
-      <div className="comidas-header">
-        <h2><FaUtensils /> Planificación Semanal de Comidas</h2>
-        <button 
-          onClick={() => navigate(`/dependientes/${dependienteId}/comidas/crear`)}
-          className="btn-add"
-        >
-          <FaPlus /> Nueva Comida
-        </button>
-      </div>
+  <div className="comidas-container">
+    <div className="comidas-header">
+      <h2><FaUtensils /> Planificación Semanal de Comidas</h2>
+      <button 
+        onClick={() => navigate(`/dependientes/${dependienteId}/comidas/crear`)}
+        className="btn-add"
+      >
+        <FaPlus /> Nueva Comida
+      </button>
+    </div>
 
-      <div className="semanario-comidas">
-        {tiposComida.map(tipo => (
-          <div key={tipo} className="tipo-comida-section">
-            <h3>{tipo}</h3>
-            <div className="grid-comidas">
-              {diasSemana.map(dia => {
-                const comidasDia = comidas.filter(c => 
-                  c.dias_semana === dia && c.tipo_comida === tipo
-                ).sort((a, b) => a.hora.localeCompare(b.hora));
+    {/* Contenedor para scroll horizontal */}
+    <div className="semanario-scroll-container">
+      <div className="semanario-inner">
 
-                return (
-                  <div key={dia} className="dia-comida">
-                    <h4>{dia}</h4>
-                    {comidasDia.map(comida => (
-                      <div key={comida.id} className={`comida-item ${comida.comido ? 'completado' : ''}`}>
-                        <div className="comida-info">
-                          <strong>{comida.nombre}</strong>
-                          <span>{comida.hora.substring(0, 5)}</span>
-                        </div>
-                        <div className="comida-actions">
-                          <button
-                            onClick={() => handleMarcarComido(comida.id, comida.comido)}
-                            className={`btn-check ${comida.comido ? 'active' : ''}`}
-                          >
-                            <FaCheck />
-                          </button>
-                          <button
-                            onClick={() => navigate(`/dependientes/${dependienteId}/comidas/${comida.id}/editar`)}
-                            className="btn-edit"
-                          >
-                            <FaEdit />
-                          </button>
-                          <button
-                            onClick={() => handleDelete(comida.id)}
-                            className="btn-delete"
-                          >
-                            <FaTrash />
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                );
-              })}
-            </div>
+
+<div className="grid-container">
+  {/* Primera fila: encabezados */}
+  <div className="tipo-comida-cell">Comida</div>
+  {diasSemana.map(dia => (
+    <div key={`header-${dia}`} className="dia-cell">{dia}</div>
+  ))}
+
+  {/* Resto de filas */}
+  {tiposComida.map(tipo => (
+    <React.Fragment key={tipo}>
+      <div className="tipo-comida-cell">{tipo}</div>
+      {diasSemana.map(dia => {
+        const comidasDia = comidas.filter(c => 
+          c.dias_semana === dia && c.tipo_comida === tipo
+        ).sort((a, b) => a.hora.localeCompare(b.hora));
+
+        return (
+          <div key={`${dia}-${tipo}`} className="celda">
+            {comidasDia.map(comida => (
+              <div key={comida.id} className={`comida-item ${comida.comido ? 'completado' : ''}`}>
+                <div className="comida-info">
+                  <strong>{comida.nombre}</strong>
+                  <span>{comida.hora.substring(0, 5)}</span>
+                </div>
+                <div className="comida-actions">
+                  <button
+                    onClick={() => handleMarcarComido(comida.id, comida.comido)}
+                    className={`btn-check ${comida.comido ? 'active' : ''}`}
+                  >
+                    <FaCheck />
+                  </button>
+                  <button
+                    onClick={() => navigate(`/dependientes/${dependienteId}/comidas/${comida.id}/editar`)}
+                    className="btn-edit"
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(comida.id)}
+                    className="btn-delete"
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        );
+      })}
+    </React.Fragment>
+  ))}
+</div>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default ComidasSemanario;

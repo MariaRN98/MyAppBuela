@@ -1,4 +1,4 @@
-.comidas-container {
+/* .comidas-container {
   padding: 20px;
 }
 
@@ -47,4 +47,133 @@
 
 .btn-check.active {
   color: #4CAF50;
+} */
+
+.comidas-container {
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.comidas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.btn-add {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.semanario-scroll-container {
+  width: 100%;
+  overflow-x: auto; /* Scroll horizontal */
+  -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.semanario-inner {
+  min-width: 800px; /* Ancho mínimo para forzar scroll en móvil */
+}
+
+.header-grid {
+  display: grid;
+  grid-template-columns: 120px repeat(7, 1fr); /* Ajusta el ancho de la columna de comidas */
+  background-color: #f5f5f5;
+  font-weight: bold;
+  text-align: center;
+}
+
+.tipo-comida-cell,
+.dia-cell {
+  padding: 10px;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 120px repeat(7, 1fr);
+  grid-auto-rows: minmax(60px, auto);
+}
+
+.celda {
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 5px;
+  min-height: 60px;
+  text-align: center; /* Alinea el contenido al centro */
+}
+
+.comida-item {
+  background-color: #e3f2fd;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 5px;
+}
+
+.comida-item.completado {
+  background-color: #e8f5e9;
+  opacity: 0.7;
+}
+
+.comida-info {
+  margin-bottom: 5px;
+}
+
+.comida-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.btn-check, .btn-edit, .btn-delete {
+  border: none;
+  padding: 5px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.btn-check {
+  background-color: #81c784;
+  color: white;
+}
+
+.btn-check.active {
+  background-color: #4CAF50;
+}
+
+.btn-edit {
+  background-color: #64b5f6;
+  color: white;
+}
+
+.btn-delete {
+  background-color: #e57373;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .semanario-scroll-container {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+  
+  .semanario-inner {
+    min-width: 800px; /* Ajusta según necesidad */
+  }
 }
