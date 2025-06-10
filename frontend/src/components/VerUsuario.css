@@ -7,7 +7,17 @@
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
-.back-button {
+.btn-volver {
+  background-color: #e57373;
+  color: white;
+}
+
+.btn-volver:hover {
+  transform: scale(1.1); 
+  transition: transform 0.3s ease, background 0.3s ease; 
+}
+
+/* .back-button {
   position: absolute;
   top: 1.5rem;
   left: 1.5rem;
@@ -23,7 +33,7 @@
 
 .back-button:hover {
   text-decoration: underline;
-}
+} */
 
 .user-header {
   text-align: center;

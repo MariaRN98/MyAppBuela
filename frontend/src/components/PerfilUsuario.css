@@ -141,3 +141,13 @@
   transform: scale(1.1); 
   transition: transform 0.3s ease, background 0.3s ease; 
 }
+
+.btn-volver {
+  background-color: #e57373;
+  color: white;
+}
+
+.btn-volver:hover {
+  transform: scale(1.1); 
+  transition: transform 0.3s ease, background 0.3s ease; 
+}

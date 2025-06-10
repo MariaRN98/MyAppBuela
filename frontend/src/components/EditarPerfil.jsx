@@ -244,20 +244,21 @@ const handleSubmit = async (e) => {
         </div>
 
         <div className="form-actions">
+          <button
+            type="button"
+            onClick={() => navigate('/perfil')}
+            className="btn-cancel"
+          >
+            <FaTimes /> Cancelar
+          </button>
           <button 
             type="submit" 
-            className="btn-guardar-editar"
+            className="btn-save"
             disabled={isSubmitting}
           >
             <FaSave /> {isSubmitting ? 'Guardando...' : 'Guardar Cambios'}
           </button>
-          <button
-            type="button"
-            onClick={() => navigate('/perfil')}
-            className="btn-cancelar"
-          >
-            <FaTimes /> Cancelar
-          </button>
+
         </div>
       </form>
     </div>

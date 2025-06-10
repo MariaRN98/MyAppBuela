@@ -124,9 +124,6 @@ const CompraForm = ({ editMode }) => {
         )}
         
         <div className="form-actions">
-          <button type="submit" className="btn-save">
-            <FaSave /> {editMode ? 'Actualizar' : 'Guardar'}
-          </button>
           <button 
             type="button" 
             className="btn-cancel"
@@ -134,6 +131,10 @@ const CompraForm = ({ editMode }) => {
           >
             <FaTimes /> Cancelar
           </button>
+          <button type="submit" className="btn-save">
+            <FaSave /> {editMode ? 'Actualizar' : 'Guardar'}
+          </button>
+
         </div>
       </form>
     </div>
