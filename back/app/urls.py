@@ -60,7 +60,7 @@ urlpatterns = [
     path('api/current-user/', current_user, name='current-user'),
     path('api/dependientes-usuario/', dependientes_usuario, name='dependientes-usuario'),
     path('api/desactivar-cuenta/', desactivar_cuenta, name='desactivar-cuenta'),
-    path('api/dependientes/<int:dependiente_id>/eliminar-acceso/', eliminar_acceso, name='eliminar-acceso'),
+    path('api/dependientes/<int:dependiente_id>/eliminar-acceso/', eliminar_acceso_usuario, name='eliminar-acceso'),
     path('api/usuarios/', lista_usuarios, name='lista-usuarios'),
 
     #acceso

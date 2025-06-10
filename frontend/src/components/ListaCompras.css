@@ -1,6 +1,10 @@
 .lista-compras-container {
-  margin: 6rem 2rem 2rem;
-  max-width: 800px;
+  max-width: 600px;
+  margin: 6rem auto 2rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .header-compras {

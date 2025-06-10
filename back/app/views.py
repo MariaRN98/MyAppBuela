@@ -734,7 +734,7 @@ def dependientes_usuario(request):
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
-def eliminar_acceso(request, dependiente_id):
+def eliminar_acceso_usuario(request, dependiente_id):
     acceso = get_object_or_404(
         Acceso,
         usuario=request.user,

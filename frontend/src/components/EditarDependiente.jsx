@@ -63,25 +63,47 @@ useEffect(() => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const formDataToSend = new FormData();
-      for (const key in formData) {
-        if (formData[key] !== null) {
-          formDataToSend.append(key, formData[key]);
-        }
+  e.preventDefault();
+  try {
+    const formDataToSend = new FormData();
+    
+    // Solo agregar campos que tienen valor
+    const fields = ['nombre', 'apellidos', 'fecha_nacimiento', 'movilidad', 
+                   'enfermedades', 'alergias', 'vacunas'];
+    
+    fields.forEach(field => {
+      if (formData[field] !== null && formData[field] !== undefined) {
+        formDataToSend.append(field, formData[field]);
       }
+    });
 
-      await api.put(`/api/dependientes/${dependienteId}/gestionar/`, formDataToSend, {
+    // Manejar la imagen solo si se seleccionó una nueva
+    if (formData.foto_perfil instanceof File) {
+      formDataToSend.append('foto_perfil', formData.foto_perfil);
+    }
+
+
+
+    const response = await api.put(
+      `/api/dependientes/${dependienteId}/gestionar/`, 
+      formDataToSend, 
+      {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
-      });
+      }
+    );
+
+    if (response.status === 200) {
       navigate(`/dependientes/${dependienteId}`);
-    } catch (err) {
+    } else {
       setError('Error al actualizar el perfil');
     }
-  };
+  } catch (err) {
+    console.error('Error detallado:', err.response?.data || err.message);
+    setError(err.response?.data?.message || 'Error al actualizar el perfil');
+  }
+};
 
   return (
     <div className="register-container">

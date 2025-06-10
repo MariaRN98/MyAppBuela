@@ -70,7 +70,7 @@ const EditarPerfil = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
   setIsSubmitting(true);
   setErrors({});
@@ -88,17 +88,29 @@ const EditarPerfil = () => {
     formData.append('email', usuario.email);
     formData.append('telefono', usuario.telefono);
     formData.append('fecha_nacimiento', usuario.fecha_nacimiento);
+    
     if (usuario.foto_perfil instanceof File) {
       formData.append('foto_perfil', usuario.foto_perfil);
     }
 
-
-    navigate('/perfil', { 
-      state: { 
-        mensaje: 'Perfil actualizado correctamente',
-        tipo: 'exito'
-      } 
+    // ¡Falta esta línea crucial que hace la petición PUT!
+    const response = await api.put('/api/current-user/', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     });
+
+    // Verifica que la respuesta sea exitosa antes de navegar
+    if (response.status === 200 || response.status === 201) {
+      navigate('/perfil', { 
+        state: { 
+          mensaje: 'Perfil actualizado correctamente',
+          tipo: 'exito'
+        } 
+      });
+    } else {
+      setErrors({ general: 'Error al actualizar el perfil' });
+    }
   } catch (err) {
     if (err.response?.data) {
       const backendErrors = err.response.data;
