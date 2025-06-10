@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { FaUtensils, FaPlus, FaCheck, FaEdit, FaTrash } from 'react-icons/fa';
 import api from '../services/api';
 import './NotasDependiente.css';
 
@@ -70,22 +71,19 @@ const NotasDependiente = () => {
                       onClick={() => navigate(`/dependientes/${dependienteId}/notas/${nota.id}`)}
                       className="btn-edit"
                     >
-                      Editar
+                      <FaEdit />
                     </button>
                     <button
                       onClick={() => handleDelete(nota.id)}
                       className="btn-delete"
                     >
-                      Eliminar
+                      <FaTrash />
                     </button>
                   </div>
                 )}
               </div>
               <p className="nota-body">{nota.cuerpo}</p>
               <div className="nota-footer">
-                <span className="nota-date">
-                  {new Date(nota.fecha_publicacion).toLocaleDateString()}
-                </span>
                 <span className="nota-author">
                   Por: {nota.autor.nombre} {nota.autor.apellido}
                 </span>
@@ -99,9 +97,9 @@ const NotasDependiente = () => {
       {canEdit && (
         <button
           onClick={() => navigate(`/dependientes/${dependienteId}/notas/crear`)}
-          className="btn-float"
+          className="btn-float_nota"
         >
-          +
+          <FaPlus />
         </button>
       )}
     </div>

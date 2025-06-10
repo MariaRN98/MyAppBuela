@@ -71,76 +71,148 @@ const TurnosSemanario = () => {
   if (loading) return <div className="loading">Cargando turnos...</div>;
   if (error) return <div className="error">{error}</div>;
 
+  // return (
+  //   <div className="turnos-container">
+  //     <div className="turnos-header">
+  //       <h2><FaUserClock /> Semanario de Turnos</h2>
+  //       {isAdmin && (
+  //         <button
+  //           onClick={() => navigate(`/dependientes/${dependienteId}/turnos/crear`)}
+  //           className="btn-add"
+  //         >
+  //           <FaPlus /> Nuevo Turno
+  //         </button>
+  //       )}
+  //     </div>
+
+  //     <div className="semanario-scroll-container">
+  //       <div className="semanario-inner">
+  //         <div className="header-grid">
+  //           <div className="hora-cell">Hora</div>
+  //           {diasSemana.map(dia => (
+  //             <div key={dia} className="dia-cell">{dia}</div>
+  //           ))}
+  //         </div>
+
+  //         <div className="grid-container">
+  //           {horasDelDia.map(hora => (
+  //             <React.Fragment key={hora}>
+  //               <div className="hora-cell">{hora}:00</div>
+  //               {diasSemana.map(dia => {
+  //                 const turnosCelda = getTurnosPorDiaYHora(dia, hora);
+  //                 return (
+  //                   <div key={`${dia}-${hora}`} className="celda">
+  //                     {turnosCelda.map(turno => (
+  //                       <div key={turno.id} className="turno-item">
+  //                         <div className="turno-info">
+  //                           <FaUser /> {usuarios.find(u => u.id === turno.usuario)?.first_name || 'Usuario'}
+  //                         </div>
+  //                         {isAdmin && (
+  //                           <div className="turno-actions">
+  //                             <button
+  //                               onClick={(e) => {
+  //                                 e.stopPropagation();
+  //                                 navigate(`/dependientes/${dependienteId}/turnos/${turno.id}/editar`);
+  //                               }}
+  //                               className="btn-edit"
+  //                             >
+  //                               <FaEdit />
+  //                             </button>
+  //                             <button
+  //                               onClick={(e) => {
+  //                                 e.stopPropagation();
+  //                                 handleDelete(turno.id);
+  //                               }}
+  //                               className="btn-delete"
+  //                             >
+  //                               <FaTrash />
+  //                             </button>
+  //                           </div>
+  //                         )}
+  //                       </div>
+  //                     ))}
+  //                   </div>
+  //                 );
+  //               })}
+  //             </React.Fragment>
+  //           ))}
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
+
   return (
-    <div className="turnos-container">
-      <div className="turnos-header">
-        <h2><FaUserClock /> Semanario de Turnos</h2>
-        {isAdmin && (
-          <button
-            onClick={() => navigate(`/dependientes/${dependienteId}/turnos/crear`)}
-            className="btn-add"
-          >
-            <FaPlus /> Nuevo Turno
-          </button>
-        )}
-      </div>
+  <div className="turnos-container">
+    <div className="turnos-header">
+      <h2><FaUserClock /> Semanario de Turnos</h2>
+    </div>
 
-      <div className="semanario-scroll-container">
-        <div className="semanario-inner">
-          <div className="header-grid">
-            <div className="hora-cell">Hora</div>
-            {diasSemana.map(dia => (
-              <div key={dia} className="dia-cell">{dia}</div>
-            ))}
-          </div>
+    <div className="semanario-scroll-container">
+      <div className="semanario-inner">
+        <div className="header-grid">
+          <div className="hora-cell">Hora</div>
+          {diasSemana.map(dia => (
+            <div key={dia} className="dia-cell">{dia}</div>
+          ))}
+        </div>
 
-          <div className="grid-container">
-            {horasDelDia.map(hora => (
-              <React.Fragment key={hora}>
-                <div className="hora-cell">{hora}:00</div>
-                {diasSemana.map(dia => {
-                  const turnosCelda = getTurnosPorDiaYHora(dia, hora);
-                  return (
-                    <div key={`${dia}-${hora}`} className="celda">
-                      {turnosCelda.map(turno => (
-                        <div key={turno.id} className="turno-item">
-                          <div className="turno-info">
-                            <FaUser /> {usuarios.find(u => u.id === turno.usuario)?.first_name || 'Usuario'}
-                          </div>
-                          {isAdmin && (
-                            <div className="turno-actions">
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  navigate(`/dependientes/${dependienteId}/turnos/${turno.id}/editar`);
-                                }}
-                                className="btn-edit"
-                              >
-                                <FaEdit />
-                              </button>
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleDelete(turno.id);
-                                }}
-                                className="btn-delete"
-                              >
-                                <FaTrash />
-                              </button>
-                            </div>
-                          )}
+        <div className="grid-container">
+          {horasDelDia.map(hora => (
+            <React.Fragment key={hora}>
+              <div className="hora-cell">{hora}:00</div>
+              {diasSemana.map(dia => {
+                const turnosCelda = getTurnosPorDiaYHora(dia, hora);
+                return (
+                  <div key={`${dia}-${hora}`} className="celda">
+                    {turnosCelda.map(turno => (
+                      <div key={turno.id} className="turno-item">
+                        <div className="turno-info">
+                          <FaUser /> {usuarios.find(u => u.id === turno.usuario)?.first_name || 'Usuario'}
                         </div>
-                      ))}
-                    </div>
-                  );
-                })}
-              </React.Fragment>
-            ))}
-          </div>
+                        {isAdmin && (
+                          <div className="turno-actions">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/dependientes/${dependienteId}/turnos/${turno.id}/editar`);
+                              }}
+                              className="btn-edit"
+                            >
+                              <FaEdit />
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDelete(turno.id);
+                              }}
+                              className="btn-delete"
+                            >
+                              <FaTrash />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
+            </React.Fragment>
+          ))}
         </div>
       </div>
     </div>
-  );
+
+    {isAdmin && (
+      <button
+        onClick={() => navigate(`/dependientes/${dependienteId}/turnos/crear`)}
+        className="btn-add-floating"
+      >
+        <FaPlus />
+      </button>
+    )}
+  </div>
+);
 };
 
 export default TurnosSemanario;

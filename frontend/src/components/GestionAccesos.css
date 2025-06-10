@@ -183,7 +183,7 @@
   }
   
   .table-header {
-    display: none; /* Ocultamos los headers en móvil */
+    display: none; 
   }
   
   .acceso-item {
@@ -226,23 +226,5 @@
   .btn-ver {
     padding: 0.5rem;
     font-size: 0.8rem;
-  }
-  
-  .btn-editar span,
-  .btn-eliminar span,
-  .btn-ver span {
-    display: none;
-  }
-  
-  .btn-editar::after {
-    content: "Editar";
-  }
-  
-  .btn-eliminar::after {
-    content: "Eliminar";
-  }
-  
-  .btn-ver::after {
-    content: "Ver";
   }
 }

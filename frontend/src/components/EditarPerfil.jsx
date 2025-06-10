@@ -246,7 +246,7 @@ const handleSubmit = async (e) => {
         <div className="form-actions">
           <button 
             type="submit" 
-            className="btn-guardar"
+            className="btn-guardar-editar"
             disabled={isSubmitting}
           >
             <FaSave /> {isSubmitting ? 'Guardando...' : 'Guardar Cambios'}

@@ -4,7 +4,7 @@ import { FaPlus, FaPills, FaCheck, FaEdit, FaTrash, FaSpinner, FaTimes } from 'r
 import api from '../services/api';
 import './MedicamentosSemanario.css';
 
-const diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+const diasSemana = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
 const horasDelDia = Array.from({ length: 24 }, (_, i) => i);
 
 const MedicamentosSemanario = () => {
@@ -99,86 +99,168 @@ const MedicamentosSemanario = () => {
     );
   }
 
-  return (
-    <div className="medicamentos-container">
-      <div className="medicamentos-header">
-        <h2><FaPills /> Semanario de Medicamentos</h2>
-        {isAdmin && (
-          <button 
-            onClick={() => navigate(`/dependientes/${dependienteId}/medicamentos/crear`)}
-            className="btn-add"
-            disabled={loading}
-          >
-            {loading ? <FaSpinner className="spinner" /> : <FaPlus />}
-            {loading ? 'Cargando...' : 'Nuevo Medicamento'}
-          </button>
-        )}
-      </div>
+  // return (
+  //   <div className="medicamentos-container">
+  //     <div className="medicamentos-header">
+  //       <h2><FaPills /> Semanario de Medicamentos</h2>
+  //       {isAdmin && (
+  //         <button 
+  //           onClick={() => navigate(`/dependientes/${dependienteId}/medicamentos/crear`)}
+  //           className="btn-add"
+  //           disabled={loading}
+  //         >
+  //           {loading ? <FaSpinner className="spinner" /> : <FaPlus />}
+  //           {loading ? 'Cargando...' : 'Nuevo Medicamento'}
+  //         </button>
+  //       )}
+  //     </div>
 
-      <div className="semanario-scroll-container">
-        <div className="semanario-inner">
-          <div className="header-grid">
-            <div className="hora-cell">Hora</div>
-            {diasSemana.map(dia => (
-              <div key={dia} className="dia-cell">{dia}</div>
-            ))}
-          </div>
+  //     <div className="semanario-scroll-container">
+  //       <div className="semanario-inner">
+  //         <div className="header-grid">
+  //           <div className="hora-cell">Hora</div>
+  //           {diasSemana.map(dia => (
+  //             <div key={dia} className="dia-cell">{dia}</div>
+  //           ))}
+  //         </div>
 
-          <div className="grid-container">
-            {horasDelDia.map(hora => (
-              <React.Fragment key={hora}>
-                <div className="hora-cell">{hora}:00</div>
-                {diasSemana.map(dia => {
-                  const medicamentosCelda = getMedicamentosPorDiaYHora(dia, hora);
-                  return (
-                    <div key={`${dia}-${hora}`} className="celda">
-                      {medicamentosCelda.map(med => (
-                        <div key={med.id} className={`medicamento-item ${med.tomado ? 'completado' : ''}`}>
-                          <div className="medicamento-info">
-                            <strong>{med.medicamento}</strong> ({med.dosis})
-                          </div>
-                          <div className="medicamento-actions">
-                            <button
-                              onClick={() => handleMarcarTomado(med.id, med.tomado)}
-                              className={`btn-check ${med.tomado ? 'active' : ''}`}
-                              disabled={loading}
-                              aria-label={med.tomado ? 'Marcar como no tomado' : 'Marcar como tomado'}
-                            >
-                              <FaCheck />
-                            </button>
-                            {isAdmin && (
-                              <>
-                                <button
-                                  onClick={() => navigate(`/dependientes/${dependienteId}/medicamentos/${med.id}/editar`)}
-                                  className="btn-edit"
-                                  disabled={loading}
-                                  aria-label="Editar medicamento"
-                                >
-                                  <FaEdit />
-                                </button>
-                                <button
-                                  onClick={() => handleDelete(med.id)}
-                                  className="btn-delete"
-                                  disabled={loading}
-                                  aria-label="Eliminar medicamento"
-                                >
-                                  <FaTrash />
-                                </button>
-                              </>
-                            )}
-                          </div>
+  //         <div className="grid-container">
+  //           {horasDelDia.map(hora => (
+  //             <React.Fragment key={hora}>
+  //               <div className="hora-cell">{hora}:00</div>
+  //               {diasSemana.map(dia => {
+  //                 const medicamentosCelda = getMedicamentosPorDiaYHora(dia, hora);
+  //                 return (
+  //                   <div key={`${dia}-${hora}`} className="celda">
+  //                     {medicamentosCelda.map(med => (
+  //                       <div key={med.id} className={`medicamento-item ${med.tomado ? 'completado' : ''}`}>
+  //                         <div className="medicamento-info">
+  //                           <strong>{med.medicamento}</strong> ({med.dosis})
+  //                         </div>
+  //                         <div className="medicamento-actions">
+  //                           <button
+  //                             onClick={() => handleMarcarTomado(med.id, med.tomado)}
+  //                             className={`btn-check ${med.tomado ? 'active' : ''}`}
+  //                             disabled={loading}
+  //                             aria-label={med.tomado ? 'Marcar como no tomado' : 'Marcar como tomado'}
+  //                           >
+  //                             <FaCheck />
+  //                           </button>
+  //                           {isAdmin && (
+  //                             <>
+  //                               <button
+  //                                 onClick={() => navigate(`/dependientes/${dependienteId}/medicamentos/${med.id}/editar`)}
+  //                                 className="btn-edit"
+  //                                 disabled={loading}
+  //                                 aria-label="Editar medicamento"
+  //                               >
+  //                                 <FaEdit />
+  //                               </button>
+  //                               <button
+  //                                 onClick={() => handleDelete(med.id)}
+  //                                 className="btn-delete"
+  //                                 disabled={loading}
+  //                                 aria-label="Eliminar medicamento"
+  //                               >
+  //                                 <FaTrash />
+  //                               </button>
+  //                             </>
+  //                           )}
+  //                         </div>
+  //                       </div>
+  //                     ))}
+  //                   </div>
+  //                 );
+  //               })}
+  //             </React.Fragment>
+  //           ))}
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
+
+  // ...existing code...
+return (
+  <div className="medicamentos-container">
+    <div className="medicamentos-header">
+      <h2><FaPills /> Semanario de Medicamentos</h2>
+    </div>
+
+    <div className="semanario-scroll-container">
+      <div className="semanario-inner">
+        <div className="header-grid">
+          <div className="hora-cell">Hora</div>
+          {diasSemana.map(dia => (
+            <div key={dia} className="dia-cell">{dia}</div>
+          ))}
+        </div>
+
+        <div className="grid-container">
+          {horasDelDia.map(hora => (
+            <React.Fragment key={hora}>
+              <div className="hora-cell">{hora}:00</div>
+              {diasSemana.map(dia => {
+                const medicamentosCelda = getMedicamentosPorDiaYHora(dia, hora);
+                return (
+                  <div key={`${dia}-${hora}`} className="celda">
+                    {medicamentosCelda.map(med => (
+                      <div key={med.id} className={`medicamento-item ${med.tomado ? 'completado' : ''}`}>
+                        <div className="medicamento-info">
+                          <strong>{med.medicamento}</strong> ({med.dosis})
                         </div>
-                      ))}
-                    </div>
-                  );
-                })}
-              </React.Fragment>
-            ))}
-          </div>
+                        <div className="medicamento-actions">
+                          <button
+                            onClick={() => handleMarcarTomado(med.id, med.tomado)}
+                            className={`btn-check ${med.tomado ? 'active' : ''}`}
+                            disabled={loading}
+                            aria-label={med.tomado ? 'Marcar como no tomado' : 'Marcar como tomado'}
+                          >
+                            <FaCheck />
+                          </button>
+                          {isAdmin && (
+                            <>
+                              <button
+                                onClick={() => navigate(`/dependientes/${dependienteId}/medicamentos/${med.id}/editar`)}
+                                className="btn-edit"
+                                disabled={loading}
+                                aria-label="Editar medicamento"
+                              >
+                                <FaEdit />
+                              </button>
+                              <button
+                                onClick={() => handleDelete(med.id)}
+                                className="btn-delete"
+                                disabled={loading}
+                                aria-label="Eliminar medicamento"
+                              >
+                                <FaTrash />
+                              </button>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
+            </React.Fragment>
+          ))}
         </div>
       </div>
     </div>
-  );
+
+    {isAdmin && (
+      <button 
+        onClick={() => navigate(`/dependientes/${dependienteId}/medicamentos/crear`)}
+        className="btn-add-floating"
+        disabled={loading}
+      >
+        <FaPlus />
+      </button>
+    )}
+  </div>
+);
 };
 
 export default MedicamentosSemanario;

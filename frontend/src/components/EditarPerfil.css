@@ -45,7 +45,7 @@
 }
 
 .btn-cambiar-foto {
-  background-color: #2196F3;
+  background-color: #64b5f6;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 5px;
@@ -80,7 +80,7 @@
   margin-top: 2rem;
 }
 
-.btn-guardar {
+.btn-guardar-editar {
   background-color: #4CAF50;
   color: white;
   padding: 0.8rem 1.5rem;
@@ -94,7 +94,7 @@
 }
 
 .btn-cancelar {
-  background-color: #f44336;
+  background-color: #e57373;
   color: white;
   padding: 0.8rem 1.5rem;
   border: none;
@@ -145,7 +145,7 @@
   margin-top: 0.3rem;
 }
 
-.btn-guardar:disabled {
+.btn-guardar-editar:disabled {
   background: #95a5a6;
   cursor: not-allowed;
 }

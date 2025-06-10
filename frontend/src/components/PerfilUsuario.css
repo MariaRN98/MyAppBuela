@@ -90,17 +90,17 @@
 }
 
 .register-container .form-actions-usu .btn-edit-usu {
-  background: #ff9800; 
-  color: white; 
+  background-color: #64b5f6;
+  color: white;
 }
 
 .register-container .form-actions-usu .btn-delete-usu {
-  background: red; 
-  color: white; 
+  background-color: #e57373;
+  color: white;
 }
 
 .register-container .form-actions-usu .btn-dependientes {
-  background: #2ecc71; 
+  background-color: #4CAF50;
   color: white; 
 }
 
@@ -126,16 +126,14 @@
   margin-top: 1.5rem;
 }
 
-
-
 .dependiente-acciones .btn-ver {
-  background: #ff9800; 
-  color: white; 
+  background-color: #64b5f6;
+  color: white;
 }
 
 .dependiente-acciones .btn-eliminar {
-  background: red; 
-  color: white; 
+  background-color: #e57373;
+  color: white;
 }
 
 .dependiente-acciones .btn-eliminar:hover,
