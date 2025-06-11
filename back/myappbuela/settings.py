@@ -114,7 +114,7 @@ DATABASES = {
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = ['*']  # O especifica tu dominio .onrender.com
+ALLOWED_HOSTS = ['*']  
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 

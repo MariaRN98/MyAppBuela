@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: django-backend
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn myappbuela.wsgi:application"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: myappbuela.settings
+      - key: SECRET_KEY
+        value: TU_SECRET_KEY
+      - key: DEBUG
+        value: False
+      - key: DB_NAME
+        value: myappbueladb
+      - key: DB_USER
+        value: mariarn
+      - key: DB_PASSWORD
+        value: la-contraseña
+      - key: DB_HOST
+        value: dpg-xxxxx.frankfurt-postgres.render.com
+      - key: DB_PORT
+        value: 5432
