@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000',  // URL de tu backend Django
+  baseURL: process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000',  // Usa localhost como fallback
 });
 
 // Interceptor para añadir el token JWT a las peticiones
