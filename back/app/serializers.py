@@ -61,11 +61,9 @@ class RegistroSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, data):
-        # Validar que las contraseñas coincidan
         if data['password'] != data['repetir_password']:
             raise serializers.ValidationError("Las contraseñas no coinciden.")
         
-        # Validar que la fecha de nacimiento no sea posterior al día actual
         fecha_nacimiento = data.get('fecha_nacimiento')
         if fecha_nacimiento and fecha_nacimiento > date.today():
             raise serializers.ValidationError("La fecha de nacimiento no puede ser posterior al día actual.")
@@ -84,13 +82,11 @@ class UsuarioSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'first_name', 'last_name', 'foto_perfil', 'telefono', 'fecha_nacimiento']
     
     def validate_email(self, value):
-        # Verifica si el email ya está en uso por otro usuario
         if Usuario.objects.filter(email=value).exclude(id=self.instance.id).exists():
             raise serializers.ValidationError("Este email ya está en uso por otro usuario.")
         return value
     
     def validate_fecha_nacimiento(self, value):
-        # Verifica que la fecha no sea posterior al día actual
         if value and value > date.today():
             raise serializers.ValidationError("La fecha de nacimiento no puede ser posterior al día actual.")
         return value
@@ -101,11 +97,6 @@ class UsuarioSerializer(serializers.ModelSerializer):
             if request:
                 return request.build_absolute_uri(obj.foto_perfil.url)
         return None
-
-# class DependienteSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Dependiente
-#         fields = '__all__'
 
 class DependienteSerializer(serializers.ModelSerializer):
     class Meta:
@@ -179,7 +170,7 @@ class EventoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Evento
         fields = '__all__'
-        read_only_fields = ['dependiente']  # Evita que se modifique el dependiente
+        read_only_fields = ['dependiente']  
 
 class CrearEventoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -191,7 +182,7 @@ class CompraSerializer(serializers.ModelSerializer):
     class Meta:
         model = Compra
         fields = '__all__'
-        read_only_fields = ['dependiente']  # Evita modificaciones no autorizadas
+        read_only_fields = ['dependiente']  
 
 class CrearCompraSerializer(serializers.ModelSerializer):
     class Meta:
@@ -208,13 +199,12 @@ class TurnoSerializer(serializers.ModelSerializer):
             'id', 'dias_semana', 'hora_inicio', 'hora_fin',
             'usuario', 'usuario_nombre', 'dependiente'
         ]
-        read_only_fields = ['dependiente']  # Evita modificación no autorizada
+        read_only_fields = ['dependiente'] 
 
     def get_usuario_nombre(self, obj):
         return f"{obj.usuario.first_name} {obj.usuario.last_name}"
 
     def validate_usuario(self, value):
-        # Verifica que el usuario tenga acceso al dependiente
         if not Acceso.objects.filter(usuario=value, dependiente=self.context['dependiente']).exists():
             raise serializers.ValidationError("El usuario no tiene acceso a este dependiente")
         return value
@@ -224,19 +214,19 @@ class MedicamentoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medicamento
         fields = '__all__'
-        read_only_fields = ['dependiente']  # Evita modificación no autorizada
+        read_only_fields = ['dependiente']  
 
 class MarcarTomadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medicamento
-        fields = ['tomado']  # Solo permite actualizar este campo
+        fields = ['tomado']  
 
 #comidas
 class ComidaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comida
         fields = '__all__'
-        read_only_fields = ['dependiente']  # Evita que se modifique el dependiente
+        read_only_fields = ['dependiente']  
 
 class CrearComidaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -246,12 +236,7 @@ class CrearComidaSerializer(serializers.ModelSerializer):
 class MarcarComidoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comida
-        fields = ['comido']  # Solo permite actualizar este campo
-
-# class DependienteSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Dependiente
-#         fields = ['id', 'nombre', 'apellidos']
+        fields = ['comido']  
 
 class AccesoSerializer(serializers.ModelSerializer):
     dependiente = DependienteSerializer()
@@ -269,7 +254,7 @@ class AccesoSerializer(serializers.ModelSerializer):
         fields = ['id', 'usuario', 'rol']
 
 class NuevoAccesoSerializer(serializers.ModelSerializer):
-    usuario = serializers.PrimaryKeyRelatedField(queryset=Usuario.objects.all())  # Acepta un ID en lugar de un objeto completo
+    usuario = serializers.PrimaryKeyRelatedField(queryset=Usuario.objects.all())  
 
     class Meta:
         model = Acceso

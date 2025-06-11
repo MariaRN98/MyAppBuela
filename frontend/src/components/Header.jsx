@@ -7,14 +7,11 @@ import './Header.css';
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  const userData = JSON.parse(localStorage.getItem('user')); // Guardado durante el login
-
-  // Construir la URL completa para la foto de perfil
-
+  const userData = JSON.parse(localStorage.getItem('user'));
 
   const handleLogout = async () => {
     try {
-      await api.post('/api/auth/logout/'); // Si tienes endpoint de logout
+      await api.post('/api/auth/logout/'); 
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       localStorage.removeItem('user');
@@ -25,10 +22,17 @@ const Header = () => {
   };
 
   return (
-    <header className="header">
-      <div className="header-left">
-        <Link to="/dashboard" className="logo">MyAppBuela</Link>
-      </div>
+  <header className="header">
+    <div className="header-left">
+      <Link to="/dashboard" className="logo">
+        <img 
+          src="/logo.png" 
+          alt="Logo"
+          className="app-logo"
+        />
+        MyAppBuela
+      </Link>
+    </div>
       
       <div className="header-right" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
         {userData?.foto_perfil ? (
@@ -46,8 +50,7 @@ const Header = () => {
         {isDropdownOpen && (
           <div className="dropdown-menu">
             <Link to="/perfil" className="dropdown-item">Mi Perfil</Link>
-            <Link to="/dashboard" className="dropdown-item">Lista de Dependientes</Link>
-            <button onClick={handleLogout} className="dropdown-item">Cerrar Sesión</button>
+            <Link onClick={handleLogout} className="dropdown-item">Cerrar Sesión</Link>
           </div>
         )}
       </div>

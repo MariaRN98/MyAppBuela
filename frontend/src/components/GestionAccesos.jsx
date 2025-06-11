@@ -77,80 +77,6 @@ const GestionAccesos = () => {
     );
   }
 
-  // return (
-  //   <div className="gestion-accesos-container">
-  //     <div className="acceso_header">
-  //       <h2>
-  //         <FaUser /> Gestión de Accesos
-  //       </h2>
-  //     </div>
-
-  //     <div className="accesos-list">
-  //       {accesos.length > 0 ? (
-  //         <>
-  //           <div className="table-header">
-  //             <div>Usuario</div>
-  //             <div>Rol</div>
-  //             <div>Acciones</div>
-  //           </div>
-
-  //           {accesos.map(acceso => (
-  //             <div key={acceso.id} className="acceso-item">
-  //               <div className="usuario-info">
-  //                 {acceso.usuario.first_name} {acceso.usuario.last_name}
-  //               </div>
-  //               <div className={`rol ${acceso.rol.toLowerCase()}`}>
-  //                 {acceso.rol}
-  //               </div>
-  //               <div className="acciones">
-  //                 <button 
-  //                   onClick={() => handleEditarRol(acceso.id)}
-  //                   className="btn-editar"
-  //                   aria-label="Editar acceso"
-  //                 >
-  //                   <FaEdit /> <span>Editar</span>
-  //                 </button>
-  //                 <button
-  //                   onClick={() => handleEliminarAcceso(acceso.id)}
-  //                   className="btn-eliminar"
-  //                   aria-label="Eliminar acceso"
-  //                 >
-  //                   <FaTrash /> <span>Eliminar</span>
-  //                 </button>
-  //                 <button
-  //                   onClick={() => navigate(`/dependientes/${dependienteId}/usuarios/${acceso.usuario.id}`)}
-  //                   className="btn-ver"
-  //                   aria-label="Ver usuario"
-  //                 >
-  //                   <FaSearch /> <span>Ver</span>
-  //                 </button>
-  //               </div>
-  //             </div>
-  //           ))}
-  //         </>
-  //       ) : (
-  //         <div className="no-accesos">
-  //           No hay usuarios con acceso a este dependiente
-  //         </div>
-  //       )}
-  //     </div>
-
-  //     <div className="footer-actions">
-  //       <button 
-  //         onClick={() => navigate(`/dependientes/${dependienteId}`)}
-  //         className="btn-cancelar"
-  //       >
-  //         <FaTimes /> Volver al dependiente
-  //       </button>
-  //       <button
-  //         onClick={() => navigate(`/dependientes/${dependienteId}/accesos/nuevo`)}
-  //         className="btn-agregar"
-  //       >
-  //         <FaPlus /> Agregar Usuario
-  //       </button>
-  //     </div>
-  //   </div>
-  // );
   return (
   <div className="gestion-accesos-container">
     <div className="acceso_header">
@@ -162,11 +88,7 @@ const GestionAccesos = () => {
     <div className="accesos-list">
       {accesos.length > 0 ? (
         <>
-          <div className="table-header">
-            <div>Usuario</div>
-            <div>Rol</div>
-            <div>Acciones</div>
-          </div>
+
 
           {accesos.map(acceso => (
             <div key={acceso.id} className="acceso-item">

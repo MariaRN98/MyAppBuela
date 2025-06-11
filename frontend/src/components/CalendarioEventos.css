@@ -1,8 +1,7 @@
-/* Estilos generales para pantallas grandes */
 .calendario-container {
   margin: 6rem auto 2rem;
   max-width: 1200px;
-  padding: 0 1rem; /* Espaciado lateral para pantallas pequeñas */
+  padding: 0 1rem; 
 }
 
 .calendario-wrapper {
@@ -13,11 +12,10 @@
   margin-bottom: 2rem;
 }
 
-/* Estilos generales para pantallas grandes */
 .calendario-container {
   margin: 6rem auto 2rem;
   max-width: 1200px;
-  padding: 0 1rem; /* Espaciado lateral para pantallas pequeñas */
+  padding: 0 1rem; 
 }
 
 .leyenda {
@@ -46,10 +44,12 @@
   border-radius: 4px;
 }
 
-.color-cita { background-color: #e74c3c; }
-.color-visita { background-color: #2ecc71; }
-.color-cumple { background-color: #f39c12; }
-.color-otro { background-color: #3498db; }
+.color-cita { background-color: #e74c3c; } 
+.color-visita { background-color: #2ecc71; } 
+.color-cumple { background-color: #f39c12; } 
+.color-cura { background-color: #3498db; } 
+.color-vacuna { background-color: #9b59b6; } 
+.color-otros { background-color: #95a5a6; }   
 
 .calendar-navigation {
   display: flex;
@@ -79,63 +79,59 @@
 }
 
 @media (max-width: 768px) {
-  /* Ajustes para el contenedor principal del calendario */
+  
   .rbc-calendar {
     height: auto !important;
     min-height: 400px;
-    margin: 0 !important; /* Elimina márgenes */
-    padding: 0 !important; /* Elimina paddings */
+    margin: 0 !important; 
+    padding: 0 !important; 
   }
 
-  /* Contenedor de la vista mensual */
+
   .rbc-month-view {
     height: auto !important;
     overflow: visible !important;
-    margin: 0 !important; /* Elimina márgenes */
-    padding: 0 !important; /* Elimina paddings */
+    margin: 0 !important;
+    padding: 0 !important; 
   }
 
-  /* Tabla del mes */
   .rbc-month-header,
   .rbc-month-row {
     display: flex !important;
     flex-wrap: wrap !important;
-    margin: 0 !important; /* Elimina márgenes */
-    padding: 0 !important; /* Elimina paddings */
-    border: none !important; /* Elimina bordes */
+    margin: 0 !important; 
+    padding: 0 !important; 
+    border: none !important; 
   }
 
-  /* Cabeceras de los días (Lun, Mar, Mié...) */
   .rbc-header {
-    flex: 1 0 14.28% !important; /* 7 columnas iguales */
+    flex: 1 0 14.28% !important;
     padding: 5px 0 !important;
     font-size: 0.7rem !important;
     text-align: center !important;
-    border: none !important; /* Elimina bordes */
+    border: none !important; 
   }
 
   .rbc-off-range-bg,
   .rbc-off-range {
-    flex: 1 0 14.28% !important; /* Asegura que las celdas tengan el mismo tamaño */
-    aspect-ratio: 1 !important; /* Hace que las celdas sean cuadradas */
-    min-height: 40px !important; /* Altura mínima */
-    padding: 0 !important; /* Elimina el padding interno */
-    margin: 0 !important; /* Elimina márgenes */
+    flex: 1 0 14.28% !important; 
+    aspect-ratio: 1 !important; 
+    min-height: 40px !important; 
+    padding: 0 !important; 
+    margin: 0 !important; 
     font-size: 0.7rem !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    background-color: #f9f9f9 !important; /* Color de fondo para días de otro mes */
-    border: none !important; /* Elimina bordes */
-    box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1) !important; /* Sombra sutil */
+    background-color: #f9f9f9 !important; 
+    border: none !important; 
+    box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1) !important; 
   }
 
-  /* Ajustes para el texto de los días de otro mes */
   .rbc-off-range {
-    color: #ccc !important; /* Color más claro para el texto */
+    color: #ccc !important; 
   }
 
-  /* Asegura que las celdas de días de otro mes estén alineadas */
   .rbc-month-row {
     display: flex !important;
     flex-wrap: wrap !important;
@@ -143,7 +139,6 @@
     padding: 0 !important;
   }
 
-  /* Celdas principales */
   .rbc-day-bg,
   .rbc-date-cell {
     flex: 1 0 14.28% !important;
@@ -159,13 +154,11 @@
     box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1) !important;
   }
 
-  /* Número del día */
   .rbc-date-cell {
     align-items: flex-start !important;
     padding-top: 3px !important;
   }
 
-  /* Eventos */
   .rbc-event {
     font-size: 0.6rem !important;
     padding: 0 2px !important;
@@ -176,12 +169,10 @@
     line-height: 1.2 !important;
   }
 
-  /* Ocultamos bordes innecesarios */
   .rbc-month-row + .rbc-month-row {
     border-top: none !important;
   }
 
-  /* Ajustamos el header del calendario */
   .rbc-toolbar {
     flex-direction: column !important;
     align-items: stretch !important;
@@ -189,7 +180,6 @@
     margin-bottom: 0.5rem !important;
   }
 
-  /* Botones de navegación */
   .rbc-btn-group {
     display: flex !important;
     justify-content: space-between !important;
@@ -200,7 +190,6 @@
     font-size: 0.8rem !important;
   }
 
-  /* Ajustar leyenda para móviles */
   .leyenda {
     flex-direction: row !important;
     flex-wrap: wrap !important;

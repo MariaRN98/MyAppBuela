@@ -24,7 +24,7 @@ const CalendarioEventos = () => {
   const { dependienteId } = useParams();
   const [eventos, setEventos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentDate, setCurrentDate] = useState(new Date()); // Estado para controlar la fecha actual
+  const [currentDate, setCurrentDate] = useState(new Date()); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,12 +49,10 @@ const CalendarioEventos = () => {
     fetchEventos();
   }, [dependienteId]);
 
-  // Función para manejar la navegación entre meses
   const onNavigate = (newDate) => {
     setCurrentDate(newDate);
   };
 
-  // Funciones personalizadas para los botones anterior/siguiente
   const goToPreviousMonth = () => {
     setCurrentDate(addMonths(currentDate, -1));
   };
@@ -65,19 +63,28 @@ const CalendarioEventos = () => {
 
   const eventStyleGetter = (event) => {
     let backgroundColor = '#3174ad';
-    switch(event.tipo) {
-      case 'Cita medica':
-        backgroundColor = '#e74c3c';
-        break;
-      case 'Visita':
-        backgroundColor = '#2ecc71';
-        break;
-      case 'Cumpleaños':
-        backgroundColor = '#f39c12';
-        break;
-      default:
-        backgroundColor = '#3498db';
-    }
+  switch(event.tipo) {
+    case 'Cita medica':
+      backgroundColor = '#e74c3c'; 
+      break;
+    case 'Visita':
+      backgroundColor = '#2ecc71'; 
+      break;
+    case 'Cumpleaños':
+      backgroundColor = '#f39c12'; 
+      break;
+    case 'Cura':
+      backgroundColor = '#3498db'; 
+      break;
+    case 'Vacuna':
+      backgroundColor = '#9b59b6'; 
+      break;
+    case 'Otros':
+      backgroundColor = '#95a5a6'; 
+      break;
+    default:
+      backgroundColor = '#95a5a6'; 
+  }
     return {
       style: {
         backgroundColor,
@@ -93,12 +100,8 @@ const CalendarioEventos = () => {
 
   return (
   <div className="calendario-container">
-    {/* Título */}
     <h2 className="calendario-titulo">Calendario de Eventos</h2>
 
-
-
-    {/* Calendario */}
     <div className="calendario-wrapper">
       <Calendar
         localizer={localizer}
@@ -125,7 +128,6 @@ const CalendarioEventos = () => {
       />
     </div>
 
-    {/* Botón Ver Lista */}
     <div className="calendar-footer">
       <button
         onClick={() => navigate(`/dependientes/${dependienteId}/eventos`)}
@@ -135,13 +137,15 @@ const CalendarioEventos = () => {
       </button>
     </div>
       
-      <div className="leyenda">
-        <h4>Leyenda:</h4>
-        <div className="leyenda-item"><span className="color-cita"></span> Cita médica</div>
-        <div className="leyenda-item"><span className="color-visita"></span> Visita</div>
-        <div className="leyenda-item"><span className="color-cumple"></span> Cumpleaños</div>
-        <div className="leyenda-item"><span className="color-otro"></span> Otros eventos</div>
-      </div>
+<div className="leyenda">
+  <h4>Leyenda:</h4>
+  <div className="leyenda-item"><span className="color-cita"></span> Cita médica</div>
+  <div className="leyenda-item"><span className="color-visita"></span> Visita</div>
+  <div className="leyenda-item"><span className="color-cumple"></span> Cumpleaños</div>
+  <div className="leyenda-item"><span className="color-cura"></span> Cura</div>
+  <div className="leyenda-item"><span className="color-vacuna"></span> Vacuna</div>
+  <div className="leyenda-item"><span className="color-otros"></span> Otros</div>
+</div>
     </div>
   );
 };

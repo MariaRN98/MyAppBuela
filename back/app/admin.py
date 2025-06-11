@@ -21,4 +21,3 @@ class CustomUserAdmin(UserAdmin):
         (None, {'fields': ('foto_perfil', 'fecha_nacimiento', 'telefono')}),
     )
 
-#admin.site.register(Usuario, CustomUserAdmin)

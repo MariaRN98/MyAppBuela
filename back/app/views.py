@@ -41,15 +41,15 @@ class LoginView(APIView):
         return Response({
             'access_token': str(refresh.access_token),
             'refresh_token': str(refresh),
-            'user': user_serializer.data  # Incluye los accesos en la respuesta
+            'user': user_serializer.data  
         })
     
 
 
-@csrf_exempt  # 👈 Esto desactiva CSRF solo para esta vista
+@csrf_exempt 
 @api_view(['POST'])
-@permission_classes([AllowAny])  # 👈 Permite el acceso sin token ni login
-@authentication_classes([])     # 👈 No requiere autenticación
+@permission_classes([AllowAny])  
+@authentication_classes([]) 
 def register_view(request):
     serializer = RegistroSerializer(data=request.data)
     if serializer.is_valid():
@@ -90,7 +90,6 @@ def crear_dependiente(request):
         return Response(dependiente_serializer.data, status=201)
     return Response(dependiente_serializer.errors, status=400)
 
-# Helper para verificar permisos de escritura
 def tiene_permiso_escritura(usuario, dependiente):
     return Acceso.objects.filter(
         usuario=usuario,
@@ -101,7 +100,6 @@ def tiene_permiso_escritura(usuario, dependiente):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def lista_notas(request, dependiente_id):
-    # Verificar que el usuario tiene acceso al dependiente
     if not Acceso.objects.filter(usuario=request.user, dependiente_id=dependiente_id).exists():
         return Response({"error": "No tienes acceso a este dependiente"}, status=403)
 
@@ -114,7 +112,6 @@ def lista_notas(request, dependiente_id):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def crear_nota(request, dependiente_id):
-    # Verificar que el usuario tiene permisos de escritura
     if not Acceso.objects.filter(
         usuario=request.user,
         dependiente_id=dependiente_id,
@@ -132,18 +129,15 @@ def crear_nota(request, dependiente_id):
         return Response(serializer.data, status=201)
     return Response(serializer.errors, status=400)
 
-# Ver/Editar/Eliminar nota específica
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def detalle_nota(request, dependiente_id, nota_id):
-    # Verificar que el usuario tiene acceso al dependiente
     if not Acceso.objects.filter(usuario=request.user, dependiente_id=dependiente_id).exists():
         return Response({"error": "No tienes acceso a este dependiente"}, status=403)
 
     nota = get_object_or_404(Nota, pk=nota_id, dependiente_id=dependiente_id)
 
-    # Verificar permisos para editar/eliminar
     if request.method in ['PUT', 'DELETE']:
         if nota.usuario != request.user and not Acceso.objects.filter(
             usuario=request.user,
@@ -175,11 +169,10 @@ def detalle_nota(request, dependiente_id, nota_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def perfil_dependiente(request, pk):
-    # Verificar que el usuario tenga acceso al dependiente
     dependiente = get_object_or_404(
         Dependiente,
         pk=pk,
-        dependiente_acceso__usuario=request.user  # Solo si tiene acceso
+        dependiente_acceso__usuario=request.user 
     )
     
     serializer = DependienteDetailSerializer(dependiente)
@@ -192,7 +185,7 @@ def gestionar_dependiente(request, pk):
         Dependiente,
         pk=pk,
         dependiente_acceso__usuario=request.user,
-        dependiente_acceso__rol='Admin'  # Solo Admin puede editar/eliminar
+        dependiente_acceso__rol='Admin'  
     )
     
     if request.method == 'PUT':
@@ -208,7 +201,6 @@ def gestionar_dependiente(request, pk):
     
 #eventos
 
-# Helper para verificar permisos
 def tiene_permiso_escritura(usuario, dependiente):
     return Acceso.objects.filter(
         usuario=usuario,
@@ -216,20 +208,18 @@ def tiene_permiso_escritura(usuario, dependiente):
         rol__in=['Admin', 'Editor']
     ).exists()
 
-# Listar todos los eventos de un dependiente
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def listar_eventos(request, dependiente_id):
     dependiente = get_object_or_404(
         Dependiente,
         pk=dependiente_id,
-        dependiente_acceso__usuario=request.user  # Solo si tiene acceso
+        dependiente_acceso__usuario=request.user 
     )
     eventos = Evento.objects.filter(dependiente=dependiente).order_by('fecha_inicio')
     serializer = EventoSerializer(eventos, many=True)
     return Response(serializer.data)
 
-# Crear evento (solo Admin/Editor)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def crear_evento(request, dependiente_id):
@@ -237,7 +227,7 @@ def crear_evento(request, dependiente_id):
         Dependiente,
         pk=dependiente_id,
         dependiente_acceso__usuario=request.user,
-        dependiente_acceso__rol__in=['Admin', 'Editor']  # Solo estos pueden crear
+        dependiente_acceso__rol__in=['Admin', 'Editor'] 
     )
     
     serializer = CrearEventoSerializer(data=request.data)
@@ -246,7 +236,6 @@ def crear_evento(request, dependiente_id):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# Ver/Editar/Eliminar evento específico
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def detalle_evento(request, dependiente_id, evento_id):
@@ -254,10 +243,9 @@ def detalle_evento(request, dependiente_id, evento_id):
         Evento,
         pk=evento_id,
         dependiente_id=dependiente_id,
-        dependiente__dependiente_acceso__usuario=request.user  # Solo si tiene acceso
+        dependiente__dependiente_acceso__usuario=request.user  
     )
     
-    # Solo Admin/Editor puede modificar/eliminar
     if request.method in ['PUT', 'DELETE']:
         if not tiene_permiso_escritura(request.user, evento.dependiente):
             return Response(
@@ -281,7 +269,6 @@ def detalle_evento(request, dependiente_id, evento_id):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 #compras
-# Helper para verificar permisos
 def tiene_permiso_escritura(usuario, dependiente):
     return Acceso.objects.filter(
         usuario=usuario,
@@ -289,17 +276,15 @@ def tiene_permiso_escritura(usuario, dependiente):
         rol__in=['Admin', 'Editor']
     ).exists()
 
-# Listar/comprar items (todos los usuarios con acceso)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def lista_compras(request, dependiente_id):
     dependiente = get_object_or_404(
         Dependiente,
         pk=dependiente_id,
-        dependiente_acceso__usuario=request.user  # Solo si tiene acceso
+        dependiente_acceso__usuario=request.user 
     )
     
-    # Filtros opcionales (ej: /api/compras/?comprado=false&producto=pan)
     comprado = request.query_params.get('comprado')
     producto = request.query_params.get('producto')
     
@@ -313,7 +298,6 @@ def lista_compras(request, dependiente_id):
     serializer = CompraSerializer(compras.order_by('-id'), many=True)
     return Response(serializer.data)
 
-# Añadir item (solo Admin/Editor)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def crear_compra(request, dependiente_id):
@@ -321,7 +305,7 @@ def crear_compra(request, dependiente_id):
         Dependiente,
         pk=dependiente_id,
         dependiente_acceso__usuario=request.user,
-        dependiente_acceso__rol__in=['Admin', 'Editor']  # Solo estos pueden crear
+        dependiente_acceso__rol__in=['Admin', 'Editor'] 
     )
     
     serializer = CrearCompraSerializer(data=request.data)
@@ -330,7 +314,6 @@ def crear_compra(request, dependiente_id):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# Marcar como comprado/editar/eliminar (solo Admin/Editor)
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def gestionar_compra(request, dependiente_id, compra_id):
@@ -364,7 +347,6 @@ def gestionar_compra(request, dependiente_id, compra_id):
 
     
 #turnos
-# Helper para verificar permisos de Admin
 def es_admin_dependiente(usuario, dependiente_id):
     return Acceso.objects.filter(
         usuario=usuario,
@@ -372,20 +354,18 @@ def es_admin_dependiente(usuario, dependiente_id):
         rol='Admin'
     ).exists()
 
-# Listar turnos (todos los usuarios con acceso)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def listar_turnos(request, dependiente_id):
     dependiente = get_object_or_404(
         Dependiente,
         pk=dependiente_id,
-        dependiente_acceso__usuario=request.user  # Solo si tiene acceso
+        dependiente_acceso__usuario=request.user 
     )
     turnos = Turno.objects.filter(dependiente=dependiente).order_by('dias_semana', 'hora_inicio')
     serializer = TurnoSerializer(turnos, many=True)
     return Response(serializer.data)
 
-# Crear turno (solo Admin)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def crear_turno(request, dependiente_id):
@@ -407,19 +387,16 @@ def crear_turno(request, dependiente_id):
 @permission_classes([IsAuthenticated])
 def usuarios_con_acceso(request, dependiente_id):
     try:
-        # Verificar que el usuario tiene acceso al dependiente
         if not Acceso.objects.filter(usuario=request.user, dependiente_id=dependiente_id).exists():
             return Response(
                 {"error": "No tienes permisos para ver este dependiente"},
                 status=status.HTTP_403_FORBIDDEN
             )
         
-        # Obtener IDs de usuarios con acceso
         usuarios_ids = Acceso.objects.filter(
             dependiente_id=dependiente_id
         ).values_list('usuario_id', flat=True)
         
-        # Obtener usuarios con esos IDs
         usuarios = Usuario.objects.filter(id__in=usuarios_ids)
         
         serializer = UsuarioSerializer(usuarios, many=True)
@@ -462,7 +439,6 @@ def gestionar_turno(request, dependiente_id, turno_id):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 #medicamentos
-# Helper para verificar permisos de Admin
 def es_admin_dependiente(usuario, dependiente_id):
     return Acceso.objects.filter(
         usuario=usuario,
@@ -470,7 +446,6 @@ def es_admin_dependiente(usuario, dependiente_id):
         rol='Admin'
     ).exists()
 
-# Listar medicamentos (todos los usuarios con acceso)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def listar_medicamentos(request, dependiente_id):
@@ -483,7 +458,6 @@ def listar_medicamentos(request, dependiente_id):
     serializer = MedicamentoSerializer(medicamentos, many=True)
     return Response(serializer.data)
 
-# Crear medicamento (solo Admin)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def crear_medicamento(request, dependiente_id):
@@ -501,8 +475,7 @@ def crear_medicamento(request, dependiente_id):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# Editar medicamento (solo Admin)
-@api_view(['GET', 'PUT'])  # 👈 Añade 'GET' aquí
+@api_view(['GET', 'PUT'])  
 @permission_classes([IsAuthenticated])
 def editar_medicamento(request, dependiente_id, medicamento_id):
     medicamento = get_object_or_404(
@@ -525,7 +498,6 @@ def editar_medicamento(request, dependiente_id, medicamento_id):
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
     
-# Marcar como tomado/no tomado (cualquier usuario con acceso)
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def marcar_tomado(request, dependiente_id, medicamento_id):
@@ -533,7 +505,7 @@ def marcar_tomado(request, dependiente_id, medicamento_id):
         Medicamento,
         pk=medicamento_id,
         dependiente_id=dependiente_id,
-        dependiente__dependiente_acceso__usuario=request.user  # Verifica acceso
+        dependiente__dependiente_acceso__usuario=request.user  
     )
     
     serializer = MarcarTomadoSerializer(medicamento, data=request.data, partial=True)
@@ -542,7 +514,6 @@ def marcar_tomado(request, dependiente_id, medicamento_id):
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# Eliminar medicamento (solo Admin)
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def eliminar_medicamento(request, dependiente_id, medicamento_id):
@@ -565,14 +536,12 @@ def eliminar_medicamento(request, dependiente_id, medicamento_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def listar_comidas(request, dependiente_id):
-    # Verifica que el usuario tenga acceso al dependiente
     dependiente = get_object_or_404(
         Dependiente,
         pk=dependiente_id,
         dependiente_acceso__usuario=request.user
     )
     
-    # Filtros opcionales
     tipo_comida = request.query_params.get('tipo_comida')
     dia_semana = request.query_params.get('dia_semana')
     
@@ -591,7 +560,6 @@ def listar_comidas(request, dependiente_id):
 def crear_comida(request, dependiente_id):
     dependiente = get_object_or_404(Dependiente, pk=dependiente_id)
     
-    # Verifica permisos de Admin/Editor
     if not Acceso.objects.filter(
         usuario=request.user,
         dependiente=dependiente,
@@ -611,7 +579,6 @@ def crear_comida(request, dependiente_id):
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def gestionar_comida(request, dependiente_id, comida_id):
-    # Obtener la comida verificando permisos de acceso
     comida = get_object_or_404(
         Comida,
         pk=comida_id,
@@ -619,7 +586,6 @@ def gestionar_comida(request, dependiente_id, comida_id):
         dependiente__dependiente_acceso__usuario=request.user
     )
     
-    # Verificar permisos de escritura para PUT/DELETE
     if request.method in ['PUT', 'DELETE']:
         if not Acceso.objects.filter(
             usuario=request.user,
@@ -631,7 +597,6 @@ def gestionar_comida(request, dependiente_id, comida_id):
                 status=status.HTTP_403_FORBIDDEN
             )
     
-    # Manejar cada método
     if request.method == 'GET':
         serializer = ComidaSerializer(comida)
         return Response(serializer.data)
@@ -650,7 +615,6 @@ def gestionar_comida(request, dependiente_id, comida_id):
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def marcar_comido(request, dependiente_id, comida_id):
-    # Cualquier usuario con acceso puede marcar como comido
     comida = get_object_or_404(
         Comida,
         pk=comida_id,
@@ -666,7 +630,6 @@ def marcar_comido(request, dependiente_id, comida_id):
 
 
 #listado dependientes
-# views.py
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def dependientes_usuario(request):
@@ -682,13 +645,9 @@ class LogoutView(APIView):
 
     def post(self, request):
         try:
-            # Invalida el refresh token
             refresh_token = request.data.get("refresh_token")
             token = RefreshToken(refresh_token)
             token.blacklist()
-
-            # Opcional: Elimina el token de acceso del cliente
-            # (esto se manejará en el frontend)
             
             return Response(
                 {"message": "Sesión cerrada correctamente"},
@@ -741,7 +700,6 @@ def eliminar_acceso_usuario(request, dependiente_id):
         dependiente_id=dependiente_id
     )
     acceso.delete()
-    # Opcional: Eliminar turnos asociados
     Turno.objects.filter(usuario=request.user, dependiente_id=dependiente_id).delete()
     return Response(status=204)
 
@@ -749,10 +707,6 @@ def eliminar_acceso_usuario(request, dependiente_id):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def desactivar_cuenta(request):
-    """
-    Desactiva la cuenta manteniendo todos los datos asociados.
-    Utiliza el campo is_active que ya existe en AbstractUser.
-    """
     user = request.user
     
     try:
@@ -783,7 +737,6 @@ def desactivar_cuenta(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def lista_accesos(request, dependiente_id):
-    # Verificar que el usuario tiene permisos de admin sobre este dependiente
     if not Acceso.objects.filter(
         usuario=request.user,
         dependiente_id=dependiente_id,
@@ -798,7 +751,6 @@ def lista_accesos(request, dependiente_id):
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def eliminar_acceso(request, dependiente_id, acceso_id):
-    # Verificar permisos
     if not Acceso.objects.filter(
         usuario=request.user,
         dependiente_id=dependiente_id,
@@ -810,11 +762,9 @@ def eliminar_acceso(request, dependiente_id, acceso_id):
     acceso.delete()
     return Response(status=204)
 
-# Para editar acceso
 @api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def editar_acceso(request, dependiente_id, acceso_id):
-    # Verificar permisos de admin
     if not Acceso.objects.filter(
         usuario=request.user,
         dependiente_id=dependiente_id,
@@ -835,7 +785,6 @@ def editar_acceso(request, dependiente_id, acceso_id):
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
 
-# Para listar usuarios disponibles
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def lista_usuarios(request):
@@ -849,7 +798,6 @@ def lista_usuarios(request):
 def crear_acceso(request, dependiente_id):
     
     print("Datos recibidos:", request.data)
-    # Verificar que el usuario actual es administrador del dependiente
     if not Acceso.objects.filter(
         usuario=request.user,
         dependiente_id=dependiente_id,
@@ -857,12 +805,10 @@ def crear_acceso(request, dependiente_id):
     ).exists():
         return Response({"error": "No tienes permisos para realizar esta acción"}, status=403)
 
-    # Verificar que el usuario al que se quiere dar acceso no tenga ya acceso
     usuario_id = request.data.get('usuario')
     if Acceso.objects.filter(usuario_id=usuario_id, dependiente_id=dependiente_id).exists():
         return Response({"error": "Este usuario ya tiene acceso"}, status=400)
 
-    # Crear el acceso
     serializer = NuevoAccesoSerializer(data={
         'usuario': usuario_id,
         'dependiente': dependiente_id,
@@ -875,7 +821,6 @@ def crear_acceso(request, dependiente_id):
     print("Errores del serializador:", serializer.errors)
     return Response(serializer.errors, status=400)
 
-# views.py
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def buscar_usuario_por_telefono(request):
@@ -891,12 +836,11 @@ def buscar_usuario_por_telefono(request):
         return Response({"error": "Usuario no encontrado"}, status=404)
     
 
-@api_view(['GET', 'PUT'])  # Asegúrate que incluye GET
+@api_view(['GET', 'PUT'])  
 @permission_classes([IsAuthenticated])
 def editar_acceso(request, dependiente_id, acceso_id):
     print("Entrando a la vista editar_acceso con método:", request.method)
     try:
-        # Verificar que el usuario es admin del dependiente
         if not Acceso.objects.filter(
             usuario=request.user,
             dependiente_id=dependiente_id,
@@ -928,7 +872,6 @@ def ver_usuario(request, usuario_id):
     try:
         usuario = Usuario.objects.get(pk=usuario_id)
         
-        # Obtener dependientes con sus roles
         accesos = Acceso.objects.filter(usuario=usuario).select_related('dependiente')
         dependientes = [{
             'id': acceso.dependiente.id,
@@ -948,7 +891,6 @@ def ver_usuario(request, usuario_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def ver_usuario_dependiente(request, dependiente_id, usuario_id):
-    # Verificar que el usuario tiene acceso al dependiente
     if not Acceso.objects.filter(
         usuario=request.user,
         dependiente_id=dependiente_id

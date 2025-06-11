@@ -1,4 +1,4 @@
-/* AgregarUsuario.css */
+
 .agregar-usuario-container {
   max-width: 600px;
   margin: 6rem auto 2rem;
@@ -197,7 +197,6 @@
   to { transform: rotate(360deg); }
 }
 
-/* Media queries para responsividad */
 @media (max-width: 768px) {
   .agregar-usuario-container {
   max-width: 600px;
