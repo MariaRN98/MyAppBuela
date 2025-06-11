@@ -1,0 +1,128 @@
+.lista-comidas-container {
+  margin: 6rem auto 2rem; 
+  max-width: 1200px; 
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+}
+
+.comidas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.comidas-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #2c3e50;
+}
+
+.comidas-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.comida-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.comida-card:hover {
+  transform: translateY(-3px);
+}
+
+.comida-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.comida-header h3 {
+  margin: 0;
+  color: #2c3e50;
+}
+
+.comida-type {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: #3498db;
+  color: white;
+}
+
+.comida-dates {
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.comida-dates p {
+  margin: 0.25rem 0;
+}
+
+.comida-desc {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.comida-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.no-comidas {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+.btn-float {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  background: #4CAF50;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s, box-shadow 0.3s;
+  z-index: 1000;
+}
+
+.btn-float:hover {
+  background: #388E3C;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-view-semanario {
+  margin: 1rem 0; /* Espaciado entre el título y el botón */
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.btn-view-semanario:hover {
+  background-color: #2980b9;
+}

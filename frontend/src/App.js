@@ -22,6 +22,7 @@ import FormularioMedicamento from './components/FormularioMedicamento';
 import ListaMedicamentos from './components/ListaMedicamentos';
 import ComidasSemanario from './components/ComidasSemanario';
 import FormularioComida from './components/FormularioComida';
+import ListaComidas from './components/ListaComidas';
 import PerfilUsuario from './components/PerfilUsuario';
 import EditarPerfil from './components/EditarPerfil';
 import GestionAccesos from './components/GestionAccesos';
@@ -160,6 +161,11 @@ function App() {
       <ListaMedicamentos />
     </ProtectedRoute>
   } />
+  <Route path=":dependienteId/comidas/lista" element={
+  <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>
+    <ListaComidas />
+  </ProtectedRoute>
+} />
   <Route path=":dependienteId/comidas" element={
     <ProtectedRoute rolesPermitidos={['Admin', 'Editor', 'Lector']}>
       <ComidasSemanario />

@@ -54,6 +54,11 @@ const Register = () => {
     setErrors({});
 
     const newErrors = {};
+
+    if (passwordStrength < 3) {
+      newErrors.password = 'La contraseña debe ser al menos aceptable.';
+    }
+
     if (formData.password !== formData.repetir_password) {
       newErrors.repetir_password = 'Las contraseñas no coinciden';
     }
