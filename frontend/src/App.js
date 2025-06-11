@@ -55,7 +55,7 @@ function App() {
           <Route path="/crear-dependiente" element={<CreateDependiente />} />
           <Route path="/perfil" element={<PerfilUsuario />} />
           <Route path="/editar-perfil" element={<EditarPerfil />} />
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Login />} />
         </Route>
 
                 {/* Rutas con menú de dependiente */}
