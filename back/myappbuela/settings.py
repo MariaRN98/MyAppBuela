@@ -187,5 +187,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CORS_ALLOWED_ORIGINS = [
+    "https://myappbuelasite.onrender.com",
     "http://localhost:3000",
 ]
