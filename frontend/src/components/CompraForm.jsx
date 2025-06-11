@@ -62,7 +62,7 @@ const CompraForm = ({ editMode }) => {
       
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Producto:</label>
+          <label>Producto*:</label>
           <input
             type="text"
             name="producto"
@@ -75,7 +75,7 @@ const CompraForm = ({ editMode }) => {
         
         <div className="form-row">
           <div className="form-group">
-            <label>Cantidad:</label>
+            <label>Cantidad*:</label>
             <input
               type="number"
               name="cantidad"

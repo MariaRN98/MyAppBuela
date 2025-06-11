@@ -96,7 +96,7 @@ const FormularioMedicamento = ({ editMode }) => {
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Nombre del Medicamento</label>
+          <label>Nombre del Medicamento*</label>
           <input
             type="text"
             name="medicamento"
@@ -108,7 +108,7 @@ const FormularioMedicamento = ({ editMode }) => {
         </div>
 
         <div className="form-group">
-          <label>Dosis</label>
+          <label>Dosis*</label>
           <input
             type="text"
             name="dosis"
@@ -120,7 +120,7 @@ const FormularioMedicamento = ({ editMode }) => {
         </div>
 
         <div className="form-group">
-          <label>Día de la Semana</label>
+          <label>Día de la Semana*</label>
           <select
             name="dias_semana"
             value={formData.dias_semana}
@@ -138,7 +138,7 @@ const FormularioMedicamento = ({ editMode }) => {
         </div>
 
         <div className="form-group">
-          <label>Hora</label>
+          <label>Hora*</label>
           <input
             type="time"
             name="hora"

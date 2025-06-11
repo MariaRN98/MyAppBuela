@@ -138,7 +138,7 @@ const showBackendError = (err) => {
       
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Título:</label>
+          <label>Título*:</label>
           <input
             type="text"
             name="titulo"
@@ -149,7 +149,7 @@ const showBackendError = (err) => {
         </div>
         
         <div className="form-group">
-          <label>Tipo de Evento:</label>
+          <label>Tipo de Evento*:</label>
           <select
             name="tipo_evento"
             value={formData.tipo_evento}
@@ -164,7 +164,7 @@ const showBackendError = (err) => {
         
         <div className="form-row">
           <div className="form-group">
-            <label>Fecha y Hora de Inicio:</label>
+            <label>Fecha y Hora de Inicio*:</label>
             <input
               type="datetime-local"
               name="fecha_inicio"
@@ -186,7 +186,7 @@ const showBackendError = (err) => {
         </div>
         
         <div className="form-group">
-          <label>Descripción:</label>
+          <label>Descripción*:</label>
           <textarea
             name="descripcion"
             value={formData.descripcion}

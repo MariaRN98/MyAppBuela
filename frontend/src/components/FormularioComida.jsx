@@ -93,7 +93,7 @@ const FormularioComida = ({ editMode }) => {
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Nombre</label>
+          <label>Nombre*</label>
           <input
             type="text"
             name="nombre"
@@ -105,7 +105,7 @@ const FormularioComida = ({ editMode }) => {
         </div>
 
         <div className="form-group">
-          <label>Descripción</label>
+          <label>Descripción*</label>
           <textarea
             name="descripcion"
             value={formData.descripcion}
@@ -116,7 +116,7 @@ const FormularioComida = ({ editMode }) => {
 
         <div className="form-row">
           <div className="form-group">
-            <label>Día</label>
+            <label>Día*</label>
             <select
               name="dias_semana"
               value={formData.dias_semana}
@@ -130,7 +130,7 @@ const FormularioComida = ({ editMode }) => {
           </div>
 
           <div className="form-group">
-            <label>Tipo</label>
+            <label>Tipo*</label>
             <select
               name="tipo_comida"
               value={formData.tipo_comida}

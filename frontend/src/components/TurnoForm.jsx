@@ -136,7 +136,7 @@ const TurnoForm = ({ editMode }) => {
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Cuidador:</label>
+          <label>Cuidador*</label>
           <select
             name="usuario"
             value={formData.usuario}
@@ -147,14 +147,14 @@ const TurnoForm = ({ editMode }) => {
             <option value="">{usuarios.length ? 'Seleccione un cuidador' : 'No hay cuidadores disponibles'}</option>
             {usuarios.map(user => (
               <option key={user.id} value={user.id}>
-                {user.first_name} {user.last_name} ({user.email})
+                {user.first_name} {user.last_name}
               </option>
             ))}
           </select>
         </div>
         
         <div className="form-group">
-          <label>Día de la semana:</label>
+          <label>Día de la semana*</label>
           <select
             name="dias_semana"
             value={formData.dias_semana}
@@ -173,7 +173,7 @@ const TurnoForm = ({ editMode }) => {
         
         <div className="form-row">
           <div className="form-group">
-            <label>Hora de inicio:</label>
+            <label>Hora de inicio*</label>
             <select
               name="hora_inicio"
               value={formData.hora_inicio}
@@ -187,7 +187,7 @@ const TurnoForm = ({ editMode }) => {
           </div>
           
           <div className="form-group">
-            <label>Hora de fin:</label>
+            <label>Hora de fin*</label>
             <select
               name="hora_fin"
               value={formData.hora_fin}

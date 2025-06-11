@@ -53,7 +53,7 @@ const NotaForm = ({ editMode }) => {
       
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Título:</label>
+          <label>Título*</label>
           <input
             type="text"
             value={formData.titulo}
@@ -63,7 +63,7 @@ const NotaForm = ({ editMode }) => {
         </div>
         
         <div className="form-group">
-          <label>Contenido:</label>
+          <label>Contenido*</label>
           <textarea
             value={formData.cuerpo}
             onChange={(e) => setFormData({...formData, cuerpo: e.target.value})}

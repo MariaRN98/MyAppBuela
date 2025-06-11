@@ -145,7 +145,7 @@ class Evento(models.Model):
             ('Cumpleaños', 'Cumpleaños'),
             ('Cura', 'Cura'),
             ('Vacuna', 'Vacuna'),
-            ('Otros', 'Otros'), #ire agregando los eventos que se me ocurran
+            ('Otros', 'Otros'), 
         ), max_length=100
     )
     
