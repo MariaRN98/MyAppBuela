@@ -1,11 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
 # Usuario
 class Usuario(AbstractUser):
-    foto_perfil = models.ImageField(upload_to="usuarios/", null=True, blank=True)
+    #foto_perfil = models.ImageField(upload_to="usuarios/", null=True, blank=True)
+    foto_perfil = CloudinaryField(
+    'image',
+    folder="usuarios/",
+    null=True, 
+    blank=True,
+    transformation=[ 
+        {'width': 500, 'height': 500, 'crop': 'fill'}
+    ]
+    ),
     fecha_nacimiento = models.DateField(null=True, blank=True) 
     telefono = models.CharField(max_length=15, unique=True, null=True, blank=True)
 
