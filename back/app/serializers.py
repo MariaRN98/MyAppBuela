@@ -76,6 +76,8 @@ class RegistroSerializer(serializers.ModelSerializer):
         return Usuario.objects.create(**validated_data)
     
 class UsuarioSerializer(serializers.ModelSerializer):
+    #produccion
+    foto_perfil = serializers.ImageField(use_url=True)
 
     class Meta:
         model = Usuario
@@ -91,12 +93,13 @@ class UsuarioSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("La fecha de nacimiento no puede ser posterior al día actual.")
         return value
     
-    def get_foto_perfil(self, obj):
-        if obj.foto_perfil:
-            request = self.context.get('request')
-            if request:
-                return request.build_absolute_uri(obj.foto_perfil.url)
-        return None
+    #local
+    # def get_foto_perfil(self, obj):
+    #     if obj.foto_perfil:
+    #         request = self.context.get('request')
+    #         if request:
+    #             return request.build_absolute_uri(obj.foto_perfil.url)
+    #     return None
 
 class DependienteSerializer(serializers.ModelSerializer):
     class Meta:
