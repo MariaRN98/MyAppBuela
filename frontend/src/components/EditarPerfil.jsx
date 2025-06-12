@@ -93,14 +93,15 @@ const handleSubmit = async (e) => {
       formData.append('foto_perfil', usuario.foto_perfil);
     }
 
-    // ¡Falta esta línea crucial que hace la petición PUT!
     const response = await api.put('/api/current-user/', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     });
 
-    // Verifica que la respuesta sea exitosa antes de navegar
+    
+    console.log('URL de la imagen en Cloudinary:', response.data.foto_perfil);
+
     if (response.status === 200 || response.status === 201) {
       navigate('/perfil', { 
         state: { 

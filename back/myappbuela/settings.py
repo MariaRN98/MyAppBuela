@@ -54,18 +54,20 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 CLOUDINARY_STORAGE = {
   'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
   'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-  'API_SECRET': os.getenv('CLOUDINARY_API_SECRET')
+  'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+  'SECURE': True,
+  'STATICFILES_MANAGER': 'cloudinary_storage.storage.StaticHashedCloudinaryStorage',
 }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
@@ -200,4 +202,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CORS_ALLOWED_ORIGINS = [
     "https://myappbuelasite.onrender.com",
     "http://localhost:3000",
+    "https://res.cloudinary.com"
 ]
