@@ -195,7 +195,7 @@ class DependienteDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dependiente
         fields = [
-            'id', 'foto_perfil_url', 'nombre', 'apellidos', 'fecha_nacimiento',
+            'id', 'foto_perfil', 'foto_perfil_url', 'nombre', 'apellidos', 'fecha_nacimiento',
             'movilidad', 'alergias', 'enfermedades', 'vacunas', 'cuidadores'
         ]
     

@@ -56,7 +56,7 @@ const PerfilDependiente = () => {
         <div className="foto-preview">
           {dependiente.foto_perfil ? (
             <img 
-              src={`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}${dependiente.foto_perfil}`} 
+              src={dependiente.foto_perfil_url} 
               alt={`${dependiente.nombre} ${dependiente.apellidos}`}
             />
           ) : (

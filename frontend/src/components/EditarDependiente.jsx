@@ -37,7 +37,7 @@ useEffect(() => {
         alergias: response.data.alergias,
         vacunas: response.data.vacunas,
         medicamentos: response.data.medicamentos,
-        foto_perfil: response.data.foto_perfil || null, 
+        foto_perfil: response.data.foto_perfil_url || null, 
         previewFoto: '' 
       });
     } catch (err) {
@@ -118,10 +118,8 @@ useEffect(() => {
               alt="Preview"
             />
           ) : formData.foto_perfil ? (
-            <img
-              src={`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}${formData.foto_perfil}`}
-              alt="Foto actual"
-            />
+            <img src={formData.foto_perfil} alt="Foto actual" />
+
           ) : (
             <div className="foto-placeholder">
               {/* Ícono de usuario genérico */}
