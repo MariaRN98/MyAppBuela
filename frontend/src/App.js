@@ -48,6 +48,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Error404 />} />
+          <Route path="/" element={<Login />} />
         
         {/* Rutas CON Header */}
         <Route element={<LayoutWithHeader />}>
@@ -55,7 +56,6 @@ function App() {
           <Route path="/crear-dependiente" element={<CreateDependiente />} />
           <Route path="/perfil" element={<PerfilUsuario />} />
           <Route path="/editar-perfil" element={<EditarPerfil />} />
-          <Route path="/" element={<Login />} />
         </Route>
 
                 {/* Rutas con menú de dependiente */}
