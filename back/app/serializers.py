@@ -16,13 +16,20 @@ class LoginSerializer(serializers.Serializer):
         if not user:
             raise serializers.ValidationError("Credenciales incorrectas")
         return user
-    
+
 class UsuarioConAccesosSerializer(serializers.ModelSerializer):
     accesos = serializers.SerializerMethodField()
+    foto_perfil_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Usuario
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'foto_perfil', 'telefono', 'fecha_nacimiento', 'accesos']
+        fields = [
+            'id', 'username', 'email', 'first_name', 'last_name',
+            'foto_perfil_url', 'telefono', 'fecha_nacimiento', 'accesos'
+        ]
+
+    def get_foto_perfil_url(self, obj):
+        return obj.foto_perfil.url if obj.foto_perfil else None
 
     def get_accesos(self, obj):
         accesos = Acceso.objects.filter(usuario=obj).select_related('dependiente')
@@ -34,6 +41,25 @@ class UsuarioConAccesosSerializer(serializers.ModelSerializer):
             }
             for acceso in accesos
         ]
+
+
+# class UsuarioConAccesosSerializer(serializers.ModelSerializer):
+#     accesos = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = Usuario
+#         fields = ['id', 'username', 'email', 'first_name', 'last_name', 'foto_perfil', 'telefono', 'fecha_nacimiento', 'accesos']
+
+#     def get_accesos(self, obj):
+#         accesos = Acceso.objects.filter(usuario=obj).select_related('dependiente')
+#         return [
+#             {
+#                 'dependienteId': acceso.dependiente.id,
+#                 'dependienteNombre': acceso.dependiente.nombre,
+#                 'rol': acceso.rol
+#             }
+#             for acceso in accesos
+#         ]
 
 #registro 
 class RegistroSerializer(serializers.ModelSerializer):
