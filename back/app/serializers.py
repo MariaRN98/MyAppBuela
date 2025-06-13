@@ -136,7 +136,12 @@ class DependienteSerializer(serializers.ModelSerializer):
         model = Dependiente
         fields = ['id', 'nombre', 'apellidos', 'fecha_nacimiento', 'movilidad', 'enfermedades', 'alergias', 'vacunas', 'foto_perfil_url']
 
+    # def get_foto_perfil_url(self, obj):
+    #     return obj.foto_perfil.url if obj.foto_perfil else None
+
     def get_foto_perfil_url(self, obj):
+        if isinstance(obj, dict):
+            return obj.get('foto_perfil')
         return obj.foto_perfil.url if obj.foto_perfil else None
 
     # def get_foto_perfil(self, obj):
@@ -198,16 +203,22 @@ class DependienteDetailSerializer(serializers.ModelSerializer):
         ]
     
     def get_foto_perfil_url(self, obj):
+        if isinstance(obj, dict):
+            return obj.get('foto_perfil')
         return obj.foto_perfil.url if obj.foto_perfil else None
     
+    # def get_cuidadores(self, obj):
+    #     accesos = Acceso.objects.filter(dependiente=obj).select_related('usuario')
+    #     return CuidadorSerializer([
+    #         {
+    #             **acceso.usuario.__dict__,
+    #             'rol': acceso.rol
+    #         } for acceso in accesos
+    #     ], many=True).data
+
     def get_cuidadores(self, obj):
-        accesos = Acceso.objects.filter(dependiente=obj).select_related('usuario')
-        return CuidadorSerializer([
-            {
-                **acceso.usuario.__dict__,
-                'rol': acceso.rol
-            } for acceso in accesos
-        ], many=True).data
+        usuarios = [cuidador.usuario for cuidador in obj.cuidadores.all()]
+        return CuidadorSerializer(usuarios, many=True, context=self.context).data
 
 #eventos    
 class EventoSerializer(serializers.ModelSerializer):
