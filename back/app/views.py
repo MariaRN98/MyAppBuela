@@ -1,31 +1,17 @@
-from django.shortcuts import render
-
 # views.py
-from rest_framework import viewsets, status
-from rest_framework.decorators import action
+from rest_framework import  status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import *
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated,AllowAny
 from django.shortcuts import get_object_or_404
 
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
-
-from django.shortcuts import get_object_or_404
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from .models import Dependiente, Nota, Acceso
-from .serializers import NotaSerializer
 
 from django.contrib.auth import logout
-from django.db.models import Q
 
 
 class LoginView(APIView):

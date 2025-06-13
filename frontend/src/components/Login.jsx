@@ -13,6 +13,8 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await api.post('/api/auth/login/', { username, password });
+
+      localStorage.clear();
       
       localStorage.setItem('access_token', response.data.access_token);
       localStorage.setItem('refresh_token', response.data.refresh_token);
