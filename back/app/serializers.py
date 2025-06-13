@@ -65,7 +65,8 @@ class UsuarioConAccesosSerializer(serializers.ModelSerializer):
 class RegistroSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
     repetir_password = serializers.CharField(write_only=True, required=True)
-    foto_perfil = serializers.ImageField(required=False)
+    #foto_perfil = serializers.ImageField(required=False)
+    foto_perfil_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Usuario
@@ -78,8 +79,10 @@ class RegistroSerializer(serializers.ModelSerializer):
             'password',
             'repetir_password',
             'fecha_nacimiento',
-            'foto_perfil',
+            'foto_perfil_url',
         ]
+    def get_foto_perfil_url(self, obj):
+        return obj.foto_perfil.url if obj.foto_perfil else None
 
     def validate_email(self, value):
         if Usuario.objects.filter(email=value).exists():
@@ -128,16 +131,20 @@ class UsuarioSerializer(serializers.ModelSerializer):
     #     return None
 
 class DependienteSerializer(serializers.ModelSerializer):
+    foto_perfil_url = serializers.SerializerMethodField()
     class Meta:
         model = Dependiente
-        fields = ['id', 'nombre', 'apellidos', 'fecha_nacimiento', 'movilidad', 'enfermedades', 'alergias', 'vacunas', 'foto_perfil']
+        fields = ['id', 'nombre', 'apellidos', 'fecha_nacimiento', 'movilidad', 'enfermedades', 'alergias', 'vacunas', 'foto_perfil_url']
 
-    def get_foto_perfil(self, obj):
-        if obj.foto_perfil:
-            request = self.context.get('request')
-            if request:
-                return request.build_absolute_uri(obj.foto_perfil.url)
-        return None
+    def get_foto_perfil_url(self, obj):
+        return obj.foto_perfil.url if obj.foto_perfil else None
+
+    # def get_foto_perfil(self, obj):
+    #     if obj.foto_perfil:
+    #         request = self.context.get('request')
+    #         if request:
+    #             return request.build_absolute_uri(obj.foto_perfil.url)
+    #     return None
 
 #crear abuela
 class DependienteCreateSerializer(serializers.ModelSerializer):
@@ -169,21 +176,29 @@ class CrearNotaSerializer(serializers.ModelSerializer):
 
 #perfil abuela
 class CuidadorSerializer(serializers.ModelSerializer):
+    foto_perfil_url = serializers.SerializerMethodField()
     tipo_acceso = serializers.CharField(source='rol')
     
     class Meta:
         model = Usuario
-        fields = ['id', 'first_name', 'last_name', 'foto_perfil', 'tipo_acceso']
+        fields = ['id', 'first_name', 'last_name', 'foto_perfil_url', 'tipo_acceso']
+
+    def get_foto_perfil_url(self, obj):
+        return obj.foto_perfil.url if obj.foto_perfil else None
 
 class DependienteDetailSerializer(serializers.ModelSerializer):
+    foto_perfil_url = serializers.SerializerMethodField()
     cuidadores = serializers.SerializerMethodField()
     
     class Meta:
         model = Dependiente
         fields = [
-            'id', 'foto_perfil', 'nombre', 'apellidos', 'fecha_nacimiento',
+            'id', 'foto_perfil_url', 'nombre', 'apellidos', 'fecha_nacimiento',
             'movilidad', 'alergias', 'enfermedades', 'vacunas', 'cuidadores'
         ]
+    
+    def get_foto_perfil_url(self, obj):
+        return obj.foto_perfil.url if obj.foto_perfil else None
     
     def get_cuidadores(self, obj):
         accesos = Acceso.objects.filter(dependiente=obj).select_related('usuario')

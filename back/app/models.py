@@ -24,7 +24,16 @@ class Usuario(AbstractUser):
 
 # Dependiente    
 class Dependiente(models.Model):
-    foto_perfil = models.ImageField(upload_to="depedientes/", null=True, blank=True)
+    #foto_perfil = models.ImageField(upload_to="depedientes/", null=True, blank=True)
+    foto_perfil = CloudinaryField(
+    'image',
+    folder="depedientes/",
+    null=True, 
+    blank=True,
+    transformation=[ 
+        {'width': 500, 'height': 500, 'crop': 'fill'}
+    ]
+    )
     nombre = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
     fecha_nacimiento = models.DateField(null=True, blank=True) 
