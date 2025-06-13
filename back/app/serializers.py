@@ -140,8 +140,6 @@ class DependienteSerializer(serializers.ModelSerializer):
     #     return obj.foto_perfil.url if obj.foto_perfil else None
 
     def get_foto_perfil_url(self, obj):
-        if isinstance(obj, dict):
-            return obj.get('foto_perfil')
         return obj.foto_perfil.url if obj.foto_perfil else None
 
     # def get_foto_perfil(self, obj):
@@ -182,11 +180,10 @@ class CrearNotaSerializer(serializers.ModelSerializer):
 #perfil abuela
 class CuidadorSerializer(serializers.ModelSerializer):
     foto_perfil_url = serializers.SerializerMethodField()
-    tipo_acceso = serializers.CharField(source='rol')
     
     class Meta:
         model = Usuario
-        fields = ['id', 'first_name', 'last_name', 'foto_perfil_url', 'tipo_acceso']
+        fields = ['id', 'first_name', 'last_name', 'foto_perfil_url']
 
     def get_foto_perfil_url(self, obj):
         return obj.foto_perfil.url if obj.foto_perfil else None
@@ -203,22 +200,17 @@ class DependienteDetailSerializer(serializers.ModelSerializer):
         ]
     
     def get_foto_perfil_url(self, obj):
-        if isinstance(obj, dict):
-            return obj.get('foto_perfil')
         return obj.foto_perfil.url if obj.foto_perfil else None
     
-    # def get_cuidadores(self, obj):
-    #     accesos = Acceso.objects.filter(dependiente=obj).select_related('usuario')
-    #     return CuidadorSerializer([
-    #         {
-    #             **acceso.usuario.__dict__,
-    #             'rol': acceso.rol
-    #         } for acceso in accesos
-    #     ], many=True).data
-
     def get_cuidadores(self, obj):
-        usuarios = [cuidador.usuario for cuidador in obj.cuidadores.all()]
-        return CuidadorSerializer(usuarios, many=True, context=self.context).data
+        accesos = Acceso.objects.filter(dependiente=obj).select_related('usuario')
+        return [
+            {
+                **CuidadorSerializer(acceso.usuario, context=self.context).data,
+                'tipo_acceso': acceso.rol
+            }
+            for acceso in accesos
+        ]
 
 #eventos    
 class EventoSerializer(serializers.ModelSerializer):
