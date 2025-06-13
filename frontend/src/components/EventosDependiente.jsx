@@ -18,7 +18,6 @@ const EventosDependiente = () => {
         const response = await api.get(`/api/dependientes/${dependienteId}/eventos/`);
         setEventos(response.data);
 
-        // Verifica rol del usuario
         const userAccess = JSON.parse(localStorage.getItem('user'))?.accesos || [];
         const hasEditAccess = userAccess.some(
           access =>
@@ -118,7 +117,6 @@ const EventosDependiente = () => {
         )}
       </div>
 
-      {/* Botón flotante para crear un nuevo evento */}
       {canEdit && (
         <button 
           onClick={() => navigate(`/dependientes/${dependienteId}/eventos/crear`)}

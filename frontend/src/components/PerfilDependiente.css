@@ -55,23 +55,22 @@
   color: #2c3e50;
 }
 
-/* Asegura que el texto de los párrafos esté alineado a la izquierda */
 .form-group-dep p {
   margin: 0;
   font-size: 1rem;
   color: #333;
-  text-align: left; /* Alinea el texto a la izquierda */
+  text-align: left; 
 }
 
 .form-actions-dep {
   display: flex;
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center; /* Centra verticalmente */
+  justify-content: center; 
+  align-items: center; 
   text-align: center;
-  gap: 1rem; /* Espacio entre botones */
+  gap: 1rem; 
   margin-top: 2rem;
-  width: 100%; /* Asegura que ocupe todo el ancho */
-  flex-wrap: wrap; /* Permite que los botones se ajusten en dispositivos pequeños */
+  width: 100%; 
+  flex-wrap: wrap; 
 }
 
 .register-container .form-actions-dep .btn-edit-dep,
@@ -99,11 +98,11 @@
   color: white;
 }
 .register-container .form-actions-dep .btn-edit-dep:hover {
-  transform: scale(1.1); /* Aumenta el tamaño del botón */
-  transition: transform 0.3s ease, background 0.3s ease; /* Suaviza la animación */
+  transform: scale(1.1); 
+  transition: transform 0.3s ease, background 0.3s ease; 
 }
 
 .register-container .form-actions-dep .btn-delete-dep:hover {
-  transform: scale(1.1); /* Aumenta el tamaño del botón */
-  transition: transform 0.3s ease, background 0.3s ease; /* Suaviza la animación */
+  transform: scale(1.1); 
+  transition: transform 0.3s ease, background 0.3s ease; 
 }

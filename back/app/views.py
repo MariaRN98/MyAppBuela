@@ -34,7 +34,6 @@ class LoginView(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
 
-        # Generar token JWT
         refresh = RefreshToken.for_user(user)
         user_serializer = UsuarioConAccesosSerializer(user)
 
@@ -710,11 +709,9 @@ def desactivar_cuenta(request):
     user = request.user
     
     try:
-        # Desactivar la cuenta
         user.is_active = False
         user.save()
         
-        # Cerrar sesión
         logout(request)
         
         return Response(

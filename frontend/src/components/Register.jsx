@@ -221,13 +221,12 @@ const Register = () => {
             value={formData.password}
             onChange={(e) => {
               handleChange(e);
-              setPasswordStrength(evaluatePasswordStrength(e.target.value)); // Actualiza la fortaleza de la contraseña
+              setPasswordStrength(evaluatePasswordStrength(e.target.value)); 
             }}
             required
           />
           {errors.password && <span className="field-error">{errors.password}</span>}
 
-          {/* Barra de progreso */}
           <div className="password-strength-bar">
             <div
               className={`strength-level strength-${passwordStrength}`}

@@ -1,4 +1,4 @@
-/* Estilos básicos del menú */
+
 .side-menu {
   position: fixed;
   left: -250px;
@@ -51,7 +51,6 @@
   font-size: 18px;
 }
 
-/* Asegura que el contenido principal no se solape */
 .main-content {
   margin-left: 0;
   transition: margin-left 0.3s ease;

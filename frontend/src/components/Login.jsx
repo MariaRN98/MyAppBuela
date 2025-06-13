@@ -14,11 +14,9 @@ const Login = () => {
     try {
       const response = await api.post('/api/auth/login/', { username, password });
       
-      // Almacenar tokens
       localStorage.setItem('access_token', response.data.access_token);
       localStorage.setItem('refresh_token', response.data.refresh_token);
       
-      // Almacenar datos completos del usuario para el Header
       localStorage.setItem('user', JSON.stringify({
         id: response.data.user.id,
         username: response.data.user.username,
@@ -27,7 +25,7 @@ const Login = () => {
         email: response.data.user.email,
         foto_perfil: response.data.user.foto_perfil || null,
         telefono: response.data.user.telefono || '',
-        accesos: response.data.user.accesos // Almacena los accesos
+        accesos: response.data.user.accesos 
       }));
       
       navigate('/dashboard');

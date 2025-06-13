@@ -18,7 +18,6 @@ const ListaComidas = () => {
         const response = await api.get(`/api/dependientes/${dependienteId}/comidas/`);
         setComidas(response.data);
 
-        // Verifica rol del usuario
         const userAccess = JSON.parse(localStorage.getItem('user'))?.accesos || [];
         const hasEditAccess = userAccess.some(
           access =>

@@ -59,32 +59,32 @@
 }
 
 .evento-type.cita-medica {
-  background: #e74c3c; /* Rojo */
+  background: #e74c3c;
   color: white;
 }
 
 .evento-type.visita {
-  background: #2ecc71; /* Verde */
+  background: #2ecc71; 
   color: white;
 }
 
 .evento-type.cumpleaños {
-  background: #f39c12; /* Naranja */
+  background: #f39c12; 
   color: white;
 }
 
 .evento-type.cura {
-  background: #3498db; /* Azul */
+  background: #3498db; 
   color: white;
 }
 
 .evento-type.vacuna {
-  background: #9b59b6; /* Morado */
+  background: #9b59b6; 
   color: white;
 }
 
 .evento-type.otros {
-  background: #95a5a6; /* Gris */
+  background: #95a5a6; 
   color: white;
 }
 

@@ -1,4 +1,4 @@
-/* FormMedicamento.css */
+
 .form-medicamento-container {
   max-width: 600px;
   margin: 6rem auto 2rem;
@@ -104,7 +104,6 @@
   align-items: center;
 }
 
-/* Estilos específicos para el input de tipo time */
 input[type="time"] {
   -webkit-appearance: none;
   -moz-appearance: none;

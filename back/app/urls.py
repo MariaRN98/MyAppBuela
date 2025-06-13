@@ -16,7 +16,7 @@ urlpatterns = [
     #notas
     path('api/dependientes/<int:dependiente_id>/notas/', lista_notas, name='lista-notas'),
     path('api/dependientes/<int:dependiente_id>/notas/crear/', crear_nota, name='crear-nota'),
-    path('api/dependientes/<int:dependiente_id>/notas/<int:nota_id>/', detalle_nota, name='detalle-nota'), #get detalles, put modificar y delete eliminar con la misma url
+    path('api/dependientes/<int:dependiente_id>/notas/<int:nota_id>/', detalle_nota, name='detalle-nota'), 
 
     #perfil abuela
     path('api/dependientes/<int:pk>/', perfil_dependiente, name='perfil-dependiente'),

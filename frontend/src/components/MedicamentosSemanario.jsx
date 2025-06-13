@@ -21,14 +21,12 @@ const MedicamentosSemanario = () => {
         setLoading(true);
         setError('');
         
-        // Verificar rol de admin
         const userAccess = JSON.parse(localStorage.getItem('user'))?.accesos || [];
         const hasAdminAccess = userAccess.some(
           (access) => access.dependienteId === parseInt(dependienteId) && access.rol === 'Admin'
         );
         setIsAdmin(hasAdminAccess);
 
-        // Cargar medicamentos
         const response = await api.get(`/api/dependientes/${dependienteId}/medicamentos/`);
         setMedicamentos(response.data);
       } catch (err) {
@@ -99,88 +97,7 @@ const MedicamentosSemanario = () => {
     );
   }
 
-  // return (
-  //   <div className="medicamentos-container">
-  //     <div className="medicamentos-header">
-  //       <h2><FaPills /> Semanario de Medicamentos</h2>
-  //       {isAdmin && (
-  //         <button 
-  //           onClick={() => navigate(`/dependientes/${dependienteId}/medicamentos/crear`)}
-  //           className="btn-add"
-  //           disabled={loading}
-  //         >
-  //           {loading ? <FaSpinner className="spinner" /> : <FaPlus />}
-  //           {loading ? 'Cargando...' : 'Nuevo Medicamento'}
-  //         </button>
-  //       )}
-  //     </div>
-
-  //     <div className="semanario-scroll-container">
-  //       <div className="semanario-inner">
-  //         <div className="header-grid">
-  //           <div className="hora-cell">Hora</div>
-  //           {diasSemana.map(dia => (
-  //             <div key={dia} className="dia-cell">{dia}</div>
-  //           ))}
-  //         </div>
-
-  //         <div className="grid-container">
-  //           {horasDelDia.map(hora => (
-  //             <React.Fragment key={hora}>
-  //               <div className="hora-cell">{hora}:00</div>
-  //               {diasSemana.map(dia => {
-  //                 const medicamentosCelda = getMedicamentosPorDiaYHora(dia, hora);
-  //                 return (
-  //                   <div key={`${dia}-${hora}`} className="celda">
-  //                     {medicamentosCelda.map(med => (
-  //                       <div key={med.id} className={`medicamento-item ${med.tomado ? 'completado' : ''}`}>
-  //                         <div className="medicamento-info">
-  //                           <strong>{med.medicamento}</strong> ({med.dosis})
-  //                         </div>
-  //                         <div className="medicamento-actions">
-  //                           <button
-  //                             onClick={() => handleMarcarTomado(med.id, med.tomado)}
-  //                             className={`btn-check ${med.tomado ? 'active' : ''}`}
-  //                             disabled={loading}
-  //                             aria-label={med.tomado ? 'Marcar como no tomado' : 'Marcar como tomado'}
-  //                           >
-  //                             <FaCheck />
-  //                           </button>
-  //                           {isAdmin && (
-  //                             <>
-  //                               <button
-  //                                 onClick={() => navigate(`/dependientes/${dependienteId}/medicamentos/${med.id}/editar`)}
-  //                                 className="btn-edit"
-  //                                 disabled={loading}
-  //                                 aria-label="Editar medicamento"
-  //                               >
-  //                                 <FaEdit />
-  //                               </button>
-  //                               <button
-  //                                 onClick={() => handleDelete(med.id)}
-  //                                 className="btn-delete"
-  //                                 disabled={loading}
-  //                                 aria-label="Eliminar medicamento"
-  //                               >
-  //                                 <FaTrash />
-  //                               </button>
-  //                             </>
-  //                           )}
-  //                         </div>
-  //                       </div>
-  //                     ))}
-  //                   </div>
-  //                 );
-  //               })}
-  //             </React.Fragment>
-  //           ))}
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
-
-  // ...existing code...
+  
 return (
   <div className="medicamentos-container">
     <div className="medicamentos-header">

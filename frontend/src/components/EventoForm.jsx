@@ -50,30 +50,9 @@ const EventoForm = ({ editMode }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const data = {
-  //       ...formData,
-  //       dependiente: dependienteId
-  //     };
-
-  //     if (editMode) {
-  //       await api.put(`/api/dependientes/${dependienteId}/eventos/${eventoId}/`, data);
-  //     } else {
-  //       await api.post(`/api/dependientes/${dependienteId}/eventos/crear/`, data);
-  //     }
-  //     navigate(`/dependientes/${dependienteId}/eventos`);
-  //   } catch (err) {
-  //     setError(err.response?.data?.message || 'Error al guardar evento');
-  //   }
-  // };
-
-// Función principal mejorada
 const handleSubmit = async (e) => {
   e.preventDefault();
   
-  // Validación frontend
   if (!formData.titulo || !formData.tipo_evento || !formData.fecha_inicio) {
     return setError('Título, tipo y fecha de inicio son obligatorios');
   }
@@ -81,14 +60,12 @@ const handleSubmit = async (e) => {
   try {
     const payload = {
       titulo: formData.titulo,
-      descripcion: formData.descripcion || '', // Envía string vacío si es null
+      descripcion: formData.descripcion || '', 
       tipo_evento: formData.tipo_evento,
       fecha_inicio: new Date(formData.fecha_inicio).toISOString(),
       fecha_fin: formData.fecha_fin ? new Date(formData.fecha_fin).toISOString() : null
     };
 
-    // Depuración
-    console.log('Enviando:', JSON.stringify(payload, null, 2));
 
     const url = editMode 
       ? `/api/dependientes/${dependienteId}/eventos/${eventoId}/`
@@ -105,7 +82,6 @@ const handleSubmit = async (e) => {
   }
 };
 
-// Muestra errores del backend de forma legible
 const showBackendError = (err) => {
   const backendError = err.response?.data;
   
@@ -113,7 +89,6 @@ const showBackendError = (err) => {
     return setError('Error de conexión con el servidor');
   }
 
-  // Maneja diferentes formatos de error
   if (typeof backendError === 'string') {
     setError(backendError);
   } else if (Array.isArray(backendError)) {
@@ -121,7 +96,7 @@ const showBackendError = (err) => {
   } else if (backendError.detail) {
     setError(backendError.detail);
   } else {
-    // Para errores de serializer (ej: {"fecha_inicio": ["Este campo es requerido"]})
+
     const errorMessages = Object.entries(backendError)
       .map(([field, errors]) => `${field}: ${Array.isArray(errors) ? errors.join(', ') : errors}`)
       .join('\n');

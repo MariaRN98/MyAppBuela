@@ -6,7 +6,6 @@ from cloudinary.models import CloudinaryField
 
 # Usuario
 class Usuario(AbstractUser):
-    #foto_perfil = models.ImageField(upload_to="usuarios/", null=True, blank=True)
     foto_perfil = CloudinaryField(
     'image',
     folder="usuarios/",
@@ -24,7 +23,6 @@ class Usuario(AbstractUser):
 
 # Dependiente    
 class Dependiente(models.Model):
-    #foto_perfil = models.ImageField(upload_to="depedientes/", null=True, blank=True)
     foto_perfil = CloudinaryField(
     'image',
     folder="depedientes/",

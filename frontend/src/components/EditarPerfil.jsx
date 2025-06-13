@@ -40,7 +40,6 @@ const EditarPerfil = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUsuario(prev => ({ ...prev, [name]: value }));
-    // Limpiar errores cuando el usuario edita
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
@@ -61,7 +60,6 @@ const EditarPerfil = () => {
     const newErrors = {};
     const today = new Date().toISOString().split('T')[0];
     
-    // Validación de fecha de nacimiento
     if (usuario.fecha_nacimiento && usuario.fecha_nacimiento > today) {
       newErrors.fecha_nacimiento = 'La fecha no puede ser posterior a hoy';
     }
@@ -75,7 +73,6 @@ const handleSubmit = async (e) => {
   setIsSubmitting(true);
   setErrors({});
   
-  // Validación frontend
   if (!validateForm()) {
     setIsSubmitting(false);
     return;
@@ -237,7 +234,7 @@ const handleSubmit = async (e) => {
             name="fecha_nacimiento"
             value={usuario.fecha_nacimiento}
             onChange={handleChange}
-            max={new Date().toISOString().split('T')[0]} // Establece la fecha máxima como hoy
+            max={new Date().toISOString().split('T')[0]} 
           />
           {errors.fecha_nacimiento && (
             <span className="field-error">{errors.fecha_nacimiento}</span>

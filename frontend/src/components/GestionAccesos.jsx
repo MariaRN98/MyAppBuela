@@ -7,7 +7,7 @@ import './GestionAccesos.css';
 const GestionAccesos = () => {
   const { dependienteId } = useParams();
   const [accesos, setAccesos] = useState([]);
-  const [dependiente, setDependiente] = useState(null);
+  const [, setDependiente] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -25,7 +25,6 @@ const GestionAccesos = () => {
         
         setDependiente(dependienteRes.data);
 
-        // Ordenar accesos por rol (admin, editor, lector)
         const rolesOrden = ['admin', 'editor', 'lector'];
         const accesosOrdenados = accesosRes.data.sort((a, b) => {
           return rolesOrden.indexOf(a.rol.toLowerCase()) - rolesOrden.indexOf(b.rol.toLowerCase());

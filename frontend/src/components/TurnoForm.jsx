@@ -36,7 +36,6 @@ const TurnoForm = ({ editMode }) => {
         setLoading(true);
         setError('');
         
-        // 1. Obtener usuarios con acceso específico
         const { data: usuariosConAcceso } = await api.get(
           `/api/dependientes/${dependienteId}/usuarios-con-acceso/`
         );
@@ -47,13 +46,11 @@ const TurnoForm = ({ editMode }) => {
 
         setUsuarios(usuariosConAcceso);
 
-        // 2. Si es edición, cargar datos del turno
         if (editMode) {
           const { data: turno } = await api.get(
             `/api/dependientes/${dependienteId}/turnos/${turnoId}/`
           );
           
-          // Verificar que el usuario asignado tenga acceso
           const usuarioValido = usuariosConAcceso.some(
             u => u.id === turno.usuario
           );

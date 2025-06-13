@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FaUtensils, FaPlus, FaCheck, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaPlus,  FaEdit, FaTrash } from 'react-icons/fa';
 import api from '../services/api';
 import './NotasDependiente.css';
 
@@ -18,7 +18,6 @@ const NotasDependiente = () => {
         const response = await api.get(`/api/dependientes/${dependienteId}/notas/`);
         setNotas(response.data);
 
-        // Verifica rol del usuario
         const userAccess = JSON.parse(localStorage.getItem('user'))?.accesos || [];
         const hasEditAccess = userAccess.some(
           access =>
@@ -93,7 +92,6 @@ const NotasDependiente = () => {
         )}
       </div>
 
-      {/* Botón flotante para crear una nueva nota */}
       {canEdit && (
         <button
           onClick={() => navigate(`/dependientes/${dependienteId}/notas/crear`)}

@@ -1,4 +1,4 @@
-/* Contenedor principal del formulario */
+
 .evento-form-container {
   max-width: 600px;
   margin: 6rem auto 2rem;
@@ -8,18 +8,16 @@
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
-/* Título del formulario */
 .evento-form-container h2 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   color: #2c3e50;
   margin-bottom: 1.5rem;
-  font-size: 1.5rem; /* Ajusta el tamaño del texto para pantallas pequeñas */
-  text-align: center; /* Centra el título en dispositivos pequeños */
+  font-size: 1.5rem; 
+  text-align: center; 
 }
 
-/* Grupo de campos del formulario */
 .form-group {
   margin-bottom: 1.5rem;
 }
@@ -46,25 +44,23 @@
   resize: vertical;
 }
 
-/* Filas de campos */
 .form-row {
   display: flex;
   gap: 1.5rem;
-  flex-wrap: wrap; /* Permite que los elementos se ajusten en dispositivos pequeños */
+  flex-wrap: wrap; 
 }
 
 .form-row .form-group {
   flex: 1;
-  min-width: 100%; /* Asegura que los campos ocupen todo el ancho en pantallas pequeñas */
+  min-width: 100%; 
 }
 
-/* Acciones del formulario (botones) */
 .form-actions {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
   margin-top: 2rem;
-  flex-wrap: wrap; /* Permite que los botones se ajusten en dispositivos pequeños */
+  flex-wrap: wrap; 
 }
 
 .btn-save,
@@ -77,8 +73,8 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
-  flex: 1; /* Asegura que los botones ocupen el mismo ancho en pantallas pequeñas */
-  justify-content: center; /* Centra el texto en los botones */
+  flex: 1; 
+  justify-content: center;
 }
 
 .btn-save {
@@ -99,38 +95,36 @@
   background: #7f8c8d;
 }
 
-/* Mensajes de error */
 .error {
   color: #e74c3c;
   margin-bottom: 1.5rem;
   padding: 1rem;
   background: #fde8e8;
   border-radius: 4px;
-  font-size: 0.9rem; /* Ajusta el tamaño del texto para pantallas pequeñas */
+  font-size: 0.9rem; 
 }
 
-/* Media queries para dispositivos pequeños */
 @media (max-width: 768px) {
   .evento-form-container {
-    padding: 1.5rem; /* Reduce el padding en dispositivos pequeños */
+    padding: 1.5rem; 
   }
 
   .form-row {
-    flex-direction: column; /* Coloca los campos en una sola columna */
-    gap: 1rem; /* Reduce el espacio entre los campos */
+    flex-direction: column; 
+    gap: 1rem; 
   }
 
   .form-actions {
-    flex-direction: column; /* Coloca los botones en una sola columna */
-    gap: 1rem; /* Reduce el espacio entre los botones */
+    flex-direction: column; 
+    gap: 1rem; 
   }
 
   .btn-save,
   .btn-cancel {
-    width: 100%; /* Asegura que los botones ocupen todo el ancho */
+    width: 100%; 
   }
 
   .evento-form-container h2 {
-    font-size: 1.25rem; /* Reduce el tamaño del título en dispositivos pequeños */
+    font-size: 1.25rem; 
   }
 }

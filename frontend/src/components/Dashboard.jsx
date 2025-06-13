@@ -36,7 +36,7 @@ const Dashboard = () => {
         ))}
       </div>
         <Link to="/crear-dependiente" className="add-btn">
-          <FaPlus /> {/* Usa el ícono en lugar del carácter + */}
+          <FaPlus /> 
         </Link>
     </div>
   );

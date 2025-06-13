@@ -43,24 +43,6 @@ class UsuarioConAccesosSerializer(serializers.ModelSerializer):
         ]
 
 
-# class UsuarioConAccesosSerializer(serializers.ModelSerializer):
-#     accesos = serializers.SerializerMethodField()
-
-#     class Meta:
-#         model = Usuario
-#         fields = ['id', 'username', 'email', 'first_name', 'last_name', 'foto_perfil', 'telefono', 'fecha_nacimiento', 'accesos']
-
-#     def get_accesos(self, obj):
-#         accesos = Acceso.objects.filter(usuario=obj).select_related('dependiente')
-#         return [
-#             {
-#                 'dependienteId': acceso.dependiente.id,
-#                 'dependienteNombre': acceso.dependiente.nombre,
-#                 'rol': acceso.rol
-#             }
-#             for acceso in accesos
-#         ]
-
 #registro 
 class RegistroSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
@@ -79,8 +61,8 @@ class RegistroSerializer(serializers.ModelSerializer):
             'password',
             'repetir_password',
             'fecha_nacimiento',
-            'foto_perfil',         # 👈 Campo que acepta la imagen
-            'foto_perfil_url',     # 👈 Solo lectura
+            'foto_perfil',         
+            'foto_perfil_url', 
         ]
     def get_foto_perfil_url(self, obj):
         return obj.foto_perfil.url if obj.foto_perfil else None
@@ -122,14 +104,6 @@ class UsuarioSerializer(serializers.ModelSerializer):
         if value and value > date.today():
             raise serializers.ValidationError("La fecha de nacimiento no puede ser posterior al día actual.")
         return value
-    
-    #local
-    # def get_foto_perfil(self, obj):
-    #     if obj.foto_perfil:
-    #         request = self.context.get('request')
-    #         if request:
-    #             return request.build_absolute_uri(obj.foto_perfil.url)
-    #     return None
 
 class DependienteSerializer(serializers.ModelSerializer):
     foto_perfil_url = serializers.SerializerMethodField()

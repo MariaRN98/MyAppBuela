@@ -1,4 +1,4 @@
-/* GestionAccesos.css */
+
 .gestion-accesos-container {
   max-width: 600px;
   margin: 6rem auto 2rem;
@@ -147,7 +147,6 @@
   max-width: 600px;
 }
 
-/* Media queries para responsividad */
 @media (max-width: 768px) {
   .gestion-accesos-container {
 

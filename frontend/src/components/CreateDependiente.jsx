@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import './Register.css'; // Reutiliza los estilos de registro
+import './Register.css'; 
 
 const CreateDependiente = () => {
   const [formData, setFormData] = useState({
@@ -47,25 +47,21 @@ const CreateDependiente = () => {
         }
       });
 
-      // 1. Crear el dependiente
       await api.post('/api/dependientes/crear/', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
 
-      // 2. Obtener los accesos actualizados
       const { data: nuevosAccesos } = await api.get('/api/auth/actualizar-localstorage/');
 
-      // 3. Actualizar localStorage manteniendo el mismo formato que en login
       const userData = JSON.parse(localStorage.getItem('user'));
       const updatedUserData = {
         ...userData,
-        accesos: nuevosAccesos // Ahora tiene el mismo formato que en el login
+        accesos: nuevosAccesos 
       };
       localStorage.setItem('user', JSON.stringify(updatedUserData));
 
-      // 4. Redirigir al dashboard con mensaje de éxito
       navigate('/dashboard', { state: { successMessage: 'Dependiente creado correctamente' } });
     } catch (err) {
       console.error('Error al crear dependiente:', err);
@@ -86,7 +82,6 @@ const CreateDependiente = () => {
             <img src={formData.previewFoto} alt="Preview" />
           ) : (
             <div className="foto-placeholder">
-              {/* Ícono de usuario genérico */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="50"
