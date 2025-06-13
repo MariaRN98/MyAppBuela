@@ -15,7 +15,7 @@ class Usuario(AbstractUser):
     transformation=[ 
         {'width': 500, 'height': 500, 'crop': 'fill'}
     ]
-    ),
+    )
     fecha_nacimiento = models.DateField(null=True, blank=True) 
     telefono = models.CharField(max_length=15, unique=True, null=True, blank=True)
 
