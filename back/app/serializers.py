@@ -65,7 +65,7 @@ class UsuarioConAccesosSerializer(serializers.ModelSerializer):
 class RegistroSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
     repetir_password = serializers.CharField(write_only=True, required=True)
-    #foto_perfil = serializers.ImageField(required=False)
+    foto_perfil = serializers.ImageField(required=False, allow_null=True)  # 👈 NECESARIO
     foto_perfil_url = serializers.SerializerMethodField()
 
     class Meta:
@@ -79,7 +79,8 @@ class RegistroSerializer(serializers.ModelSerializer):
             'password',
             'repetir_password',
             'fecha_nacimiento',
-            'foto_perfil_url',
+            'foto_perfil',         # 👈 Campo que acepta la imagen
+            'foto_perfil_url',     # 👈 Solo lectura
         ]
     def get_foto_perfil_url(self, obj):
         return obj.foto_perfil.url if obj.foto_perfil else None
@@ -136,25 +137,21 @@ class DependienteSerializer(serializers.ModelSerializer):
         model = Dependiente
         fields = ['id', 'nombre', 'apellidos', 'fecha_nacimiento', 'movilidad', 'enfermedades', 'alergias', 'vacunas', 'foto_perfil_url']
 
-    # def get_foto_perfil_url(self, obj):
-    #     return obj.foto_perfil.url if obj.foto_perfil else None
+
 
     def get_foto_perfil_url(self, obj):
         return obj.foto_perfil.url if obj.foto_perfil else None
 
-    # def get_foto_perfil(self, obj):
-    #     if obj.foto_perfil:
-    #         request = self.context.get('request')
-    #         if request:
-    #             return request.build_absolute_uri(obj.foto_perfil.url)
-    #     return None
 
-#crear abuela
 class DependienteCreateSerializer(serializers.ModelSerializer):
+    foto_perfil = serializers.ImageField(required=False)  
+
     class Meta:
         model = Dependiente
-        fields = ['nombre', 'apellidos', 'fecha_nacimiento', 'movilidad', 
-                 'enfermedades', 'alergias', 'vacunas']
+        fields = [
+            'nombre', 'apellidos', 'fecha_nacimiento', 'movilidad',
+            'enfermedades', 'alergias', 'vacunas', 'medicamentos', 'foto_perfil'
+        ]
         
 #notas
 class NotaSerializer(serializers.ModelSerializer):
