@@ -64,16 +64,6 @@ return (
       <FaUtensils /> Ver Semanario
     </button>
 
-    <div className="header-actions">
-      {canEdit && (
-        <button
-          onClick={() => navigate(`/dependientes/${dependienteId}/comidas/crear`)}
-          className="btn-add"
-        >
-          <FaPlus /> Nueva Comida
-        </button>
-      )}
-    </div>
 
     <div className="comidas-list">
       {comidas.length === 0 ? (

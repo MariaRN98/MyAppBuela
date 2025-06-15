@@ -96,9 +96,6 @@ const handleSubmit = async (e) => {
       }
     });
 
-    
-    console.log('URL de la imagen en Cloudinary:', response.data.foto_perfil);
-
     if (response.status === 200 || response.status === 201) {
       navigate('/perfil', { 
         state: { 

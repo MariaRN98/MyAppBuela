@@ -110,6 +110,7 @@ const FormularioComida = ({ editMode }) => {
             name="descripcion"
             value={formData.descripcion}
             onChange={handleChange}
+            required
             disabled={loading}
           />
         </div>

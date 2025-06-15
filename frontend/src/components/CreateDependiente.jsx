@@ -146,6 +146,7 @@ const CreateDependiente = () => {
             name="movilidad"
             value={formData.movilidad}
             onChange={handleChange}
+            required
             placeholder="(Ejemplo: Puede caminar con ayuda, usa silla de ruedas, etc.)"
             rows="3"
           />
@@ -157,6 +158,7 @@ const CreateDependiente = () => {
             name="enfermedades"
             value={formData.enfermedades}
             onChange={handleChange}
+            required
             placeholder="(Ejemplo: Diabetes, hipertensión, etc.)"
             rows="3"
           />
@@ -168,6 +170,7 @@ const CreateDependiente = () => {
             name="alergias"
             value={formData.alergias}
             onChange={handleChange}
+            required
             placeholder="(Ejemplo: Alergia a la penicilina, al polen, etc.)"
             rows="3"
           />
@@ -179,6 +182,7 @@ const CreateDependiente = () => {
             name="vacunas"
             value={formData.vacunas}
             onChange={handleChange}
+            required
             placeholder="(Ejemplo: Vacuna contra la gripe, COVID-19, etc.)"
             rows="3"
           />

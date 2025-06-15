@@ -34,7 +34,6 @@ const Login = () => {
       
       navigate('/dashboard');
     } catch (err) {
-      console.log('Error completo:', error.response); 
       setError(err.response?.data?.detail || 'Credenciales incorrectas');
       console.error('Error en login:', err);
     }

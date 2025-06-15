@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
-import { format, parse, startOfWeek, getDay, addMonths } from 'date-fns';
+import { format, parse, startOfWeek, getDay } from 'date-fns';
 import esES from 'date-fns/locale/es';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './CalendarioEventos.css';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import { FaPlus } from 'react-icons/fa';
 
 const locales = {
   'es': esES,
@@ -25,6 +26,7 @@ const CalendarioEventos = () => {
   const [eventos, setEventos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState(new Date()); 
+  const [canEdit, setCanEdit] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,6 +42,15 @@ const CalendarioEventos = () => {
           tipo: evento.tipo_evento,
         }));
         setEventos(eventosFormateados);
+
+        const userAccess = JSON.parse(localStorage.getItem('user'))?.accesos || [];
+        const hasEditAccess = userAccess.some(
+          access =>
+            access.dependienteId === parseInt(dependienteId) &&
+            (access.rol === 'Admin' || access.rol === 'Editor')
+        );
+        setCanEdit(hasEditAccess);
+
       } catch (err) {
         console.error('Error cargando eventos:', err);
       } finally {
@@ -51,14 +62,6 @@ const CalendarioEventos = () => {
 
   const onNavigate = (newDate) => {
     setCurrentDate(newDate);
-  };
-
-  const goToPreviousMonth = () => {
-    setCurrentDate(addMonths(currentDate, -1));
-  };
-
-  const goToNextMonth = () => {
-    setCurrentDate(addMonths(currentDate, 1));
   };
 
   const eventStyleGetter = (event) => {
@@ -94,6 +97,10 @@ const CalendarioEventos = () => {
         border: '0px',
       },
     };
+  };
+
+    const handleAddEvent = () => {
+    navigate(`/dependientes/${dependienteId}/eventos/crear`);
   };
 
   if (loading) return <div>Cargando calendario...</div>;
@@ -146,6 +153,13 @@ const CalendarioEventos = () => {
   <div className="leyenda-item"><span className="color-vacuna"></span> Vacuna</div>
   <div className="leyenda-item"><span className="color-otros"></span> Otros</div>
 </div>
+
+      {canEdit && (
+        <button className="btn-add-floating" onClick={handleAddEvent}>
+          <FaPlus />
+        </button>
+      )}
+
     </div>
   );
 };

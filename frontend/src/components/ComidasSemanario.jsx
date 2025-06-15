@@ -150,7 +150,7 @@ const ComidasSemanario = () => {
     )}
     <div className="comidas-footer">
   <button
-    onClick={() => navigate(`/dependientes/${dependienteId}/comidas`)}
+    onClick={() => navigate(`/dependientes/${dependienteId}/comidas/lista`)}
     className="btn-toggle-view"
   >
     Ver Lista

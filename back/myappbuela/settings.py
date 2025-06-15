@@ -14,21 +14,10 @@ from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 load_dotenv()  
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-8_q*mtg&_nim*9kgk_rs0v=ih45r64)tv76qj5pqy!*7&-tc-0'
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
@@ -186,10 +175,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ]
-    #lo he comentado porque me da problemas para logear, aun tengo que ajustarlo
 }
 
 

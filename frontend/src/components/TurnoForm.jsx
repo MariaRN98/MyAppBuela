@@ -17,10 +17,7 @@ const TurnoForm = ({ editMode }) => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const horasDisponibles = Array.from({ length: 13 }, (_, i) => {
-    const hora = i + 8;
-    return `${hora.toString().padStart(2, '0')}:00`;
-  });
+
 
   const handleChange = (e) => {
   const { name, value } = e.target;
@@ -168,35 +165,29 @@ const TurnoForm = ({ editMode }) => {
           </select>
         </div>
         
-        <div className="form-row">
-          <div className="form-group">
-            <label>Hora de inicio*</label>
-            <select
-              name="hora_inicio"
-              value={formData.hora_inicio}
-              onChange={handleChange}
-              required
-            >
-              {horasDisponibles.map(hora => (
-                <option key={`inicio-${hora}`} value={hora}>{hora}</option>
-              ))}
-            </select>
-          </div>
-          
-          <div className="form-group">
-            <label>Hora de fin*</label>
-            <select
-              name="hora_fin"
-              value={formData.hora_fin}
-              onChange={handleChange}
-              required
-            >
-              {horasDisponibles.map(hora => (
-                <option key={`fin-${hora}`} value={hora}>{hora}</option>
-              ))}
-            </select>
-          </div>
-        </div>
+<div className="form-row">
+  <div className="form-group">
+    <label>Hora de inicio*</label>
+    <input
+      type="time"
+      name="hora_inicio"
+      value={formData.hora_inicio}
+      onChange={handleChange}
+      required
+    />
+  </div>
+  
+  <div className="form-group">
+    <label>Hora de fin*</label>
+    <input
+      type="time"
+      name="hora_fin"
+      value={formData.hora_fin}
+      onChange={handleChange}
+      required
+    />
+  </div>
+</div>
         
         <div className="form-actions">
           <button 

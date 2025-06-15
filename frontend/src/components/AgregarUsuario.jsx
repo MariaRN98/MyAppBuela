@@ -14,27 +14,32 @@ const AgregarUsuario = () => {
 
   const buscarUsuario = async () => {
     if (!telefono) {
-      setError('Por favor ingresa un número de teléfono');
-      return;
+        setError('Por favor ingresa un número de teléfono');
+        return;
     }
 
     setLoading(true);
     try {
-      const response = await api.get(`/api/usuarios/buscar/?telefono=${telefono}`);
-      if (response.data) {
-        setUsuarioEncontrado(response.data);
-        setError('');
-      } else {
+        const response = await api.get(`/api/usuarios/buscar/?telefono=${telefono}`);
+        if (response.data) {
+            if (!response.data.is_active) {
+                setError('La cuenta de este usuario está inactiva.');
+                setUsuarioEncontrado(null);
+            } else {
+                setUsuarioEncontrado(response.data);
+                setError('');
+            }
+        } else {
+            setError('Usuario no encontrado');
+            setUsuarioEncontrado(null);
+        }
+    } catch (err) {
         setError('Usuario no encontrado');
         setUsuarioEncontrado(null);
-      }
-    } catch (err) {
-      setError('Error buscando usuario');
-      setUsuarioEncontrado(null);
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
 
   const asignarAcceso = async () => {
     try {

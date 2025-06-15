@@ -88,12 +88,11 @@ class RegistroSerializer(serializers.ModelSerializer):
         return Usuario.objects.create(**validated_data)
     
 class UsuarioSerializer(serializers.ModelSerializer):
-    #produccion
     foto_perfil = serializers.ImageField(use_url=True)
 
     class Meta:
         model = Usuario
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'foto_perfil', 'telefono', 'fecha_nacimiento']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'foto_perfil', 'telefono', 'fecha_nacimiento', 'is_active' ]
     
     def validate_email(self, value):
         if Usuario.objects.filter(email=value).exclude(id=self.instance.id).exists():
